@@ -3,188 +3,234 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Kvitrehus 🐦</title>
+    <title>Karstenvegen 6C</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        
+
         body {
-            background: #111;
-            color: #eee;
-            font-family: 'Segoe UI', sans-serif;
+            background: #0f0f0f;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Roboto, sans-serif;
             min-height: 100vh;
         }
 
         header {
-            background: #1a1a2e;
-            padding: 20px;
-            text-align: center;
-            border-bottom: 2px solid #333;
+            background: #1c1c1e;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #2c2c2e;
         }
+
+        header svg { color: #4fc3f7; }
 
         header h1 {
-            font-size: 1.8rem;
-            letter-spacing: 2px;
-        }
-
-        header p {
-            color: #888;
-            font-size: 0.9rem;
-            margin-top: 5px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            color: #f5f5f5;
         }
 
         .main {
-            max-width: 900px;
-            margin: 30px auto;
-            padding: 0 20px;
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 24px 16px;
         }
 
-        .bilde-container {
-            position: relative;
-            background: #1a1a1a;
-            border-radius: 12px;
+        .bilde-kort {
+            background: #1c1c1e;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+            border: 1px solid #2c2c2e;
         }
 
-        .bilde-container img {
+        .bilde-wrapper {
+            position: relative;
+            background: #000;
+        }
+
+        .bilde-wrapper img {
             width: 100%;
             display: block;
+            max-height: 520px;
+            object-fit: contain;
         }
 
-        .bilde-info {
+        .bilde-overlay {
             position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,0.8));
-            padding: 20px;
-            font-size: 0.9rem;
-            color: #ccc;
+            bottom: 0; left: 0; right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.75));
+            padding: 24px 16px 12px;
+            font-size: 0.82rem;
+            color: #bbb;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
         }
 
         .kontroller {
             display: flex;
-            justify-content: center;
             align-items: center;
-            gap: 15px;
-            margin: 20px 0;
+            justify-content: space-between;
+            padding: 12px 16px;
+            border-top: 1px solid #2c2c2e;
+            gap: 12px;
             flex-wrap: wrap;
         }
 
-        button {
-            background: #2d6a4f;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 10px 20px;
-            cursor: pointer;
-            font-size: 0.95rem;
-            transition: background 0.2s;
-        }
-
-        button:hover { background: #40916c; }
-        button:disabled { background: #444; cursor: default; }
-
-        .btn-capture {
-            background: #c9184a;
-            padding: 12px 28px;
-            font-size: 1rem;
-        }
-
-        .btn-capture:hover { background: #ff4d6d; }
-
-        #status {
-            text-align: center;
-            color: #888;
-            font-size: 0.85rem;
-            min-height: 20px;
-            margin-bottom: 10px;
+        .nav-gruppe {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .teller {
+            font-size: 0.85rem;
             color: #888;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .btn {
+            background: #2c2c2e;
+            color: #e0e0e0;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            cursor: pointer;
             font-size: 0.9rem;
+            transition: background 0.15s;
+        }
+
+        .btn:hover { background: #3a3a3c; }
+        .btn:disabled { background: #1c1c1e; color: #444; cursor: default; }
+
+        .btn-capture {
+            background: #1565c0;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.15s;
+        }
+
+        .btn-capture:hover { background: #1976d2; }
+        .btn-capture:disabled { background: #333; color: #666; cursor: default; }
+
+        #status {
+            font-size: 0.8rem;
+            color: #888;
+            padding: 6px 16px 0;
+            min-height: 24px;
         }
 
         .tidslinje {
-            margin-top: 30px;
+            margin-top: 24px;
         }
 
-        .tidslinje h2 {
-            font-size: 1rem;
-            color: #888;
-            margin-bottom: 15px;
-            letter-spacing: 1px;
+        .tidslinje-header {
+            font-size: 0.75rem;
+            color: #666;
             text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            padding: 0 4px;
         }
 
         .tidslinje-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            gap: 8px;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 6px;
         }
 
-        .tidslinje-grid img {
-            width: 100%;
+        .thumb {
             aspect-ratio: 4/3;
             object-fit: cover;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            opacity: 0.6;
-            transition: opacity 0.2s, transform 0.2s;
+            opacity: 0.5;
+            transition: opacity 0.15s, transform 0.15s;
             border: 2px solid transparent;
+            width: 100%;
+            display: block;
         }
 
-        .tidslinje-grid img:hover {
-            opacity: 1;
-            transform: scale(1.05);
+        .thumb:hover { opacity: 0.85; transform: scale(1.03); }
+        .thumb.aktiv { opacity: 1; border-color: #4fc3f7; }
+
+        .spinner {
+            display: inline-block;
+            width: 12px; height: 12px;
+            border: 2px solid #444;
+            border-top-color: #4fc3f7;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            vertical-align: middle;
+            margin-right: 4px;
         }
 
-        .tidslinje-grid img.aktiv {
-            opacity: 1;
-            border-color: #40916c;
-        }
-
-        .laster {
-            text-align: center;
-            padding: 40px;
-            color: #555;
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
     <header>
-        <h1>🐦 Kvitrehus</h1>
-        <p id="header-tid">Laster...</p>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+            <circle cx="12" cy="13" r="4"/>
+        </svg>
+        <h1>Karstenvegen 6C</h1>
     </header>
 
     <div class="main">
-        <div class="bilde-container">
-            <img id="hovudbilde" src="" alt="Fuglehus">
-            <div class="bilde-info" id="bilde-info">–</div>
-        </div>
-
-        <div style="margin-top:15px;">
-            <p id="status"></p>
-            <div class="kontroller">
-                <button onclick="forrige()" id="btn-forrige">◀ Forrige</button>
-                <span class="teller" id="teller">– / –</span>
-                <button onclick="neste()" id="btn-neste">Neste ▶</button>
-                <button class="btn-capture" onclick="taBilde()">📷 Ta bilde nå</button>
+        <div class="bilde-kort">
+            <div class="bilde-wrapper">
+                <img id="hovudbilde" src="" alt="Fuglehus">
+                <div class="bilde-overlay">
+                    <span id="bilde-tid">–</span>
+                    <span id="bilde-nr">–</span>
+                </div>
             </div>
+            <div class="kontroller">
+                <div class="nav-gruppe">
+                    <button class="btn" onclick="forrige()" id="btn-forrige">&#8592;</button>
+                    <span class="teller" id="teller">– / –</span>
+                    <button class="btn" onclick="neste()" id="btn-neste">&#8594;</button>
+                </div>
+                <button class="btn-capture" id="btn-ta" onclick="taBilde()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                        <circle cx="12" cy="13" r="4"/>
+                    </svg>
+                    Ta bilde
+                </button>
+            </div>
+            <p id="status"></p>
         </div>
 
         <div class="tidslinje">
-            <h2>Tidslinje</h2>
-            <div class="tidslinje-grid" id="tidslinje-grid">
-                <div class="laster">Laster bilder...</div>
-            </div>
+            <p class="tidslinje-header">Tidslinje</p>
+            <div class="tidslinje-grid" id="tidslinje-grid"></div>
         </div>
     </div>
 
     <script>
         let bilder = [];
         let gjeldende = 0;
+
+        function formatTid(navn) {
+            const s = navn.replace('bilde_', '').replace('.jpg', '');
+            const [dato, tid] = s.split('_');
+            if (!dato || !tid) return s;
+            const [ar, mnd, dag] = dato.split('-');
+            const [time, min] = tid.split('-');
+            return `${dag}.${mnd} kl. ${time}:${min}`;
+        }
 
         async function hentBilder() {
             try {
@@ -193,13 +239,12 @@
                 bilder = files
                     .filter(f => f.name.startsWith('bilde_') && f.name.endsWith('.jpg'))
                     .sort((a, b) => b.name.localeCompare(a.name));
-
                 if (bilder.length > 0) {
                     visGrid();
                     visBilde(0);
                 }
             } catch(e) {
-                document.getElementById('status').textContent = '❌ Kunne ikke laste bilder.';
+                document.getElementById('status').textContent = 'Kunne ikke laste bilder.';
             }
         }
 
@@ -207,15 +252,12 @@
             gjeldende = index;
             const b = bilder[index];
             document.getElementById('hovudbilde').src = b.download_url;
-            const tid = b.name.replace('bilde_', '').replace('.jpg', '').replace(/_/g, ' ');
-            document.getElementById('bilde-info').textContent = '📅 ' + tid;
-            document.getElementById('header-tid').textContent = tid;
+            document.getElementById('bilde-tid').textContent = formatTid(b.name);
+            document.getElementById('bilde-nr').textContent = `${index + 1} / ${bilder.length}`;
             document.getElementById('teller').textContent = `${index + 1} / ${bilder.length}`;
             document.getElementById('btn-forrige').disabled = index >= bilder.length - 1;
             document.getElementById('btn-neste').disabled = index <= 0;
-
-            // Oppdater aktiv i grid
-            document.querySelectorAll('.tidslinje-grid img').forEach((img, i) => {
+            document.querySelectorAll('.thumb').forEach((img, i) => {
                 img.classList.toggle('aktiv', i === index);
             });
         }
@@ -226,35 +268,36 @@
             bilder.forEach((b, i) => {
                 const img = document.createElement('img');
                 img.src = b.download_url;
-                img.title = b.name.replace('bilde_', '').replace('.jpg', '').replace(/_/g, ' ');
+                img.className = 'thumb' + (i === 0 ? ' aktiv' : '');
+                img.title = formatTid(b.name);
                 img.onclick = () => visBilde(i);
-                if (i === 0) img.classList.add('aktiv');
                 grid.appendChild(img);
             });
         }
 
-        function forrige() {
-            if (gjeldende < bilder.length - 1) visBilde(gjeldende + 1);
-        }
-
-        function neste() {
-            if (gjeldende > 0) visBilde(gjeldende - 1);
-        }
+        function forrige() { if (gjeldende < bilder.length - 1) visBilde(gjeldende + 1); }
+        function neste() { if (gjeldende > 0) visBilde(gjeldende - 1); }
 
         async function taBilde() {
-            document.getElementById('status').textContent = '📷 Tar bilde...';
+            const btn = document.getElementById('btn-ta');
+            const status = document.getElementById('status');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span> Tar bilde...';
+            status.textContent = '';
             try {
                 const resp = await fetch('https://fuglehus.torbjs.workers.dev', { method: 'POST' });
                 const data = await resp.json();
                 if (data.success) {
-                    document.getElementById('status').textContent = '✅ Bilde tatt! Oppdaterer om 35 sek...';
-                    setTimeout(() => { hentBilder(); }, 35000);
+                    status.textContent = 'Bilde tatt! Oppdaterer om 35 sek...';
+                    setTimeout(() => { hentBilder(); status.textContent = ''; }, 35000);
                 } else {
-                    document.getElementById('status').textContent = '❌ ' + data.error;
+                    status.textContent = 'Feil: ' + data.error;
                 }
             } catch(e) {
-                document.getElementById('status').textContent = '❌ Kunne ikke nå Pi.';
+                status.textContent = 'Kunne ikke nå Pi.';
             }
+            btn.disabled = false;
+            btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> Ta bilde';
         }
 
         hentBilder();
