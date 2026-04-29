@@ -3,78 +3,110 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Karstenvegen 6C</title>
+    <title>Fuglehus – Karstenvegen 6C</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            background: #0f0f0f;
-            color: #e0e0e0;
-            font-family: 'Segoe UI', Roboto, sans-serif;
+            background: #edeae4;
+            color: #2a2a2a;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             min-height: 100vh;
         }
 
-        header {
-            background: #1c1c1e;
-            padding: 16px 24px;
+        .side-tittel-wrapper {
             display: flex;
             align-items: center;
-            gap: 12px;
-            border-bottom: 1px solid #2c2c2e;
+            gap: 10px;
+            margin-bottom: 16px;
+            padding: 0 2px;
         }
 
-        header svg { color: #4fc3f7; }
-
-        header h1 {
-            font-size: 1.1rem;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            color: #f5f5f5;
+        .side-tittel {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2a2a2a;
+            letter-spacing: -0.3px;
         }
 
         .main {
-            max-width: 960px;
+            max-width: 920px;
             margin: 0 auto;
-            padding: 24px 16px;
+            padding: 28px 16px 48px;
         }
 
+        /* ── Kortdesign ── */
+
         .bilde-kort {
-            background: #1c1c1e;
-            border-radius: 16px;
+            background: #fff;
+            border-radius: 22px;
             overflow: hidden;
-            border: 1px solid #2c2c2e;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.07), 0 8px 40px rgba(0,0,0,0.05);
         }
 
         .bilde-wrapper {
             position: relative;
-            background: #000;
+            background: #111;
         }
 
         .bilde-wrapper img {
             width: 100%;
             display: block;
-            max-height: 520px;
+            max-height: 540px;
             object-fit: contain;
         }
 
         .bilde-overlay {
             position: absolute;
             bottom: 0; left: 0; right: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,0.75));
-            padding: 24px 16px 12px;
-            font-size: 0.82rem;
-            color: #bbb;
+            background: linear-gradient(transparent, rgba(0,0,0,0.55));
+            padding: 36px 18px 14px;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.85);
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
         }
 
+        /* ── Hjerte-knapp ── */
+
+        .btn-hjerte {
+            position: absolute;
+            top: 12px; right: 12px;
+            background: rgba(0,0,0,0.32);
+            border: none;
+            border-radius: 50%;
+            width: 40px; height: 40px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            transition: background 0.15s, transform 0.12s;
+            color: rgba(255,255,255,0.85);
+            backdrop-filter: blur(4px);
+        }
+
+        .btn-hjerte:hover { background: rgba(0,0,0,0.52); transform: scale(1.1); }
+        .btn-hjerte:active { transform: scale(0.95); }
+
+        .btn-hjerte svg { transition: fill 0.15s, stroke 0.15s; }
+
+        .btn-hjerte.favoritt svg {
+            fill: #e53935;
+            stroke: #e53935;
+        }
+
+        .btn-hjerte:not(.favoritt) svg {
+            fill: none;
+            stroke: rgba(255,255,255,0.85);
+        }
+
+        /* ── Kontroller ── */
+
         .kontroller {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 12px 16px;
-            border-top: 1px solid #2c2c2e;
+            padding: 14px 18px;
+            border-top: 1px solid #f2f2f2;
             gap: 12px;
             flex-wrap: wrap;
         }
@@ -82,226 +114,441 @@
         .nav-gruppe {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .teller {
-            font-size: 0.85rem;
-            color: #888;
-            min-width: 60px;
+            font-size: 0.8rem;
+            color: #bbb;
+            min-width: 56px;
             text-align: center;
         }
 
         .btn {
-            background: #2c2c2e;
-            color: #e0e0e0;
+            background: #f4f3f1;
+            color: #555;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             padding: 8px 16px;
             cursor: pointer;
             font-size: 0.9rem;
-            transition: background 0.15s;
+            transition: background 0.12s;
         }
 
-        .btn:hover { background: #3a3a3c; }
-        .btn:disabled { background: #1c1c1e; color: #444; cursor: default; }
+        .btn:hover { background: #ebe9e5; }
+        .btn:disabled { color: #ccc; cursor: default; background: #f9f9f8; }
 
         .btn-capture {
-            background: #1565c0;
-            color: white;
-            padding: 8px 20px;
-            border-radius: 8px;
+            background: #4caf50;
+            color: #fff;
+            padding: 9px 20px;
+            border-radius: 10px;
             border: none;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.87rem;
+            font-weight: 500;
             display: flex;
             align-items: center;
             gap: 6px;
-            transition: background 0.15s;
+            transition: background 0.12s, transform 0.1s, box-shadow 0.1s;
+            box-shadow: 0 2px 8px rgba(76,175,80,0.25);
         }
 
-        .btn-capture:hover { background: #1976d2; }
-        .btn-capture:disabled { background: #333; color: #666; cursor: default; }
+        .btn-capture:hover {
+            background: #43a047;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(76,175,80,0.3);
+        }
+
+        .btn-capture:active { transform: translateY(0); box-shadow: none; }
+        .btn-capture:disabled { background: #ccc; cursor: default; transform: none; box-shadow: none; }
 
         #status {
-            font-size: 0.8rem;
-            color: #888;
-            padding: 6px 16px 0;
-            min-height: 24px;
+            font-size: 0.77rem;
+            color: #aaa;
+            padding: 4px 18px 10px;
+            min-height: 22px;
         }
+
+        /* ── Tabs + filmstripe ── */
 
         .tidslinje {
-            margin-top: 24px;
+            margin-top: 22px;
         }
 
-        .tidslinje-header {
-            font-size: 0.75rem;
+        .tab-bar {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 10px;
+        }
+
+        .tab {
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            color: #aaa;
+            transition: background 0.12s, color 0.12s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .tab:hover { color: #666; }
+
+        .tab.aktiv {
+            background: #fff;
+            color: #2a2a2a;
+            box-shadow: 0 1px 6px rgba(0,0,0,0.09);
+        }
+
+        .tab-teller {
+            background: #f0ede8;
+            color: #999;
+            font-size: 0.7rem;
+            border-radius: 10px;
+            padding: 1px 6px;
+            font-weight: 600;
+        }
+
+        .tab.aktiv .tab-teller {
+            background: #f0ede8;
             color: #666;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 12px;
-            padding: 0 4px;
         }
 
-        .tidslinje-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        .filmstripe {
+            display: flex;
             gap: 6px;
+            overflow-x: auto;
+            padding: 4px 4px 14px;
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: #ccc9c2 transparent;
         }
+
+        .filmstripe::-webkit-scrollbar { height: 4px; }
+        .filmstripe::-webkit-scrollbar-track { background: transparent; }
+        .filmstripe::-webkit-scrollbar-thumb { background: #d0ccc6; border-radius: 4px; }
 
         .thumb {
-            aspect-ratio: 4/3;
+            width: 84px;
+            height: 63px;
             object-fit: cover;
-            border-radius: 8px;
+            border-radius: 9px;
             cursor: pointer;
             opacity: 0.5;
-            transition: opacity 0.15s, transform 0.15s;
-            border: 2px solid transparent;
-            width: 100%;
+            flex-shrink: 0;
+            transition: opacity 0.13s, transform 0.13s;
+            border: 2.5px solid transparent;
             display: block;
         }
 
-        .thumb:hover { opacity: 0.85; transform: scale(1.03); }
-        .thumb.aktiv { opacity: 1; border-color: #4fc3f7; }
+        .thumb:hover { opacity: 0.88; transform: translateY(-2px); }
+
+        .thumb.aktiv {
+            opacity: 1;
+            border-color: #4caf50;
+            transform: translateY(-2px);
+        }
+
+        .tom-melding {
+            font-size: 0.82rem;
+            color: #bbb;
+            padding: 18px 4px;
+        }
+
+        /* ── Global hover-preview ── */
+
+        #forhåndsvisning {
+            display: none;
+            position: fixed;
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.16);
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 9999;
+            width: 210px;
+        }
+
+        #forhåndsvisning img { width: 100%; display: block; }
+
+        #forhåndsvisning-tid {
+            font-size: 0.72rem;
+            color: #999;
+            padding: 7px 10px 8px;
+            text-align: center;
+        }
 
         .spinner {
             display: inline-block;
             width: 12px; height: 12px;
-            border: 2px solid #444;
-            border-top-color: #4fc3f7;
+            border: 2px solid rgba(255,255,255,0.35);
+            border-top-color: #fff;
             border-radius: 50%;
             animation: spin 0.7s linear infinite;
             vertical-align: middle;
-            margin-right: 4px;
         }
 
         @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
-    <header>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-            <circle cx="12" cy="13" r="4"/>
+
+<div class="main">
+    <div class="side-tittel-wrapper">
+        <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M29 22 L42 17 L42 31 Z" fill="#3d6018"/>
+            <ellipse cx="23" cy="23" rx="10" ry="7" fill="#6fa82a" transform="rotate(-5 23 23)"/>
+            <ellipse cx="18" cy="24" rx="10" ry="8" fill="#f5c820"/>
+            <ellipse cx="17.5" cy="27" rx="2.5" ry="7" fill="#111"/>
+            <circle cx="9" cy="16" r="8" fill="#111"/>
+            <ellipse cx="7.5" cy="17.5" rx="4.5" ry="3.5" fill="#f0f0f0"/>
+            <circle cx="8" cy="14" r="1.9" fill="#f0f0f0"/>
+            <circle cx="8.6" cy="14" r="0.95" fill="#111"/>
+            <path d="M1.5 15.5 L1.5 17.5 L6.5 16.5 Z" fill="#c8900a"/>
+            <line x1="14" y1="31" x2="12" y2="38" stroke="#c8900a" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="12" y1="38" x2="9"  y2="38" stroke="#c8900a" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="12" y1="38" x2="13" y2="40" stroke="#c8900a" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="21" y1="32" x2="23" y2="38" stroke="#c8900a" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="23" y1="38" x2="20" y2="38" stroke="#c8900a" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="23" y1="38" x2="25" y2="40" stroke="#c8900a" stroke-width="1.5" stroke-linecap="round"/>
         </svg>
-        <h1>Karstenvegen 6C</h1>
-    </header>
-
-    <div class="main">
-        <div class="bilde-kort">
-            <div class="bilde-wrapper">
-                <img id="hovudbilde" src="" alt="Fuglehus">
-                <div class="bilde-overlay">
-                    <span id="bilde-tid">–</span>
-                    <span id="bilde-nr">–</span>
-                </div>
-            </div>
-            <div class="kontroller">
-                <div class="nav-gruppe">
-                    <button class="btn" onclick="forrige()" id="btn-forrige">&#8592;</button>
-                    <span class="teller" id="teller">– / –</span>
-                    <button class="btn" onclick="neste()" id="btn-neste">&#8594;</button>
-                </div>
-                <button class="btn-capture" id="btn-ta" onclick="taBilde()">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-                        <circle cx="12" cy="13" r="4"/>
-                    </svg>
-                    Ta bilde
-                </button>
-            </div>
-            <p id="status"></p>
-        </div>
-
-        <div class="tidslinje">
-            <p class="tidslinje-header">Tidslinje</p>
-            <div class="tidslinje-grid" id="tidslinje-grid"></div>
-        </div>
+        <h1 class="side-tittel">Karstenvegen 6 C</h1>
     </div>
 
-    <script>
-        let bilder = [];
-        let gjeldende = 0;
+    <div class="bilde-kort">
+        <div class="bilde-wrapper">
+            <img id="hovudbilde" src="" alt="Fuglehus">
+            <div class="bilde-overlay">
+                <span id="bilde-tid">–</span>
+                <span id="bilde-nr">–</span>
+            </div>
+            <button class="btn-hjerte" id="btn-hjerte" onclick="toggleFavoritt()" title="Merk som favoritt">
+                <svg width="18" height="18" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+            </button>
+        </div>
 
-        function formatTid(navn) {
-            const s = navn.replace('bilde_', '').replace('.jpg', '');
-            const [dato, tid] = s.split('_');
-            if (!dato || !tid) return s;
-            const [ar, mnd, dag] = dato.split('-');
-            const [time, min] = tid.split('-');
-            return `${dag}.${mnd} kl. ${time}:${min}`;
-        }
+        <div class="kontroller">
+            <div class="nav-gruppe">
+                <button class="btn" onclick="forrige()" id="btn-forrige">&#8592;</button>
+                <span class="teller" id="teller">– / –</span>
+                <button class="btn" onclick="neste()" id="btn-neste">&#8594;</button>
+            </div>
+            <button class="btn-capture" id="btn-ta" onclick="taBilde()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                    <circle cx="12" cy="13" r="4"/>
+                </svg>
+                Ta bilde
+            </button>
+        </div>
+        <p id="status"></p>
+    </div>
 
-        async function hentBilder() {
-            try {
-                const resp = await fetch('https://api.github.com/repos/torbjornsand/fuglehus/contents/');
-                const files = await resp.json();
-                bilder = files
-                    .filter(f => f.name.startsWith('bilde_') && f.name.endsWith('.jpg'))
-                    .sort((a, b) => b.name.localeCompare(a.name));
-                if (bilder.length > 0) {
-                    visGrid();
-                    visBilde(0);
-                }
-            } catch(e) {
-                document.getElementById('status').textContent = 'Kunne ikke laste bilder.';
+    <div class="tidslinje">
+        <div class="tab-bar">
+            <button class="tab aktiv" id="tab-tidslinje" onclick="byttTab('tidslinje')">
+                Tidslinje
+                <span class="tab-teller" id="teller-tidslinje">0</span>
+            </button>
+            <button class="tab" id="tab-favoritter" onclick="byttTab('favoritter')">
+                Favoritter
+                <span class="tab-teller" id="teller-favoritter">0</span>
+            </button>
+        </div>
+        <div class="filmstripe" id="filmstripe"></div>
+    </div>
+</div>
+
+<div id="forhåndsvisning">
+    <img id="forhåndsvisning-img" src="" alt="">
+    <div id="forhåndsvisning-tid"></div>
+</div>
+
+<script>
+    const WORKER = 'https://fuglehus.torbjs.workers.dev';
+
+    let bilder     = [];
+    let gjeldende  = 0;
+    let favoritter = new Set();
+    let aktivTab   = 'tidslinje';
+
+    const preview    = document.getElementById('forhåndsvisning');
+    const previewImg = document.getElementById('forhåndsvisning-img');
+    const previewTid = document.getElementById('forhåndsvisning-tid');
+
+    function formatTid(navn) {
+        const s = navn.replace('bilde_', '').replace('.jpg', '');
+        const [dato, tid] = s.split('_');
+        if (!dato || !tid) return s;
+        const [ar, mnd, dag] = dato.split('-');
+        const [time, min] = tid.split('-');
+        return `${dag}.${mnd} kl. ${time}:${min}`;
+    }
+
+    function plasserPreview(e) {
+        const w = preview.offsetWidth  || 210;
+        const h = preview.offsetHeight || 160;
+        let x = e.clientX - w / 2;
+        let y = e.clientY - h - 14;
+        x = Math.max(8, Math.min(x, window.innerWidth  - w - 8));
+        y = Math.max(8, Math.min(y, window.innerHeight - h - 8));
+        preview.style.left = x + 'px';
+        preview.style.top  = y + 'px';
+    }
+
+    async function hentBilder() {
+        try {
+            const resp  = await fetch('https://api.github.com/repos/torbjornsand/fuglehus/contents/');
+            const files = await resp.json();
+            bilder = files
+                .filter(f => f.name.startsWith('bilde_') && f.name.endsWith('.jpg'))
+                .sort((a, b) => b.name.localeCompare(a.name));
+            document.getElementById('teller-tidslinje').textContent = bilder.length;
+            if (bilder.length > 0) {
+                visFilmstripe();
+                visBilde(0);
             }
+        } catch(e) {
+            document.getElementById('status').textContent = 'Kunne ikke laste bilder.';
         }
+    }
 
-        function visBilde(index) {
-            gjeldende = index;
-            const b = bilder[index];
-            document.getElementById('hovudbilde').src = b.download_url;
-            document.getElementById('bilde-tid').textContent = formatTid(b.name);
-            document.getElementById('bilde-nr').textContent = `${index + 1} / ${bilder.length}`;
-            document.getElementById('teller').textContent = `${index + 1} / ${bilder.length}`;
-            document.getElementById('btn-forrige').disabled = index >= bilder.length - 1;
-            document.getElementById('btn-neste').disabled = index <= 0;
-            document.querySelectorAll('.thumb').forEach((img, i) => {
-                img.classList.toggle('aktiv', i === index);
+    async function hentFavoritter() {
+        try {
+            const resp = await fetch(WORKER + '/favorites');
+            const liste = await resp.json();
+            favoritter = new Set(liste);
+            oppdaterFavorittTeller();
+            oppdaterHjerte();
+            if (aktivTab === 'favoritter') visFilmstripe();
+        } catch(e) { /* stille feil */ }
+    }
+
+    async function toggleFavoritt() {
+        if (!bilder[gjeldende]) return;
+        const navn = bilder[gjeldende].name;
+        try {
+            const resp = await fetch(WORKER + '/favorites', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ navn }),
             });
+            const data = await resp.json();
+            favoritter = new Set(data.favorites);
+            oppdaterFavorittTeller();
+            oppdaterHjerte();
+            if (aktivTab === 'favoritter') visFilmstripe();
+        } catch(e) {
+            document.getElementById('status').textContent = 'Kunne ikke lagre favoritt.';
+        }
+    }
+
+    function oppdaterHjerte() {
+        const navn = bilder[gjeldende]?.name;
+        document.getElementById('btn-hjerte').classList.toggle('favoritt', favoritter.has(navn));
+    }
+
+    function oppdaterFavorittTeller() {
+        document.getElementById('teller-favoritter').textContent = favoritter.size;
+    }
+
+    function visBilde(index) {
+        gjeldende = index;
+        const b   = bilder[index];
+        document.getElementById('hovudbilde').src             = b.download_url;
+        document.getElementById('bilde-tid').textContent      = formatTid(b.name);
+        document.getElementById('bilde-nr').textContent       = `${index + 1} / ${bilder.length}`;
+        document.getElementById('teller').textContent         = `${index + 1} / ${bilder.length}`;
+        document.getElementById('btn-forrige').disabled       = index >= bilder.length - 1;
+        document.getElementById('btn-neste').disabled         = index <= 0;
+        oppdaterHjerte();
+        document.querySelectorAll('.thumb').forEach(img => {
+            img.classList.toggle('aktiv', img.dataset.navn === b.name);
+        });
+        const aktiv = document.querySelector('.thumb.aktiv');
+        if (aktiv) aktiv.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+
+    function visFilmstripe() {
+        const strip = document.getElementById('filmstripe');
+        strip.innerHTML = '';
+
+        const liste = aktivTab === 'favoritter'
+            ? bilder.filter(b => favoritter.has(b.name))
+            : bilder;
+
+        if (liste.length === 0) {
+            strip.innerHTML = '<p class="tom-melding">Ingen favoritter ennå – klikk ♥ på et bilde.</p>';
+            return;
         }
 
-        function visGrid() {
-            const grid = document.getElementById('tidslinje-grid');
-            grid.innerHTML = '';
-            bilder.forEach((b, i) => {
-                const img = document.createElement('img');
-                img.src = b.download_url;
-                img.className = 'thumb' + (i === 0 ? ' aktiv' : '');
-                img.title = formatTid(b.name);
-                img.onclick = () => visBilde(i);
-                grid.appendChild(img);
+        liste.forEach(b => {
+            const img        = document.createElement('img');
+            img.src          = b.download_url;
+            img.dataset.navn = b.name;
+            img.className    = 'thumb' + (b.name === bilder[gjeldende]?.name ? ' aktiv' : '');
+            img.title        = formatTid(b.name);
+
+            img.addEventListener('click', () => {
+                const idx = bilder.findIndex(x => x.name === b.name);
+                if (idx !== -1) visBilde(idx);
             });
-        }
+            img.addEventListener('mouseenter', e => {
+                previewImg.src         = b.download_url;
+                previewTid.textContent = formatTid(b.name);
+                preview.style.display  = 'block';
+                plasserPreview(e);
+            });
+            img.addEventListener('mousemove', plasserPreview);
+            img.addEventListener('mouseleave', () => { preview.style.display = 'none'; });
 
-        function forrige() { if (gjeldende < bilder.length - 1) visBilde(gjeldende + 1); }
-        function neste() { if (gjeldende > 0) visBilde(gjeldende - 1); }
+            strip.appendChild(img);
+        });
+    }
 
-        async function taBilde() {
-            const btn = document.getElementById('btn-ta');
-            const status = document.getElementById('status');
-            btn.disabled = true;
-            btn.innerHTML = '<span class="spinner"></span> Tar bilde...';
-            status.textContent = '';
-            try {
-                const resp = await fetch('https://fuglehus.torbjs.workers.dev', { method: 'POST' });
-                const data = await resp.json();
-                if (data.success) {
-                    status.textContent = 'Bilde tatt! Oppdaterer om 35 sek...';
-                    setTimeout(() => { hentBilder(); status.textContent = ''; }, 35000);
-                } else {
-                    status.textContent = 'Feil: ' + data.error;
-                }
-            } catch(e) {
-                status.textContent = 'Kunne ikke nå Pi.';
+    function byttTab(tab) {
+        aktivTab = tab;
+        document.getElementById('tab-tidslinje').classList.toggle('aktiv', tab === 'tidslinje');
+        document.getElementById('tab-favoritter').classList.toggle('aktiv', tab === 'favoritter');
+        visFilmstripe();
+    }
+
+    function forrige() { if (gjeldende < bilder.length - 1) visBilde(gjeldende + 1); }
+    function neste()   { if (gjeldende > 0)                 visBilde(gjeldende - 1); }
+
+    async function taBilde() {
+        const btn    = document.getElementById('btn-ta');
+        const status = document.getElementById('status');
+        btn.disabled  = true;
+        btn.innerHTML = '<span class="spinner"></span> Tar bilde…';
+        status.textContent = '';
+        try {
+            const resp = await fetch(WORKER, { method: 'POST' });
+            const data = await resp.json();
+            if (data.success) {
+                status.textContent = 'Bilde tatt! Oppdaterer om 35 sek…';
+                setTimeout(() => { hentBilder(); status.textContent = ''; }, 35000);
+            } else {
+                status.textContent = 'Feil: ' + data.error;
             }
-            btn.disabled = false;
-            btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> Ta bilde';
+        } catch(e) {
+            status.textContent = 'Kunne ikke nå Pi.';
         }
+        btn.disabled  = false;
+        btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> Ta bilde`;
+    }
 
-        hentBilder();
-        setInterval(hentBilder, 600000);
-    </script>
+    hentBilder();
+    hentFavoritter();
+    setInterval(hentBilder, 600000);
+    setInterval(hentFavoritter, 30000);
+</script>
 </body>
 </html>
