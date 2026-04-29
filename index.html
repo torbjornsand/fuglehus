@@ -133,6 +133,21 @@
             padding-left: 6px;
         }
 
+        .btn-refresh {
+            background: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 4px 12px;
+            cursor: pointer;
+            font-size: 0.78rem;
+            font-weight: 500;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+
+        .btn-refresh:hover { background: #43a047; }
+
         .btn {
             background: #f4f3f1;
             color: #555;
@@ -561,10 +576,10 @@
 
     <div class="kontroller">
         <div class="nav-gruppe">
-            <button class="btn btn-nav" onclick="neste()" id="btn-neste">
+            <button class="btn btn-nav" onclick="forrige()" id="btn-forrige">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
             </button>
-            <button class="btn btn-nav" onclick="forrige()" id="btn-forrige">
+            <button class="btn btn-nav" onclick="neste()" id="btn-neste">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
             </button>
             <span class="bilde-tid-tekst" id="bilde-tid">–</span>
@@ -785,8 +800,8 @@
         const b   = bilder[index];
         document.getElementById('hovudbilde').src             = b.download_url;
         document.getElementById('bilde-tid').textContent = formatTid(b.name);
-        document.getElementById('btn-forrige').disabled       = index >= bilder.length - 1;
-        document.getElementById('btn-neste').disabled         = index <= 0;
+        document.getElementById('btn-forrige').disabled = index <= 0;
+        document.getElementById('btn-neste').disabled   = index >= bilder.length - 1;
         oppdaterHjerte();
         document.querySelectorAll('.thumb').forEach(img => {
             img.classList.toggle('aktiv', img.dataset.navn === b.name);
@@ -799,9 +814,9 @@
         const strip = document.getElementById('filmstripe');
         strip.innerHTML = '';
 
-        const liste = aktivTab === 'favoritter'
+        const liste = (aktivTab === 'favoritter'
             ? bilder.filter(b => favoritter.has(b.name))
-            : bilder;
+            : bilder).slice().reverse();
 
         if (liste.length === 0) {
             strip.innerHTML = '<p class="tom-melding">Ingen favoritter ennå – klikk ♥ på et bilde.</p>';
@@ -843,8 +858,13 @@
         visFilmstripe();
     }
 
-    function forrige() { if (gjeldende < bilder.length - 1) visBilde(gjeldende + 1); }
-    function neste()   { if (gjeldende > 0)                 visBilde(gjeldende - 1); }
+    function forrige() { if (gjeldende > 0)                 visBilde(gjeldende - 1); }
+    function neste()   { if (gjeldende < bilder.length - 1) visBilde(gjeldende + 1); }
+
+    function oppdaterBilder() {
+        hentBilder();
+        document.getElementById('status').textContent = '';
+    }
 
     async function taBilde() {
         const btn    = document.getElementById('btn-ta');
@@ -856,8 +876,10 @@
             const resp = await fetch(WORKER, { method: 'POST' });
             const data = await resp.json();
             if (data.success) {
-                status.textContent = 'Bilde tatt! Oppdaterer om 35 sek…';
-                setTimeout(() => { hentBilder(); status.textContent = ''; }, 35000);
+                status.textContent = 'Fremkaller foto, vent litt…';
+                setTimeout(() => {
+                    status.innerHTML = 'Fremkaller foto, vent litt… <button class="btn-refresh" onclick="oppdaterBilder()">Oppdater nå</button>';
+                }, 30000);
             } else {
                 status.textContent = 'Feil: ' + data.error;
             }
@@ -954,8 +976,8 @@
     hentFavoritter();
     hentHighFives();
     document.addEventListener('keydown', e => {
-        if (e.key === 'ArrowLeft')  neste();
-        if (e.key === 'ArrowRight') forrige();
+        if (e.key === 'ArrowLeft')  forrige();
+        if (e.key === 'ArrowRight') neste();
     });
 
     setInterval(hentBilder, 600000);
