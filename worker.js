@@ -35,6 +35,26 @@ export default {
       }
     }
 
+    // ── High fives ──────────────────────────────────────────
+    if (url.pathname === '/highfives') {
+      const val   = await env.FAVORITES.get('highfives');
+      const count = val ? parseInt(val) : 0;
+
+      if (request.method === 'GET') {
+        return new Response(JSON.stringify({ count }), {
+          headers: { ...cors, 'Content-Type': 'application/json' },
+        });
+      }
+
+      if (request.method === 'POST') {
+        const next = count + 1;
+        await env.FAVORITES.put('highfives', String(next));
+        return new Response(JSON.stringify({ count: next }), {
+          headers: { ...cors, 'Content-Type': 'application/json' },
+        });
+      }
+    }
+
     // ── Ta bilde (eksisterende) ──────────────────────────────
     if (request.method !== 'POST') {
       return new Response('Method not allowed', { status: 405, headers: cors });
