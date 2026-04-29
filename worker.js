@@ -60,7 +60,7 @@ export default {
       return new Response('Method not allowed', { status: 405, headers: cors });
     }
 
-    const response = await fetch('https://kvitrehus.com/api/capture', {
+    const response = await fetch('https://cam.kvitrehus.com/api/capture', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
     });
