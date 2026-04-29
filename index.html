@@ -105,8 +105,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 14px 18px;
-            border-top: 1px solid #f2f2f2;
+            padding: 12px 4px;
             gap: 12px;
             flex-wrap: wrap;
         }
@@ -234,24 +233,27 @@
         .filmstripe::-webkit-scrollbar-thumb { background: #d0ccc6; border-radius: 4px; }
 
         .thumb {
-            width: 84px;
-            height: 63px;
+            width: 110px;
+            height: 82px;
             object-fit: cover;
             border-radius: 9px;
             cursor: pointer;
-            opacity: 0.5;
+            opacity: 1;
             flex-shrink: 0;
-            transition: opacity 0.13s, transform 0.13s;
+            transition: transform 0.13s;
             border: 2.5px solid transparent;
             display: block;
         }
 
-        .thumb:hover { opacity: 0.88; transform: translateY(-2px); }
+        .thumb:hover { transform: translateY(-2px); }
 
         .thumb.aktiv {
-            opacity: 1;
             border-color: #4caf50;
             transform: translateY(-2px);
+        }
+
+        @media (max-width: 600px) {
+            .thumb { width: 90px; height: 67px; }
         }
 
         .tom-melding {
@@ -294,6 +296,14 @@
         }
 
         @keyframes spin { to { transform: rotate(360deg); } }
+
+        .filmstripe.dragging {
+            cursor: grabbing;
+            scroll-behavior: auto;
+            user-select: none;
+        }
+
+        .filmstripe { cursor: grab; }
     </style>
 </head>
 <body>
@@ -334,22 +344,23 @@
             </button>
         </div>
 
-        <div class="kontroller">
-            <div class="nav-gruppe">
-                <button class="btn" onclick="forrige()" id="btn-forrige">&#8592;</button>
-                <span class="teller" id="teller">– / –</span>
-                <button class="btn" onclick="neste()" id="btn-neste">&#8594;</button>
-            </div>
-            <button class="btn-capture" id="btn-ta" onclick="taBilde()">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-                    <circle cx="12" cy="13" r="4"/>
-                </svg>
-                Ta bilde
-            </button>
-        </div>
-        <p id="status"></p>
     </div>
+
+    <div class="kontroller">
+        <div class="nav-gruppe">
+            <button class="btn" onclick="forrige()" id="btn-forrige">&#8592;</button>
+            <span class="teller" id="teller">– / –</span>
+            <button class="btn" onclick="neste()" id="btn-neste">&#8594;</button>
+        </div>
+        <button class="btn-capture" id="btn-ta" onclick="taBilde()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                <circle cx="12" cy="13" r="4"/>
+            </svg>
+            Ta bilde
+        </button>
+    </div>
+    <p id="status"></p>
 
     <div class="tidslinje">
         <div class="tab-bar">
@@ -501,12 +512,16 @@
                 if (idx !== -1) visBilde(idx);
             });
             img.addEventListener('mouseenter', e => {
+                if (window.matchMedia('(hover: none)').matches) return;
                 previewImg.src         = b.download_url;
                 previewTid.textContent = formatTid(b.name);
                 preview.style.display  = 'block';
                 plasserPreview(e);
             });
-            img.addEventListener('mousemove', plasserPreview);
+            img.addEventListener('mousemove', e => {
+                if (window.matchMedia('(hover: none)').matches) return;
+                plasserPreview(e);
+            });
             img.addEventListener('mouseleave', () => { preview.style.display = 'none'; });
 
             strip.appendChild(img);
@@ -544,6 +559,38 @@
         btn.disabled  = false;
         btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> Ta bilde`;
     }
+
+    // ── Drag-to-scroll på filmstripe ────────────────────────
+    const stripe   = document.getElementById('filmstripe');
+    let dragActive = false;
+    let dragStartX = 0;
+    let scrollStart = 0;
+    let dragMoved  = false;
+
+    stripe.addEventListener('mousedown', e => {
+        dragActive  = true;
+        dragMoved   = false;
+        dragStartX  = e.pageX;
+        scrollStart = stripe.scrollLeft;
+        stripe.classList.add('dragging');
+    });
+
+    window.addEventListener('mousemove', e => {
+        if (!dragActive) return;
+        const delta = e.pageX - dragStartX;
+        if (Math.abs(delta) > 4) dragMoved = true;
+        stripe.scrollLeft = scrollStart - delta;
+    });
+
+    window.addEventListener('mouseup', () => {
+        dragActive = false;
+        stripe.classList.remove('dragging');
+    });
+
+    // Hindre klikk på thumbnail hvis brukeren drog
+    stripe.addEventListener('click', e => {
+        if (dragMoved) e.stopImmediatePropagation();
+    }, true);
 
     hentBilder();
     hentFavoritter();
