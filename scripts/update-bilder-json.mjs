@@ -7,8 +7,11 @@ const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, '..');
 const manifestPath = path.join(repoRoot, 'bilder.json');
 const filteredManifestPath = path.join(repoRoot, 'bilder-filtrert.json');
+const galleryDirPath = path.join(repoRoot, 'galleri');
+const galleryManifestPath = path.join(repoRoot, 'galleri.json');
 
 const IMAGE_PATTERN = /^bilde_.*\.jpg$/i;
+const GALLERY_IMAGE_PATTERN = /\.(jpg|jpeg|png|webp)$/i;
 const MAX_DUPLICATE_GAP_MINUTES = 20;
 const MIN_KEEP_INTERVAL_MINUTES = 40;
 const MAX_SIZE_DELTA_BYTES = 14_000;
@@ -83,12 +86,30 @@ async function buildManifest() {
 
   const manifest = images.map(({ name, download_url }) => ({ name, download_url }));
   const filteredManifest = buildFilteredManifest(images);
+  let galleryManifest = [];
+
+  try {
+    const galleryEntries = await fs.readdir(galleryDirPath, { withFileTypes: true });
+    galleryManifest = galleryEntries
+      .filter((entry) => entry.isFile() && GALLERY_IMAGE_PATTERN.test(entry.name))
+      .map((entry) => ({
+        name: entry.name,
+        download_url: `galleri/${entry.name}`,
+      }))
+      .sort((a, b) => a.name.localeCompare(b.name, 'en'));
+  } catch (error) {
+    if (error && error.code !== 'ENOENT') {
+      throw error;
+    }
+  }
 
   await fs.writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
   await fs.writeFile(filteredManifestPath, `${JSON.stringify(filteredManifest, null, 2)}\n`, 'utf8');
+  await fs.writeFile(galleryManifestPath, `${JSON.stringify(galleryManifest, null, 2)}\n`, 'utf8');
 
   console.log(`Updated bilder.json with ${manifest.length} images.`);
   console.log(`Updated bilder-filtrert.json with ${filteredManifest.length} images.`);
+  console.log(`Updated galleri.json with ${galleryManifest.length} images.`);
 }
 
 buildManifest().catch((error) => {
