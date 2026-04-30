@@ -123,25 +123,26 @@
 
             .vaer-widget {
                 margin-left: 0;
-                width: 100%;
+                width: auto;
+                max-width: 238px;
                 min-width: 0;
-                padding: 10px 12px;
-                border-radius: 16px;
-                gap: 10px;
+                padding: 8px 10px;
+                border-radius: 14px;
+                gap: 8px;
             }
 
             .vaer-ikon {
-                width: 28px;
-                height: 28px;
-                border-radius: 10px;
-                font-size: 1rem;
+                width: 24px;
+                height: 24px;
+                border-radius: 8px;
+                font-size: 0.92rem;
             }
 
             .vaer-innhold {
                 flex-direction: row;
                 align-items: center;
-                gap: 8px;
-                width: 100%;
+                gap: 6px;
+                width: auto;
                 min-width: 0;
             }
 
@@ -150,13 +151,13 @@
             }
 
             .vaer-temp {
-                font-size: 0.95rem;
+                font-size: 0.88rem;
                 white-space: nowrap;
             }
 
             .vaer-meta {
-                font-size: 0.76rem;
-                flex: 1;
+                font-size: 0.72rem;
+                flex: 0 1 auto;
             }
         }
 
@@ -1195,6 +1196,7 @@
     let aktivTab   = 'tidslinje';
     let captureTimer = null;
     let captureCountdown = null;
+    let captureRunId = 0;
     let thumbObserver = null;
 
     const preview    = document.getElementById('forhåndsvisning');
@@ -1247,14 +1249,10 @@
                 || '';
             const temp = Math.round(details.air_temperature);
             const wind = Math.round(details.wind_speed);
-            const oppdatert = new Date(no.time).toLocaleTimeString('nb-NO', {
-                hour: '2-digit',
-                minute: '2-digit'
-            });
 
             vaerIkon.textContent = vaerEmoji(symbol);
             vaerTemp.textContent = `${temp}\u00B0C`;
-            vaerMeta.textContent = `${vaerTekst(symbol)} \u2022 vind ${wind} m/s \u2022 ${oppdatert}`;
+            vaerMeta.textContent = `${vaerTekst(symbol)} \u2022 vind ${wind} m/s`;
         } catch (e) {
             vaerIkon.textContent = '\uD83C\uDF26\uFE0F';
             vaerTemp.textContent = 'Vær utilgjengelig';
@@ -1368,6 +1366,90 @@
                 stoppCaptureFremdrift();
             }, 1200);
             captureTimer = null;
+        }, varighetSek * 1000);
+    }
+
+    async function ventPaaNyttBilde(forigeNyaste, runId, maksForsok = 6, intervallMs = 4000) {
+        for (let forsok = 0; forsok < maksForsok; forsok += 1) {
+            if (runId !== captureRunId) return false;
+
+            await hentBilder();
+
+            if (!forigeNyaste || bilder[0]?.name !== forigeNyaste) {
+                return true;
+            }
+
+            if (forsok < maksForsok - 1) {
+                captureFremdriftTekst.textContent = `Ser etter nytt bilde… (${forsok + 2}/${maksForsok})`;
+                await new Promise((resolve) => {
+                    captureTimer = setTimeout(resolve, intervallMs);
+                });
+                captureTimer = null;
+            }
+        }
+
+        return false;
+    }
+
+    function stoppCaptureFremdrift() {
+        captureRunId += 1;
+        if (captureTimer) {
+            clearTimeout(captureTimer);
+            captureTimer = null;
+        }
+        if (captureCountdown) {
+            clearInterval(captureCountdown);
+            captureCountdown = null;
+        }
+        captureFremdrift.classList.remove('aktiv');
+        captureFremdriftFill.style.width = '0%';
+    }
+
+    function startCaptureFremdrift(varighetSek = 35, forigeNyaste = bilder[0]?.name) {
+        stoppCaptureFremdrift();
+        const runId = captureRunId;
+        const startTid = Date.now();
+        const sluttTid = startTid + (varighetSek * 1000);
+
+        captureFremdrift.classList.add('aktiv');
+        captureFremdriftTekst.textContent = 'Nytt bilde blir klart…';
+        captureFremdriftTid.textContent = `${varighetSek}s`;
+        captureFremdriftFill.style.width = '0%';
+
+        captureCountdown = setInterval(() => {
+            const no = Date.now();
+            const progresjon = Math.min(1, (no - startTid) / (varighetSek * 1000));
+            const gjenstaarMs = Math.max(0, sluttTid - no);
+            captureFremdriftFill.style.width = `${progresjon * 100}%`;
+            captureFremdriftTid.textContent = `${Math.ceil(gjenstaarMs / 1000)}s`;
+        }, 200);
+
+        captureTimer = setTimeout(async () => {
+            if (runId !== captureRunId) return;
+            if (captureCountdown) {
+                clearInterval(captureCountdown);
+                captureCountdown = null;
+            }
+
+            captureFremdriftFill.style.width = '100%';
+            captureFremdriftTekst.textContent = 'Oppdaterer bildene…';
+            captureFremdriftTid.textContent = '0s';
+            captureTimer = null;
+
+            const fannNyttBilde = await ventPaaNyttBilde(forigeNyaste, runId);
+            if (runId !== captureRunId) return;
+
+            document.getElementById('status').textContent = fannNyttBilde
+                ? 'Nytt bilde hentet inn.'
+                : 'Fant ikke nytt bilde ennå. Prøv igjen om litt.';
+            captureFremdriftTekst.textContent = fannNyttBilde
+                ? 'Nytt bilde klart'
+                : 'Ingen nytt bilde funnet ennå';
+
+            captureTimer = setTimeout(() => {
+                if (runId !== captureRunId) return;
+                stoppCaptureFremdrift();
+            }, 1400);
         }, varighetSek * 1000);
     }
 
@@ -1565,6 +1647,7 @@
     async function taBilde() {
         const btn    = document.getElementById('btn-ta');
         const status = document.getElementById('status');
+        const forigeNyaste = bilder[0]?.name;
         btn.disabled  = true;
         btn.innerHTML = '<span class="spinner"></span><span class="btn-capture-tekst">Tar bilde…</span>';
         status.textContent = '';
@@ -1573,7 +1656,7 @@
             const data = await resp.json();
             if (data.success) {
                 status.textContent = 'Bilde tas nå. Oppdaterer automatisk om 35 sekunder.';
-                startCaptureFremdrift(35);
+                startCaptureFremdrift(35, forigeNyaste);
             } else {
                 status.textContent = 'Feil: ' + data.error;
             }
