@@ -38,6 +38,7 @@
         .side-tittel-wrapper {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 14px;
             margin-bottom: 8px;
             padding: 18px 20px 0;
@@ -59,6 +60,7 @@
 
         .vaer-widget {
             margin-left: auto;
+            margin-right: auto;
             min-width: 220px;
             padding: 14px 16px;
             border-radius: 20px;
@@ -67,6 +69,7 @@
             box-shadow: var(--shadow-soft);
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 12px;
         }
 
@@ -87,6 +90,7 @@
             flex-direction: column;
             gap: 2px;
             min-width: 0;
+            text-align: center;
         }
 
         .vaer-sted {
@@ -122,28 +126,30 @@
             }
 
             .vaer-widget {
-                margin-left: 0;
+                margin-left: auto;
+                margin-right: auto;
                 width: auto;
-                max-width: 238px;
+                max-width: 212px;
                 min-width: 0;
-                padding: 8px 10px;
+                padding: 7px 9px;
                 border-radius: 14px;
-                gap: 8px;
+                gap: 7px;
             }
 
             .vaer-ikon {
-                width: 24px;
-                height: 24px;
+                width: 22px;
+                height: 22px;
                 border-radius: 8px;
-                font-size: 0.92rem;
+                font-size: 0.84rem;
             }
 
             .vaer-innhold {
                 flex-direction: row;
                 align-items: center;
-                gap: 6px;
+                gap: 5px;
                 width: auto;
                 min-width: 0;
+                justify-content: center;
             }
 
             .vaer-sted {
@@ -151,12 +157,12 @@
             }
 
             .vaer-temp {
-                font-size: 0.88rem;
+                font-size: 0.82rem;
                 white-space: nowrap;
             }
 
             .vaer-meta {
-                font-size: 0.72rem;
+                font-size: 0.68rem;
                 flex: 0 1 auto;
             }
         }
@@ -815,6 +821,14 @@
         .beboer-illustrasjon {
             flex-shrink: 0;
             margin-top: 4px;
+            animation: else-flyr 2.8s ease-in-out infinite;
+        }
+
+        @keyframes else-flyr {
+            0%, 100% { transform: translateY(0) translateX(0) rotate(-3deg); }
+            25% { transform: translateY(-3px) translateX(1px) rotate(-1deg); }
+            50% { transform: translateY(-6px) translateX(0) rotate(2deg); }
+            75% { transform: translateY(-3px) translateX(-1px) rotate(0deg); }
         }
 
         .beboer-innhold {
@@ -885,11 +899,20 @@
         }
 
         .highfive-teller {
-            font-size: 0.82rem;
-            color: rgba(255,255,255,0.45);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border-radius: 999px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.08));
+            border: 1px solid rgba(255,255,255,0.12);
+            color: rgba(255,255,255,0.82);
+            font-size: 0.86rem;
+            font-weight: 600;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
         }
 
-        .highfive-teller span { font-weight: 600; color: rgba(255,255,255,0.75); }
+        .highfive-teller span { font-weight: 700; color: #ffffff; }
 
         /* Meis-animasjon */
         .meis-wrapper {
@@ -960,8 +983,8 @@
         }
 
         .highfive-teller span {
-            font-weight: 600;
-            color: #888;
+            font-weight: 700;
+            color: #ffffff;
         }
 
         .filmstripe.dragging {
