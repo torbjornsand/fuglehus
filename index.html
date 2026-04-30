@@ -1307,9 +1307,23 @@
             let files = [];
 
             try {
-                const lokalResp = await fetch('./bilder.json', { cache: 'no-store' });
-                if (!lokalResp.ok) throw new Error(`lokal-${lokalResp.status}`);
-                files = await lokalResp.json();
+                const manifestUrls = ['./bilder-filtrert.json', './bilder.json'];
+                let sisteFeil = null;
+
+                for (const manifestUrl of manifestUrls) {
+                    try {
+                        const lokalResp = await fetch(manifestUrl, { cache: 'no-store' });
+                        if (!lokalResp.ok) throw new Error(`lokal-${lokalResp.status}`);
+                        files = await lokalResp.json();
+                        if (Array.isArray(files) && files.length > 0) break;
+                    } catch (feil) {
+                        sisteFeil = feil;
+                    }
+                }
+
+                if (!Array.isArray(files) || files.length === 0) {
+                    throw sisteFeil || new Error('lokal-manifest-mangler');
+                }
             } catch (lokalFeil) {
                 const githubResp = await fetch('https://api.github.com/repos/torbjornsand/fuglehus/contents/');
                 if (!githubResp.ok) throw new Error(`github-${githubResp.status}`);
