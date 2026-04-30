@@ -542,15 +542,25 @@
             display: flex;
             gap: 10px;
             overflow-x: auto;
-            padding: 4px 2px 8px;
+            padding: 4px 2px 12px;
             scroll-behavior: smooth;
-            scrollbar-width: thin;
-            scrollbar-color: #ccc9c2 transparent;
+            scrollbar-width: auto;
+            scrollbar-color: #9db8b3 rgba(15, 155, 142, 0.08);
         }
 
-        .filmstripe::-webkit-scrollbar { height: 4px; }
-        .filmstripe::-webkit-scrollbar-track { background: transparent; }
-        .filmstripe::-webkit-scrollbar-thumb { background: #d0ccc6; border-radius: 4px; }
+        .filmstripe::-webkit-scrollbar { height: 10px; }
+        .filmstripe::-webkit-scrollbar-track {
+            background: rgba(15, 155, 142, 0.08);
+            border-radius: 999px;
+        }
+        .filmstripe::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #a8c7c0, #7fa7a0);
+            border-radius: 999px;
+            border: 2px solid rgba(255,255,255,0.92);
+        }
+        .filmstripe::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #8ebbb3, #5f8f87);
+        }
 
         .thumb {
             width: 122px;
@@ -653,6 +663,14 @@
             .tidslinje {
                 margin-top: 14px;
                 padding: 12px;
+            }
+
+            .filmstripe {
+                padding-bottom: 14px;
+            }
+
+            .filmstripe::-webkit-scrollbar {
+                height: 12px;
             }
         }
 
@@ -1344,7 +1362,7 @@
             if (bilder.length > 0) {
                 visFilmstripe();
                 try {
-                    visBilde(0, 'end');
+                    visBilde(0, 'end', 'auto');
                     document.getElementById('status').textContent = '';
                 } catch (visFeil) {
                     console.error(visFeil);
@@ -1397,7 +1415,7 @@
         document.getElementById('teller-favoritter').textContent = favoritter.size;
     }
 
-    function visBilde(index, inline = 'center') {
+    function visBilde(index, inline = 'center', behavior = 'smooth') {
         gjeldende = index;
         const b   = bilder[index];
         visBildeLaster();
@@ -1419,7 +1437,7 @@
         const aktiv = document.querySelector('.thumb.aktiv');
         if (aktiv) {
             try {
-                aktiv.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline });
+                aktiv.scrollIntoView({ behavior, block: 'nearest', inline });
             } catch {
                 aktiv.scrollIntoView();
             }
@@ -1480,7 +1498,7 @@
         document.getElementById('tab-favoritter').classList.toggle('aktiv', tab === 'favoritter');
         visFilmstripe();
         if (bilder.length > 0) {
-            visBilde(gjeldende, gjeldende === 0 && tab === 'tidslinje' ? 'end' : 'center');
+            visBilde(gjeldende, gjeldende === 0 && tab === 'tidslinje' ? 'end' : 'center', 'auto');
         }
     }
 
