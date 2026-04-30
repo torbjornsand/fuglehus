@@ -3,64 +3,277 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <title>Fuglehus – Karstenvegen 6C</title>
     <style>
+        :root {
+            --surface-strong: #ffffff;
+            --surface-muted: #e6fbf8;
+            --text: #163034;
+            --text-soft: #406268;
+            --text-faint: #6f8e94;
+            --line: rgba(22, 84, 92, 0.12);
+            --shadow: 0 18px 50px rgba(11, 71, 79, 0.14);
+            --shadow-soft: 0 10px 30px rgba(11, 71, 79, 0.08);
+            --accent: #0f9b8e;
+            --accent-strong: #0b766d;
+            --accent-bright: #ff8f5a;
+            --panel-dark: #12363c;
+        }
+
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            background: #edeae4;
-            color: #2a2a2a;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(255, 143, 90, 0.18), transparent 28%),
+                radial-gradient(circle at top right, rgba(15, 155, 142, 0.22), transparent 32%),
+                linear-gradient(180deg, #f6fffe 0%, #edf8f7 48%, #e5f1f0 100%);
+            color: var(--text);
+            font-family: "Instrument Sans", system-ui, sans-serif;
             min-height: 100vh;
         }
 
         .side-tittel-wrapper {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 6px;
-            padding: 0 2px;
+            gap: 14px;
+            margin-bottom: 8px;
+            padding: 18px 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .side-tittel-blokk {
+            display: flex;
+            align-items: center;
+            gap: 14px;
         }
 
         .side-tittel {
-            font-size: 1.5rem;
+            font-size: clamp(1.9rem, 3vw, 2.8rem);
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: -0.04em;
+        }
+
+        .vaer-widget {
+            margin-left: auto;
+            min-width: 220px;
+            padding: 14px 16px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.88), rgba(230,251,248,0.92));
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow-soft);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .vaer-ikon {
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
+            background: rgba(15, 155, 142, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.35rem;
+            flex-shrink: 0;
+        }
+
+        .vaer-innhold {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 0;
+        }
+
+        .vaer-sted {
+            font-size: 0.8rem;
+            color: var(--text-faint);
             font-weight: 600;
-            color: #2a2a2a;
-            letter-spacing: -0.3px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .vaer-temp {
+            font-size: 1.25rem;
+            color: var(--text);
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .vaer-meta {
+            font-size: 0.82rem;
+            color: var(--text-soft);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        @media (max-width: 700px) {
+            .side-tittel-wrapper {
+                align-items: stretch;
+            }
+
+            .side-tittel-blokk {
+                width: 100%;
+            }
+
+            .vaer-widget {
+                margin-left: 0;
+                width: 100%;
+                min-width: 0;
+                padding: 10px 12px;
+                border-radius: 16px;
+                gap: 10px;
+            }
+
+            .vaer-ikon {
+                width: 28px;
+                height: 28px;
+                border-radius: 10px;
+                font-size: 1rem;
+            }
+
+            .vaer-innhold {
+                flex-direction: row;
+                align-items: center;
+                gap: 8px;
+                width: 100%;
+                min-width: 0;
+            }
+
+            .vaer-sted {
+                display: none;
+            }
+
+            .vaer-temp {
+                font-size: 0.95rem;
+                white-space: nowrap;
+            }
+
+            .vaer-meta {
+                font-size: 0.76rem;
+                flex: 1;
+            }
         }
 
         .side-undertittel {
-            font-size: 0.82rem;
-            color: #aaa;
-            margin-bottom: 16px;
-            padding: 0 4px;
+            font-size: 0.95rem;
+            color: var(--text-soft);
+            padding: 16px 20px 0;
+            width: 100%;
+            line-height: 1.5;
+            text-align: center;
         }
 
         .main {
-            max-width: 920px;
+            max-width: 1080px;
             margin: 0 auto;
-            padding: 28px 16px 48px;
+            padding: 28px 18px 56px;
         }
 
         /* ── Kortdesign ── */
 
         .bilde-kort {
-            background: #fff;
-            border-radius: 22px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,253,248,0.82));
+            border: 1px solid var(--line);
+            border-radius: 30px;
             overflow: hidden;
-            box-shadow: 0 2px 16px rgba(0,0,0,0.07), 0 8px 40px rgba(0,0,0,0.05);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(14px);
         }
 
         .bilde-wrapper {
             position: relative;
-            background: #111;
+            background: transparent;
+            padding: 18px;
+            aspect-ratio: 16 / 9;
         }
 
         .bilde-wrapper img {
             width: 100%;
+            height: 100%;
             display: block;
-            max-height: 540px;
             object-fit: contain;
+            border-radius: 22px;
+            box-shadow: none;
+        }
+
+        .bilde-laster {
+            position: absolute;
+            inset: 18px;
+            border-radius: 22px;
+            background: linear-gradient(180deg, rgba(246,255,254,0.94), rgba(226,246,243,0.92));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .bilde-laster.synlig {
+            opacity: 1;
+        }
+
+        .bilde-laster-innhold {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            color: var(--accent-strong);
+            text-align: center;
+        }
+
+        .bilde-laster-fugl {
+            width: 92px;
+            height: 44px;
+            position: relative;
+            overflow: visible;
+        }
+
+        .bilde-laster-fugl svg {
+            width: 44px;
+            height: 44px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            animation: fugl-flyr 1.55s ease-in-out infinite;
+        }
+
+        .bilde-laster-tekst {
+            font-size: 0.88rem;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+        }
+
+        @keyframes fugl-flyr {
+            0%   { transform: translateX(0) translateY(4px) rotate(-4deg); }
+            50%  { transform: translateX(42px) translateY(-4px) rotate(3deg); }
+            100% { transform: translateX(0) translateY(4px) rotate(-4deg); }
+        }
+
+        @keyframes fugl-vinge-v {
+            0%, 100% { transform: rotate(-12deg); }
+            50% { transform: rotate(-36deg); }
+        }
+
+        @keyframes fugl-vinge-h {
+            0%, 100% { transform: rotate(12deg); }
+            50% { transform: rotate(36deg); }
+        }
+
+        .bilde-laster-fugl .vinge-v {
+            transform-origin: 14px 26px;
+            animation: fugl-vinge-v 0.42s ease-in-out infinite;
+        }
+
+        .bilde-laster-fugl .vinge-h {
+            transform-origin: 30px 26px;
+            animation: fugl-vinge-h 0.42s ease-in-out infinite;
         }
 
 
@@ -68,19 +281,25 @@
 
         .btn-hjerte {
             position: absolute;
-            top: 12px; right: 12px;
-            background: rgba(0,0,0,0.32);
-            border: none;
+            top: 18px; right: 18px;
+            background: rgba(255,255,255,0.14);
+            border: 1px solid rgba(255,255,255,0.18);
             border-radius: 50%;
-            width: 40px; height: 40px;
+            width: 46px; height: 46px;
             display: flex; align-items: center; justify-content: center;
             cursor: pointer;
-            transition: background 0.15s, transform 0.12s;
+            transition: background 0.15s, transform 0.12s, border-color 0.15s;
             color: rgba(255,255,255,0.85);
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(8px);
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .btn-hjerte:hover { background: rgba(0,0,0,0.52); transform: scale(1.1); }
+        .btn-hjerte:hover {
+            background: rgba(255,255,255,0.22);
+            border-color: rgba(255,255,255,0.36);
+            transform: scale(1.08);
+        }
         .btn-hjerte:active { transform: scale(0.95); }
 
         .btn-hjerte svg { transition: fill 0.15s, stroke 0.15s; }
@@ -101,40 +320,67 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 12px 4px;
-            gap: 12px;
-            flex-wrap: wrap;
+            padding: 18px 20px 22px;
+            gap: 16px;
+            flex-wrap: nowrap;
         }
 
         .nav-gruppe {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 10px;
+            background: var(--surface-muted);
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            padding: 8px 10px;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
+            flex: 1;
+            min-width: 0;
         }
 
-        .btn-nav {
-            width: 40px;
-            height: 40px;
+        .btn.btn-nav {
+            width: 48px;
+            height: 48px;
             padding: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 12px;
-            background: #e8e6e1;
-            color: #333;
+            border-radius: 50%;
+            background: linear-gradient(180deg, #0f9b8e, #0b766d);
+            color: #ffffff;
+            border: 1px solid rgba(6, 60, 55, 0.2);
+            box-shadow: 0 12px 24px rgba(11, 118, 109, 0.28);
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .btn-nav:hover { background: #d8d5cf; }
-        .btn-nav:disabled { color: #ccc; background: #f4f3f1; }
+        .btn.btn-nav:hover {
+            background: linear-gradient(180deg, #13ad9e, #0c867b);
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+        .btn.btn-nav:disabled {
+            color: #dbe8e6;
+            background: #94bdb8;
+            border-color: rgba(22, 84, 92, 0.08);
+            box-shadow: none;
+        }
+
+        .btn.btn-nav svg {
+            width: 20px;
+            height: 20px;
+            stroke-width: 3;
+        }
 
         .bilde-tid-tekst {
-            font-size: 0.82rem;
-            color: #999;
-            padding-left: 6px;
+            font-size: 0.9rem;
+            color: var(--text-soft);
+            padding: 0 8px 0 2px;
+            font-family: "Instrument Sans", system-ui, sans-serif;
         }
 
         .btn-refresh {
-            background: #4caf50;
+            background: var(--accent);
             color: #fff;
             border: none;
             border-radius: 8px;
@@ -146,7 +392,7 @@
             vertical-align: middle;
         }
 
-        .btn-refresh:hover { background: #43a047; }
+        .btn-refresh:hover { background: var(--accent-strong); }
 
         .btn {
             background: #f4f3f1;
@@ -156,98 +402,147 @@
             padding: 8px 16px;
             cursor: pointer;
             font-size: 0.9rem;
-            transition: background 0.12s;
+            transition: background 0.12s, transform 0.12s, box-shadow 0.12s;
+            font-family: "Instrument Sans", system-ui, sans-serif;
         }
 
         .btn:hover { background: #ebe9e5; }
         .btn:disabled { color: #ccc; cursor: default; background: #f9f9f8; }
 
         .btn-capture {
-            background: #4caf50;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 100%);
             color: #fff;
-            padding: 9px 20px;
-            border-radius: 10px;
+            padding: 12px 22px;
+            border-radius: 999px;
             border: none;
             cursor: pointer;
-            font-size: 0.87rem;
-            font-weight: 500;
+            font-size: 0.92rem;
+            font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             transition: background 0.12s, transform 0.1s, box-shadow 0.1s;
-            box-shadow: 0 2px 8px rgba(76,175,80,0.25);
+            box-shadow: 0 12px 24px rgba(71, 101, 36, 0.22);
+            font-family: "Instrument Sans", system-ui, sans-serif;
+            min-height: 62px;
+            white-space: nowrap;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .btn-capture:hover {
-            background: #43a047;
+            background: linear-gradient(135deg, #648a39 0%, #41611d 100%);
             transform: translateY(-1px);
-            box-shadow: 0 4px 14px rgba(76,175,80,0.3);
+            box-shadow: 0 16px 30px rgba(71, 101, 36, 0.28);
         }
 
         .btn-capture:active { transform: translateY(0); box-shadow: none; }
         .btn-capture:disabled { background: #ccc; cursor: default; transform: none; box-shadow: none; }
 
         #status {
-            font-size: 0.77rem;
-            color: #aaa;
-            padding: 4px 18px 10px;
+            font-size: 0.8rem;
+            color: var(--text-faint);
+            padding: 0 20px 4px;
             min-height: 22px;
+            font-family: "Instrument Sans", system-ui, sans-serif;
+        }
+
+        .capture-fremdrift {
+            padding: 0 20px 12px;
+            display: none;
+        }
+
+        .capture-fremdrift.aktiv {
+            display: block;
+        }
+
+        .capture-fremdrift-topp {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            font-size: 0.8rem;
+            color: var(--text-soft);
+            margin-bottom: 8px;
+        }
+
+        .capture-fremdrift-bar {
+            width: 100%;
+            height: 8px;
+            border-radius: 999px;
+            overflow: hidden;
+            background: rgba(15, 155, 142, 0.12);
+        }
+
+        .capture-fremdrift-fill {
+            width: 0%;
+            height: 100%;
+            border-radius: inherit;
+            background: linear-gradient(90deg, var(--accent), var(--accent-bright));
+            transition: width 1s linear;
         }
 
         /* ── Tabs + filmstripe ── */
 
         .tidslinje {
-            margin-top: 22px;
+            margin-top: 28px;
+            background: rgba(255,255,255,0.5);
+            border: 1px solid rgba(73, 88, 61, 0.08);
+            border-radius: 26px;
+            padding: 16px;
+            box-shadow: var(--shadow-soft);
+            backdrop-filter: blur(10px);
         }
 
         .tab-bar {
             display: flex;
-            gap: 4px;
-            margin-bottom: 10px;
+            gap: 8px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
         }
 
         .tab {
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 500;
+            padding: 9px 16px;
+            border-radius: 999px;
+            font-size: 0.84rem;
+            font-weight: 600;
             cursor: pointer;
             border: none;
-            background: transparent;
-            color: #aaa;
+            background: rgba(255,255,255,0.45);
+            color: var(--text-faint);
             transition: background 0.12s, color 0.12s;
             display: flex;
             align-items: center;
             gap: 5px;
+            font-family: "Instrument Sans", system-ui, sans-serif;
         }
 
-        .tab:hover { color: #666; }
+        .tab:hover { color: var(--text-soft); }
 
         .tab.aktiv {
-            background: #fff;
-            color: #2a2a2a;
-            box-shadow: 0 1px 6px rgba(0,0,0,0.09);
+            background: linear-gradient(135deg, var(--panel-dark), #31452e);
+            color: #f9f5ed;
+            box-shadow: 0 10px 24px rgba(34, 49, 32, 0.22);
         }
 
         .tab-teller {
-            background: #f0ede8;
-            color: #999;
+            background: rgba(88, 122, 49, 0.12);
+            color: var(--text-soft);
             font-size: 0.7rem;
             border-radius: 10px;
-            padding: 1px 6px;
+            padding: 2px 7px;
             font-weight: 600;
         }
 
         .tab.aktiv .tab-teller {
-            background: #f0ede8;
-            color: #666;
+            background: rgba(255,255,255,0.14);
+            color: rgba(255,255,255,0.82);
         }
 
         .filmstripe {
             display: flex;
-            gap: 6px;
+            gap: 10px;
             overflow-x: auto;
-            padding: 4px 4px 14px;
+            padding: 4px 2px 8px;
             scroll-behavior: smooth;
             scrollbar-width: thin;
             scrollbar-color: #ccc9c2 transparent;
@@ -258,27 +553,107 @@
         .filmstripe::-webkit-scrollbar-thumb { background: #d0ccc6; border-radius: 4px; }
 
         .thumb {
-            width: 110px;
-            height: 82px;
+            width: 122px;
+            height: 90px;
             object-fit: cover;
-            border-radius: 9px;
+            border-radius: 16px;
             cursor: pointer;
             opacity: 1;
             flex-shrink: 0;
-            transition: transform 0.13s;
-            border: 2.5px solid transparent;
+            transition: transform 0.13s, box-shadow 0.13s, border-color 0.13s;
+            border: 2px solid transparent;
             display: block;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            background: linear-gradient(135deg, rgba(15,155,142,0.08), rgba(255,255,255,0.92));
         }
 
-        .thumb:hover { transform: translateY(-2px); }
+        .thumb:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 24px rgba(0,0,0,0.12);
+        }
+
+        .thumb.laster {
+            opacity: 0.72;
+        }
 
         .thumb.aktiv {
-            border-color: #4caf50;
-            transform: translateY(-2px);
+            border-color: var(--accent);
+            transform: translateY(-3px);
         }
 
         @media (max-width: 600px) {
-            .thumb { width: 90px; height: 67px; }
+            .thumb { width: 92px; height: 68px; }
+        }
+
+        @media (max-width: 640px) {
+            .main {
+                padding: 20px 14px 44px;
+            }
+
+            .side-undertittel {
+                padding: 0 12px 14px;
+                font-size: 0.86rem;
+            }
+
+            .bilde-wrapper {
+                padding: 0;
+            }
+
+            .bilde-wrapper img {
+                border-radius: 0;
+            }
+
+            .bilde-laster {
+                inset: 0;
+                border-radius: 0;
+            }
+
+            .kontroller {
+                padding: 14px 12px 14px;
+                gap: 10px;
+            }
+
+            .nav-gruppe {
+                padding: 6px 8px;
+                gap: 8px;
+            }
+
+            .btn.btn-nav {
+                width: 44px;
+                height: 44px;
+            }
+
+            .btn-capture {
+                min-height: 54px;
+                min-width: 54px;
+                padding: 0 16px;
+                gap: 0;
+                justify-content: center;
+                flex-shrink: 0;
+            }
+
+            .btn-capture-tekst {
+                display: none;
+            }
+
+            .bilde-tid-tekst {
+                font-size: 0.82rem;
+                padding-right: 2px;
+            }
+
+            .capture-fremdrift {
+                padding: 0 12px 8px;
+            }
+
+            .capture-fremdrift-topp {
+                font-size: 0.75rem;
+                margin-bottom: 6px;
+            }
+
+            .tidslinje {
+                margin-top: 14px;
+                padding: 12px;
+            }
         }
 
         .tom-melding {
@@ -415,7 +790,7 @@
             gap: 5px;
             margin-top: 4px;
             font-size: 0.82rem;
-            color: #4caf50;
+            color: var(--accent-strong);
             text-decoration: none;
             font-weight: 500;
         }
@@ -430,7 +805,7 @@
 
         .highfive-kort {
             flex: 1;
-            background: #1a2540;
+            background: linear-gradient(160deg, #12363c 0%, #0f636c 100%);
             border-radius: 22px;
             padding: 28px 24px;
             box-shadow: 0 2px 16px rgba(0,0,0,0.12), 0 8px 40px rgba(0,0,0,0.1);
@@ -541,37 +916,62 @@
 
 <div class="main">
     <div class="side-tittel-wrapper">
-        <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M29 22 L42 17 L42 31 Z" fill="#3d6018"/>
-            <ellipse cx="23" cy="23" rx="10" ry="7" fill="#6fa82a" transform="rotate(-5 23 23)"/>
-            <ellipse cx="18" cy="24" rx="10" ry="8" fill="#f5c820"/>
-            <ellipse cx="17.5" cy="27" rx="2.5" ry="7" fill="#111"/>
-            <circle cx="9" cy="16" r="8" fill="#111"/>
-            <ellipse cx="7.5" cy="17.5" rx="4.5" ry="3.5" fill="#f0f0f0"/>
-            <circle cx="8" cy="14" r="1.9" fill="#f0f0f0"/>
-            <circle cx="8.6" cy="14" r="0.95" fill="#111"/>
-            <path d="M1.5 15.5 L1.5 17.5 L6.5 16.5 Z" fill="#c8900a"/>
-            <line x1="14" y1="31" x2="12" y2="38" stroke="#c8900a" stroke-width="1.5" stroke-linecap="round"/>
-            <line x1="12" y1="38" x2="9"  y2="38" stroke="#c8900a" stroke-width="1.5" stroke-linecap="round"/>
-            <line x1="12" y1="38" x2="13" y2="40" stroke="#c8900a" stroke-width="1.5" stroke-linecap="round"/>
-            <line x1="21" y1="32" x2="23" y2="38" stroke="#c8900a" stroke-width="1.5" stroke-linecap="round"/>
-            <line x1="23" y1="38" x2="20" y2="38" stroke="#c8900a" stroke-width="1.5" stroke-linecap="round"/>
-            <line x1="23" y1="38" x2="25" y2="40" stroke="#c8900a" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
-        <h1 class="side-tittel">Karstenvegen 6 C</h1>
+        <div class="side-tittel-blokk">
+            <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M29 22 L42 17 L42 31 Z" fill="#0b766d"/>
+                <ellipse cx="23" cy="23" rx="10" ry="7" fill="#14b8a6" transform="rotate(-5 23 23)"/>
+                <ellipse cx="18" cy="24" rx="10" ry="8" fill="#ffbf69"/>
+                <ellipse cx="17.5" cy="27" rx="2.5" ry="7" fill="#111"/>
+                <circle cx="9" cy="16" r="8" fill="#111"/>
+                <ellipse cx="7.5" cy="17.5" rx="4.5" ry="3.5" fill="#f0f0f0"/>
+                <circle cx="8" cy="14" r="1.9" fill="#f0f0f0"/>
+                <circle cx="8.6" cy="14" r="0.95" fill="#111"/>
+                <path d="M1.5 15.5 L1.5 17.5 L6.5 16.5 Z" fill="#ff8f5a"/>
+                <line x1="14" y1="31" x2="12" y2="38" stroke="#ff8f5a" stroke-width="1.5" stroke-linecap="round"/>
+                <line x1="12" y1="38" x2="9"  y2="38" stroke="#ff8f5a" stroke-width="1.5" stroke-linecap="round"/>
+                <line x1="12" y1="38" x2="13" y2="40" stroke="#ff8f5a" stroke-width="1.5" stroke-linecap="round"/>
+                <line x1="21" y1="32" x2="23" y2="38" stroke="#ff8f5a" stroke-width="1.5" stroke-linecap="round"/>
+                <line x1="23" y1="38" x2="20" y2="38" stroke="#ff8f5a" stroke-width="1.5" stroke-linecap="round"/>
+                <line x1="23" y1="38" x2="25" y2="40" stroke="#ff8f5a" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <h1 class="side-tittel">Karstenvegen 6 C</h1>
+        </div>
+        <aside class="vaer-widget" aria-label="Været i Ålesund akkurat nå">
+            <div class="vaer-ikon" id="vaer-ikon">⛅</div>
+            <div class="vaer-innhold">
+                <div class="vaer-sted">Ålesund nå</div>
+                <div class="vaer-temp" id="vaer-temp">Laster…</div>
+                <div class="vaer-meta" id="vaer-meta">Henter værdata</div>
+            </div>
+        </aside>
     </div>
-    <p class="side-undertittel">Automatisk bilde hvert 10. minutt, kl. 06–21</p>
-
     <div class="bilde-kort">
         <div class="bilde-wrapper">
             <img id="hovudbilde" src="" alt="Fuglehus">
+            <div class="bilde-laster synlig" id="bilde-laster" aria-live="polite">
+                <div class="bilde-laster-innhold">
+                    <div class="bilde-laster-fugl" aria-hidden="true">
+                        <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <ellipse class="vinge-v" cx="13" cy="26" rx="10" ry="6.5" fill="#0f9b8e"/>
+                            <ellipse class="vinge-h" cx="31" cy="26" rx="10" ry="6.5" fill="#0b766d"/>
+                            <ellipse cx="22" cy="26" rx="10" ry="7.5" fill="#ffbf69"/>
+                            <circle cx="21" cy="19" r="6.5" fill="#163034"/>
+                            <circle cx="19.5" cy="18.5" r="1.6" fill="#ffffff"/>
+                            <circle cx="19.8" cy="18.5" r="0.8" fill="#163034"/>
+                            <path d="M13 20 L8 22.5 L13 24 Z" fill="#ff8f5a"/>
+                            <path d="M31 25 L40 21 L40 29 Z" fill="#0b766d"/>
+                        </svg>
+                    </div>
+                    <div class="bilde-laster-tekst">Henter nytt fuglebilde…</div>
+                </div>
+            </div>
             <button class="btn-hjerte" id="btn-hjerte" onclick="toggleFavoritt()" title="Merk som favoritt">
                 <svg width="18" height="18" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
                 </svg>
             </button>
         </div>
-
+        <p class="side-undertittel">Automatisk bilde hvert 10. minutt, kl. 06–21</p>
     </div>
 
     <div class="kontroller">
@@ -589,10 +989,19 @@
                 <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
                 <circle cx="12" cy="13" r="4"/>
             </svg>
-            Ta bilde
+            <span class="btn-capture-tekst">Ta bilde</span>
         </button>
     </div>
     <p id="status"></p>
+    <div class="capture-fremdrift" id="capture-fremdrift" aria-live="polite">
+        <div class="capture-fremdrift-topp">
+            <span id="capture-fremdrift-tekst">Forbereder nytt bilde…</span>
+            <span id="capture-fremdrift-tid">35s</span>
+        </div>
+        <div class="capture-fremdrift-bar">
+            <div class="capture-fremdrift-fill" id="capture-fremdrift-fill"></div>
+        </div>
+    </div>
 
     <div class="tidslinje">
         <div class="tab-bar">
@@ -709,15 +1118,80 @@
 
 <script>
     const WORKER = 'https://fuglehus.torbjs.workers.dev';
+    const WEATHER_URL = 'https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=62.4722&lon=6.1549';
 
     let bilder     = [];
     let gjeldende  = 0;
     let favoritter = new Set();
     let aktivTab   = 'tidslinje';
+    let captureTimer = null;
+    let captureCountdown = null;
+    let thumbObserver = null;
 
     const preview    = document.getElementById('forhåndsvisning');
     const previewImg = document.getElementById('forhåndsvisning-img');
     const previewTid = document.getElementById('forhåndsvisning-tid');
+    const hovudbilde = document.getElementById('hovudbilde');
+    const bildeLaster = document.getElementById('bilde-laster');
+    const vaerIkon   = document.getElementById('vaer-ikon');
+    const vaerTemp   = document.getElementById('vaer-temp');
+    const vaerMeta   = document.getElementById('vaer-meta');
+    const captureFremdrift = document.getElementById('capture-fremdrift');
+    const captureFremdriftFill = document.getElementById('capture-fremdrift-fill');
+    const captureFremdriftTekst = document.getElementById('capture-fremdrift-tekst');
+    const captureFremdriftTid = document.getElementById('capture-fremdrift-tid');
+
+    function vaerEmoji(symbol) {
+        if (!symbol) return '\u26C5';
+        if (symbol.includes('thunder')) return '\u26C8\uFE0F';
+        if (symbol.includes('snow')) return '\u2744\uFE0F';
+        if (symbol.includes('rain')) return '\uD83C\uDF27\uFE0F';
+        if (symbol.includes('fog')) return '\uD83C\uDF2B\uFE0F';
+        if (symbol.includes('cloudy')) return symbol.includes('partly') ? '\u26C5' : '\u2601\uFE0F';
+        return '\u2600\uFE0F';
+    }
+
+    function vaerTekst(symbol) {
+        if (!symbol) return 'Rolig vær';
+        if (symbol.includes('thunder')) return 'Torden i lufta';
+        if (symbol.includes('snow')) return 'Snø i området';
+        if (symbol.includes('rain')) return 'Regnbyger';
+        if (symbol.includes('fog')) return 'Tåke';
+        if (symbol.includes('cloudy')) return symbol.includes('partly') ? 'Delvis skyet' : 'Skyet';
+        return 'Klart vær';
+    }
+
+    async function hentVaer() {
+        try {
+            const resp = await fetch(WEATHER_URL, {
+                headers: { 'Accept': 'application/json' }
+            });
+            if (!resp.ok) throw new Error('weather');
+            const data = await resp.json();
+            const serie = data?.properties?.timeseries || [];
+            const no = serie.find(entry => new Date(entry.time).getTime() >= Date.now()) || serie[0];
+            const details = no?.data?.instant?.details;
+            if (!details) throw new Error('weather-details');
+
+            const symbol = no?.data?.next_1_hours?.summary?.symbol_code
+                || no?.data?.next_6_hours?.summary?.symbol_code
+                || '';
+            const temp = Math.round(details.air_temperature);
+            const wind = Math.round(details.wind_speed);
+            const oppdatert = new Date(no.time).toLocaleTimeString('nb-NO', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            vaerIkon.textContent = vaerEmoji(symbol);
+            vaerTemp.textContent = `${temp}\u00B0C`;
+            vaerMeta.textContent = `${vaerTekst(symbol)} \u2022 vind ${wind} m/s \u2022 ${oppdatert}`;
+        } catch (e) {
+            vaerIkon.textContent = '\uD83C\uDF26\uFE0F';
+            vaerTemp.textContent = 'Vær utilgjengelig';
+            vaerMeta.textContent = 'Prøv å laste siden på nytt litt senere';
+        }
+    }
 
     function formatTid(navn) {
         const s = navn.replace('bilde_', '').replace('.jpg', '');
@@ -739,17 +1213,131 @@
         preview.style.top  = y + 'px';
     }
 
+    function visBildeLaster() {
+        bildeLaster.classList.add('synlig');
+    }
+
+    function skjulBildeLaster() {
+        bildeLaster.classList.remove('synlig');
+    }
+
+    function settThumbSrc(img) {
+        if (!img || !img.dataset.src || img.dataset.lasta === '1') return;
+        img.src = img.dataset.src;
+        img.dataset.lasta = '1';
+        img.classList.remove('laster');
+    }
+
+    function observerThumbs() {
+        if (thumbObserver) {
+            thumbObserver.disconnect();
+            thumbObserver = null;
+        }
+
+        if (!('IntersectionObserver' in window)) {
+            document.querySelectorAll('.thumb').forEach(settThumbSrc);
+            return;
+        }
+
+        thumbObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                settThumbSrc(entry.target);
+                thumbObserver.unobserve(entry.target);
+            });
+        }, {
+            root: document.getElementById('filmstripe'),
+            rootMargin: '120px',
+            threshold: 0.01,
+        });
+
+        document.querySelectorAll('.thumb').forEach((img) => {
+            thumbObserver.observe(img);
+        });
+    }
+
+    function stoppCaptureFremdrift() {
+        if (captureTimer) {
+            clearTimeout(captureTimer);
+            captureTimer = null;
+        }
+        if (captureCountdown) {
+            clearInterval(captureCountdown);
+            captureCountdown = null;
+        }
+        captureFremdrift.classList.remove('aktiv');
+        captureFremdriftFill.style.width = '0%';
+    }
+
+    function startCaptureFremdrift(varighetSek = 35) {
+        stoppCaptureFremdrift();
+        let gjenstaar = varighetSek;
+        captureFremdrift.classList.add('aktiv');
+        captureFremdriftTekst.textContent = 'Nytt bilde blir klart…';
+        captureFremdriftTid.textContent = `${gjenstaar}s`;
+        captureFremdriftFill.style.width = '0%';
+
+        requestAnimationFrame(() => {
+            captureFremdriftFill.style.width = '100%';
+        });
+
+        captureCountdown = setInterval(() => {
+            gjenstaar -= 1;
+            captureFremdriftTid.textContent = `${Math.max(gjenstaar, 0)}s`;
+        }, 1000);
+
+        captureTimer = setTimeout(async () => {
+            if (captureCountdown) {
+                clearInterval(captureCountdown);
+                captureCountdown = null;
+            }
+            captureFremdriftTekst.textContent = 'Oppdaterer bildene…';
+            captureFremdriftTid.textContent = '0s';
+            await hentBilder();
+            document.getElementById('status').textContent = 'Nytt bilde hentet inn.';
+            setTimeout(() => {
+                stoppCaptureFremdrift();
+            }, 1200);
+            captureTimer = null;
+        }, varighetSek * 1000);
+    }
+
     async function hentBilder() {
         try {
-            const resp  = await fetch('https://api.github.com/repos/torbjornsand/fuglehus/contents/');
-            const files = await resp.json();
+            let files = [];
+
+            try {
+                const lokalResp = await fetch('./bilder.json', { cache: 'no-store' });
+                if (!lokalResp.ok) throw new Error(`lokal-${lokalResp.status}`);
+                files = await lokalResp.json();
+            } catch (lokalFeil) {
+                const githubResp = await fetch('https://api.github.com/repos/torbjornsand/fuglehus/contents/');
+                if (!githubResp.ok) throw new Error(`github-${githubResp.status}`);
+                files = await githubResp.json();
+            }
+
+            if (!Array.isArray(files)) throw new Error('image-response');
+
             bilder = files
-                .filter(f => f.name.startsWith('bilde_') && f.name.endsWith('.jpg'))
+                .filter(f => f.name && f.name.startsWith('bilde_') && f.name.endsWith('.jpg'))
+                .map(f => ({
+                    name: f.name,
+                    download_url: f.download_url || f.name,
+                }))
                 .sort((a, b) => b.name.localeCompare(a.name));
+
             document.getElementById('teller-tidslinje').textContent = bilder.length;
             if (bilder.length > 0) {
                 visFilmstripe();
-                visBilde(0);
+                try {
+                    visBilde(0, 'end');
+                    document.getElementById('status').textContent = '';
+                } catch (visFeil) {
+                    console.error(visFeil);
+                    document.getElementById('status').textContent = 'Bildene ble hentet, men kunne ikke vises riktig.';
+                }
+            } else {
+                document.getElementById('status').textContent = 'Fant ingen bilder.';
             }
         } catch(e) {
             document.getElementById('status').textContent = 'Kunne ikke laste bilder.';
@@ -795,19 +1383,33 @@
         document.getElementById('teller-favoritter').textContent = favoritter.size;
     }
 
-    function visBilde(index) {
+    function visBilde(index, inline = 'center') {
         gjeldende = index;
         const b   = bilder[index];
-        document.getElementById('hovudbilde').src             = b.download_url;
+        visBildeLaster();
+        const sameSrc = hovudbilde.currentSrc === b.download_url || hovudbilde.src === b.download_url;
+        hovudbilde.src = b.download_url;
+        if (sameSrc && hovudbilde.complete) {
+            requestAnimationFrame(skjulBildeLaster);
+        }
+        if (hovudbilde.complete) {
+            requestAnimationFrame(skjulBildeLaster);
+        }
         document.getElementById('bilde-tid').textContent = formatTid(b.name);
-        document.getElementById('btn-forrige').disabled = index <= 0;
-        document.getElementById('btn-neste').disabled   = index >= bilder.length - 1;
+        document.getElementById('btn-forrige').disabled = index >= bilder.length - 1;
+        document.getElementById('btn-neste').disabled   = index <= 0;
         oppdaterHjerte();
         document.querySelectorAll('.thumb').forEach(img => {
             img.classList.toggle('aktiv', img.dataset.navn === b.name);
         });
         const aktiv = document.querySelector('.thumb.aktiv');
-        if (aktiv) aktiv.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        if (aktiv) {
+            try {
+                aktiv.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline });
+            } catch {
+                aktiv.scrollIntoView();
+            }
+        }
     }
 
     function visFilmstripe() {
@@ -825,10 +1427,14 @@
 
         liste.forEach(b => {
             const img        = document.createElement('img');
-            img.src          = b.download_url;
+            img.src          = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
+            img.dataset.src  = b.download_url;
+            img.dataset.lasta = '0';
             img.dataset.navn = b.name;
-            img.className    = 'thumb' + (b.name === bilder[gjeldende]?.name ? ' aktiv' : '');
+            img.className    = 'thumb laster' + (b.name === bilder[gjeldende]?.name ? ' aktiv' : '');
             img.title        = formatTid(b.name);
+            img.loading      = 'lazy';
+            img.decoding     = 'async';
 
             img.addEventListener('click', () => {
                 const idx = bilder.findIndex(x => x.name === b.name);
@@ -836,6 +1442,7 @@
             });
             img.addEventListener('mouseenter', e => {
                 if (window.matchMedia('(hover: none)').matches) return;
+                settThumbSrc(img);
                 previewImg.src         = b.download_url;
                 previewTid.textContent = formatTid(b.name);
                 preview.style.display  = 'block';
@@ -849,6 +1456,8 @@
 
             strip.appendChild(img);
         });
+
+        observerThumbs();
     }
 
     function byttTab(tab) {
@@ -856,12 +1465,16 @@
         document.getElementById('tab-tidslinje').classList.toggle('aktiv', tab === 'tidslinje');
         document.getElementById('tab-favoritter').classList.toggle('aktiv', tab === 'favoritter');
         visFilmstripe();
+        if (bilder.length > 0) {
+            visBilde(gjeldende, gjeldende === 0 && tab === 'tidslinje' ? 'end' : 'center');
+        }
     }
 
-    function forrige() { if (gjeldende > 0)                 visBilde(gjeldende - 1); }
-    function neste()   { if (gjeldende < bilder.length - 1) visBilde(gjeldende + 1); }
+    function forrige() { if (gjeldende < bilder.length - 1) visBilde(gjeldende + 1); }
+    function neste()   { if (gjeldende > 0)                 visBilde(gjeldende - 1); }
 
     function oppdaterBilder() {
+        stoppCaptureFremdrift();
         hentBilder();
         document.getElementById('status').textContent = '';
     }
@@ -870,25 +1483,27 @@
         const btn    = document.getElementById('btn-ta');
         const status = document.getElementById('status');
         btn.disabled  = true;
-        btn.innerHTML = '<span class="spinner"></span> Tar bilde…';
+        btn.innerHTML = '<span class="spinner"></span><span class="btn-capture-tekst">Tar bilde…</span>';
         status.textContent = '';
         try {
             const resp = await fetch(WORKER, { method: 'POST' });
             const data = await resp.json();
             if (data.success) {
-                status.textContent = 'Fremkaller foto, vent litt…';
-                setTimeout(() => {
-                    status.innerHTML = 'Fremkaller foto, vent litt… <button class="btn-refresh" onclick="oppdaterBilder()">Oppdater nå</button>';
-                }, 30000);
+                status.textContent = 'Bilde tas nå. Oppdaterer automatisk om 35 sekunder.';
+                startCaptureFremdrift(35);
             } else {
                 status.textContent = 'Feil: ' + data.error;
             }
         } catch(e) {
             status.textContent = 'Kunne ikke nå Pi.';
+            stoppCaptureFremdrift();
         }
         btn.disabled  = false;
-        btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> Ta bilde`;
+        btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span class="btn-capture-tekst">Ta bilde</span>`;
     }
+
+    hovudbilde.addEventListener('load', skjulBildeLaster);
+    hovudbilde.addEventListener('error', skjulBildeLaster);
 
     // ── Drag-to-scroll på filmstripe ────────────────────────
     const stripe   = document.getElementById('filmstripe');
@@ -975,6 +1590,7 @@
     hentBilder();
     hentFavoritter();
     hentHighFives();
+    hentVaer();
     document.addEventListener('keydown', e => {
         if (e.key === 'ArrowLeft')  forrige();
         if (e.key === 'ArrowRight') neste();
@@ -982,6 +1598,7 @@
 
     setInterval(hentBilder, 600000);
     setInterval(hentFavoritter, 30000);
+    setInterval(hentVaer, 600000);
 </script>
 </body>
 </html>
