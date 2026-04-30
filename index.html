@@ -811,6 +811,8 @@
             overflow: hidden;
             aspect-ratio: 1 / 1;
             background: linear-gradient(135deg, rgba(15,155,142,0.08), rgba(255,255,255,0.92));
+            touch-action: pan-y;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .galleri-bilde {
@@ -822,12 +824,7 @@
         }
 
         .galleri-tekst {
-            position: absolute;
-            bottom: 0; left: 0; right: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,0.55));
-            color: rgba(255,255,255,0.85);
-            font-size: 0.8rem;
-            padding: 32px 20px 16px;
+            display: none;
         }
 
         .galleri-nav {
@@ -851,6 +848,8 @@
             cursor: pointer;
             box-shadow: 0 10px 24px rgba(0,0,0,0.12);
             transition: transform 0.12s ease, background 0.12s ease;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .galleri-knapp:hover {
@@ -1371,7 +1370,7 @@
         </div>
         <div class="galleri-ramme">
             <img class="galleri-bilde" id="galleri-bilde" src="galleri/DSC00577.jpg" alt="Galleri fra fuglehuset" loading="lazy" decoding="async">
-            <div class="galleri-tekst" id="galleri-tekst">Galleri fra fuglehuset og livet rundt Karstenvegen 6C.</div>
+            <div class="galleri-tekst" id="galleri-tekst" aria-hidden="true"></div>
             <div class="galleri-nav">
                 <button class="galleri-knapp" id="galleri-forrige" type="button" onclick="forrigeGalleri()" aria-label="Forrige bilde">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
@@ -1396,6 +1395,8 @@
     let bilder     = [];
     let galleriBilder = [];
     let galleriIndex = 0;
+    let galleriTouchStartX = null;
+    let galleriTouchStartY = null;
     let gjeldende  = 0;
     let favoritter = new Set();
     let aktivTab   = 'tidslinje';
@@ -1412,6 +1413,7 @@
     const vaerIkon   = document.getElementById('vaer-ikon');
     const vaerTemp   = document.getElementById('vaer-temp');
     const vaerMeta   = document.getElementById('vaer-meta');
+    const galleriRamme = document.querySelector('.galleri-ramme');
     const galleriBilde = document.getElementById('galleri-bilde');
     const galleriTekst = document.getElementById('galleri-tekst');
     const galleriTeller = document.getElementById('galleri-teller');
@@ -1598,6 +1600,31 @@
 
         visGalleri(0);
     }
+
+    galleriRamme?.addEventListener('touchstart', (event) => {
+        const touch = event.touches[0];
+        galleriTouchStartX = touch.clientX;
+        galleriTouchStartY = touch.clientY;
+    }, { passive: true });
+
+    galleriRamme?.addEventListener('touchend', (event) => {
+        if (galleriTouchStartX === null || galleriTouchStartY === null) return;
+
+        const touch = event.changedTouches[0];
+        const deltaX = touch.clientX - galleriTouchStartX;
+        const deltaY = touch.clientY - galleriTouchStartY;
+
+        galleriTouchStartX = null;
+        galleriTouchStartY = null;
+
+        if (Math.abs(deltaX) < 40 || Math.abs(deltaX) <= Math.abs(deltaY) * 1.2) return;
+
+        if (deltaX < 0) {
+            nesteGalleri();
+        } else {
+            forrigeGalleri();
+        }
+    }, { passive: true });
 
     function stoppCaptureFremdrift() {
         if (captureTimer) {
