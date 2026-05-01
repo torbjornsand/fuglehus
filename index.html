@@ -766,6 +766,553 @@
 
         @keyframes spin { to { transform: rotate(360deg); } }
 
+        /* ── Egg-poll ── */
+
+        .eggpoll-kort {
+            margin-top: 16px;
+            background: linear-gradient(180deg, #fffdf8 0%, #ffffff 100%);
+            border-radius: 22px;
+            padding: 22px 20px 20px;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.07), 0 8px 40px rgba(0,0,0,0.05);
+            border: 1px solid rgba(255, 191, 105, 0.18);
+        }
+
+        .eggpoll-topp {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .eggpoll-etikett {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            padding: 7px 12px;
+            border-radius: 999px;
+            background: rgba(255, 191, 105, 0.18);
+            color: #8a5307;
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+
+        .eggpoll-tittel {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.3;
+        }
+
+        .eggpoll-beskrivelse {
+            margin-top: 6px;
+            color: var(--muted);
+            font-size: 0.9rem;
+            line-height: 1.55;
+            max-width: 62ch;
+        }
+
+        .eggpoll-innhald {
+            display: grid;
+            grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+            gap: 18px;
+        }
+
+        .eggpoll-kalender {
+            background: #ffffff;
+            border-radius: 20px;
+            border: 1px solid rgba(11, 118, 109, 0.08);
+            padding: 16px;
+        }
+
+        .eggpoll-maanad {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 12px;
+            color: var(--text);
+            font-weight: 700;
+        }
+
+        .eggpoll-maanad span:last-child {
+            color: var(--muted);
+            font-size: 0.84rem;
+            font-weight: 600;
+        }
+
+        .eggpoll-veker {
+            display: grid;
+            grid-template-columns: repeat(7, minmax(0, 1fr));
+            gap: 8px;
+        }
+
+        .eggpoll-vekenamn {
+            text-align: center;
+            color: #94a3a1;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding-bottom: 2px;
+        }
+
+        .eggpoll-rute {
+            min-height: 52px;
+            border: 1px solid rgba(11, 118, 109, 0.08);
+            border-radius: 16px;
+            background: #f9fcfb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .eggpoll-rute.tom {
+            background: transparent;
+            border-color: transparent;
+        }
+
+        .eggpoll-dag {
+            min-height: 52px;
+            border: 1px solid rgba(11, 118, 109, 0.12);
+            border-radius: 16px;
+            background: #ffffff;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.12s ease, border-color 0.12s ease, background 0.12s ease, color 0.12s ease, box-shadow 0.12s ease;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .eggpoll-dag:hover {
+            transform: translateY(-1px);
+            border-color: rgba(20, 184, 166, 0.42);
+            box-shadow: 0 10px 20px rgba(11, 118, 109, 0.08);
+        }
+
+        .eggpoll-dag.aktiv {
+            background: linear-gradient(135deg, #14b8a6 0%, #0b766d 100%);
+            border-color: transparent;
+            color: #ffffff;
+            box-shadow: 0 14px 28px rgba(11, 118, 109, 0.22);
+        }
+
+        .eggpoll-sidepanel {
+            background: linear-gradient(180deg, rgba(20,184,166,0.08), rgba(255,191,105,0.08));
+            border-radius: 20px;
+            padding: 16px;
+            border: 1px solid rgba(11, 118, 109, 0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .eggpoll-felt label {
+            display: block;
+            margin-bottom: 7px;
+            color: var(--text);
+            font-size: 0.84rem;
+            font-weight: 700;
+        }
+
+        .eggpoll-input {
+            width: 100%;
+            min-height: 48px;
+            border-radius: 14px;
+            border: 1px solid rgba(11, 118, 109, 0.16);
+            background: #ffffff;
+            padding: 0 14px;
+            font: inherit;
+            color: var(--text);
+            outline: none;
+            transition: border-color 0.12s ease, box-shadow 0.12s ease;
+        }
+
+        .eggpoll-input:focus {
+            border-color: rgba(20, 184, 166, 0.52);
+            box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.12);
+        }
+
+        .eggpoll-knapp {
+            min-height: 50px;
+            border: none;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #ff8f5a 0%, #f26b3f 100%);
+            color: #ffffff;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 14px 28px rgba(242, 107, 63, 0.24);
+            transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .eggpoll-knapp:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 18px 34px rgba(242, 107, 63, 0.28);
+        }
+
+        .eggpoll-knapp:disabled {
+            opacity: 0.55;
+            cursor: default;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .eggpoll-status {
+            min-height: 20px;
+            color: var(--muted);
+            font-size: 0.84rem;
+        }
+
+        .eggpoll-liste {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .eggpoll-liste-tittel {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            color: var(--text);
+            font-weight: 700;
+        }
+
+        .eggpoll-total {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 40px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(11,118,109,0.1);
+            color: var(--accent-strong);
+            font-size: 0.8rem;
+        }
+
+        .eggpoll-oversikt {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .eggpoll-rad {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 12px 10px;
+            border-radius: 16px;
+            background: rgba(255,255,255,0.78);
+            border: 1px solid rgba(11, 118, 109, 0.08);
+        }
+
+        .eggpoll-datopill {
+            flex-shrink: 0;
+            min-width: 84px;
+            padding: 9px 12px;
+            border-radius: 14px;
+            background: linear-gradient(180deg, rgba(20,184,166,0.12), rgba(20,184,166,0.06));
+            color: var(--accent-strong);
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .eggpoll-namn {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .eggpoll-namnepill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 11px;
+            border-radius: 999px;
+            background: #ffffff;
+            border: 1px solid rgba(11, 118, 109, 0.1);
+            color: var(--text);
+            font-size: 0.84rem;
+            font-weight: 600;
+        }
+
+        .eggpoll-tom {
+            padding: 14px;
+            border-radius: 16px;
+            background: rgba(255,255,255,0.72);
+            border: 1px dashed rgba(11,118,109,0.16);
+            color: var(--muted);
+            font-size: 0.88rem;
+        }
+
+        @media (max-width: 760px) {
+            .eggpoll-topp {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .eggpoll-innhald {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .eggpoll-kort {
+                padding: 18px 16px;
+            }
+
+            .eggpoll-kalender,
+            .eggpoll-sidepanel {
+                padding: 14px;
+            }
+
+            .eggpoll-veker {
+                gap: 6px;
+            }
+
+            .eggpoll-dag,
+            .eggpoll-rute {
+                min-height: 46px;
+                border-radius: 14px;
+            }
+        }
+
+        .eggantall-kort {
+            margin-top: 16px;
+            background: linear-gradient(180deg, #fffdf9 0%, #ffffff 100%);
+            border-radius: 22px;
+            padding: 18px 18px 20px;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.07), 0 8px 40px rgba(0,0,0,0.05);
+            border: 1px solid rgba(255, 191, 105, 0.16);
+        }
+
+        .eggantall-topp {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 14px;
+            margin-bottom: 14px;
+        }
+
+        .eggantall-etikett {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            padding: 7px 12px;
+            border-radius: 999px;
+            background: rgba(255, 191, 105, 0.18);
+            color: #8a5307;
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+
+        .eggantall-tittel {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.3;
+        }
+
+        .eggantall-beskrivelse {
+            margin-top: 6px;
+            color: var(--muted);
+            font-size: 0.88rem;
+            line-height: 1.5;
+        }
+
+        .eggantall-valgt {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 62px;
+            min-height: 62px;
+            border-radius: 18px;
+            background: linear-gradient(180deg, rgba(20,184,166,0.12), rgba(20,184,166,0.05));
+            color: var(--accent-strong);
+            font-size: 1.2rem;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .eggantall-innhald {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(260px, 0.9fr);
+            gap: 16px;
+            align-items: start;
+        }
+
+        .eggantall-velger {
+            background: #ffffff;
+            border-radius: 20px;
+            border: 1px solid rgba(11, 118, 109, 0.08);
+            padding: 14px;
+        }
+
+        .eggantall-grid {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .eggantall-knapp {
+            border: 1px solid rgba(11, 118, 109, 0.12);
+            border-radius: 18px;
+            background: #ffffff;
+            min-height: 78px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            cursor: pointer;
+            transition: transform 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .eggantall-knapp:hover {
+            transform: translateY(-1px);
+            border-color: rgba(20, 184, 166, 0.38);
+            box-shadow: 0 12px 24px rgba(11, 118, 109, 0.08);
+        }
+
+        .eggantall-knapp.aktiv {
+            background: linear-gradient(180deg, rgba(255, 191, 105, 0.22), rgba(255, 191, 105, 0.08));
+            border-color: rgba(242, 107, 63, 0.3);
+            box-shadow: 0 14px 28px rgba(242, 107, 63, 0.12);
+        }
+
+        .eggantall-ikon {
+            width: 22px;
+            height: 28px;
+            border-radius: 50% 50% 46% 46%;
+            background: linear-gradient(180deg, #fff7e8 0%, #ffe5bf 100%);
+            border: 1px solid rgba(201, 144, 10, 0.22);
+            box-shadow: inset 0 -2px 0 rgba(255,255,255,0.58);
+        }
+
+        .eggantall-knapp.aktiv .eggantall-ikon {
+            background: linear-gradient(180deg, #fff1d8 0%, #ffc671 100%);
+            border-color: rgba(242, 107, 63, 0.24);
+        }
+
+        .eggantall-tal {
+            color: var(--text);
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+
+        .eggantall-panel {
+            background: linear-gradient(180deg, rgba(20,184,166,0.08), rgba(255,191,105,0.08));
+            border-radius: 20px;
+            border: 1px solid rgba(11, 118, 109, 0.08);
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .eggantall-knapp-send {
+            min-height: 48px;
+            border: none;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #14b8a6 0%, #0b766d 100%);
+            color: #ffffff;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 14px 26px rgba(11, 118, 109, 0.22);
+            transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
+        }
+
+        .eggantall-knapp-send:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 18px 34px rgba(11, 118, 109, 0.28);
+        }
+
+        .eggantall-knapp-send:disabled {
+            opacity: 0.55;
+            cursor: default;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .eggantall-status {
+            min-height: 20px;
+            color: var(--muted);
+            font-size: 0.84rem;
+        }
+
+        .eggantall-graf {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .eggantall-rad {
+            display: grid;
+            grid-template-columns: 36px minmax(0, 1fr) 34px;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .eggantall-radlabel,
+        .eggantall-radtal {
+            color: var(--text);
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .eggantall-bar {
+            height: 12px;
+            border-radius: 999px;
+            background: rgba(11,118,109,0.09);
+            overflow: hidden;
+        }
+
+        .eggantall-barfill {
+            height: 100%;
+            border-radius: inherit;
+            background: linear-gradient(90deg, #ffbf69 0%, #f26b3f 100%);
+            min-width: 8px;
+        }
+
+        @media (max-width: 760px) {
+            .eggantall-topp {
+                align-items: stretch;
+            }
+
+            .eggantall-innhald {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .eggantall-kort {
+                padding: 16px;
+            }
+
+            .eggantall-grid {
+                gap: 8px;
+            }
+
+            .eggantall-knapp {
+                min-height: 72px;
+                border-radius: 16px;
+            }
+        }
+
         /* ── Foto-kort ── */
 
         .galleri-kort {
@@ -1363,6 +1910,65 @@
 
     </div>
 
+    <section class="eggpoll-kort" aria-labelledby="eggpoll-tittel">
+        <div class="eggpoll-topp">
+            <div>
+                <div class="eggpoll-etikett">🥚 Egg-poll</div>
+                <h3 class="eggpoll-tittel" id="eggpoll-tittel">Når tipper du at første egget blir lagt?</h3>
+                <p class="eggpoll-beskrivelse">Velg en dato i mai, skriv inn navnet ditt og legg inn tipset ditt. Lista under oppdateres fortløpende.</p>
+            </div>
+        </div>
+
+        <div class="eggpoll-innhald">
+            <div class="eggpoll-kalender">
+                <div class="eggpoll-maanad">
+                    <span>Mai 2026</span>
+                    <span>Trykk på datoen du tror på</span>
+                </div>
+                <div class="eggpoll-veker" id="eggpoll-kalender"></div>
+            </div>
+
+            <div class="eggpoll-sidepanel">
+                <div class="eggpoll-felt">
+                    <label for="eggpoll-namn">Navn</label>
+                    <input class="eggpoll-input" id="eggpoll-namn" type="text" maxlength="40">
+                </div>
+                <button class="eggpoll-knapp" id="eggpoll-bekreft" type="button" onclick="sendEggTips()">Bekreft svar</button>
+                <div class="eggpoll-status" id="eggpoll-status"></div>
+                <div class="eggpoll-liste">
+                    <div class="eggpoll-liste-tittel">
+                        <span>Innkomne tips</span>
+                        <span class="eggpoll-total" id="eggpoll-total">0</span>
+                    </div>
+                    <div class="eggpoll-oversikt" id="eggpoll-oversikt"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="eggantall-kort" aria-labelledby="eggantall-tittel">
+        <div class="eggantall-topp">
+            <div>
+                <div class="eggantall-etikett">🐣 Antall egg</div>
+                <h3 class="eggantall-tittel" id="eggantall-tittel">Hvor mange egg tror du Else legger?</h3>
+                <p class="eggantall-beskrivelse">Marker hvor mange egg du tror det blir. Når du sender inn, får du se hva andre tror.</p>
+            </div>
+            <div class="eggantall-valgt" id="eggantall-valgt">–</div>
+        </div>
+
+        <div class="eggantall-innhald">
+            <div class="eggantall-velger">
+                <div class="eggantall-grid" id="eggantall-grid"></div>
+            </div>
+
+            <div class="eggantall-panel">
+                <button class="eggantall-knapp-send" id="eggantall-bekreft" type="button" onclick="sendEggCount()">Send inn antall</button>
+                <div class="eggantall-status" id="eggantall-status"></div>
+                <div class="eggantall-graf" id="eggantall-graf"></div>
+            </div>
+        </div>
+    </section>
+
     <div class="galleri-kort">
         <div class="galleri-topp">
             <h3 class="galleri-tittel">Galleri</h3>
@@ -1397,6 +2003,10 @@
     let galleriIndex = 0;
     let galleriTouchStartX = null;
     let galleriTouchStartY = null;
+    let eggPollEntries = [];
+    let valgtEggDato = '';
+    let eggCountStats = {};
+    let valtEggAntall = 0;
     let gjeldende  = 0;
     let favoritter = new Set();
     let aktivTab   = 'tidslinje';
@@ -1413,6 +2023,17 @@
     const vaerIkon   = document.getElementById('vaer-ikon');
     const vaerTemp   = document.getElementById('vaer-temp');
     const vaerMeta   = document.getElementById('vaer-meta');
+    const eggPollKalender = document.getElementById('eggpoll-kalender');
+    const eggPollNamn = document.getElementById('eggpoll-namn');
+    const eggPollStatus = document.getElementById('eggpoll-status');
+    const eggPollOversikt = document.getElementById('eggpoll-oversikt');
+    const eggPollTotal = document.getElementById('eggpoll-total');
+    const eggPollBekreft = document.getElementById('eggpoll-bekreft');
+    const eggCountGrid = document.getElementById('eggantall-grid');
+    const eggCountValgt = document.getElementById('eggantall-valgt');
+    const eggCountStatus = document.getElementById('eggantall-status');
+    const eggCountGraf = document.getElementById('eggantall-graf');
+    const eggCountBekreft = document.getElementById('eggantall-bekreft');
     const galleriRamme = document.querySelector('.galleri-ramme');
     const galleriBilde = document.getElementById('galleri-bilde');
     const galleriTekst = document.getElementById('galleri-tekst');
@@ -1486,6 +2107,232 @@
             .replace(/\.[^.]+$/, '')
             .replace(/[_-]+/g, ' ')
             .trim();
+    }
+
+    function formatEggPollDato(dateStr) {
+        if (!dateStr) return 'Velg en dato';
+        const [, , dag] = dateStr.split('-');
+        return `${parseInt(dag, 10)}. mai`;
+    }
+
+    function renderEggPollKalender() {
+        if (!eggPollKalender) return;
+
+        const weekDays = ['man', 'tir', 'ons', 'tor', 'fre', 'lør', 'søn'];
+        const firstDay = new Date(2026, 4, 1);
+        const offset = (firstDay.getDay() + 6) % 7;
+        const totalDays = 31;
+
+        let html = '';
+        weekDays.forEach((day) => {
+            html += `<div class="eggpoll-vekenamn">${day}</div>`;
+        });
+
+        for (let i = 0; i < offset; i += 1) {
+            html += '<div class="eggpoll-rute tom" aria-hidden="true"></div>';
+        }
+
+        for (let day = 1; day <= totalDays; day += 1) {
+            const dateStr = `2026-05-${String(day).padStart(2, '0')}`;
+            const aktiv = valgtEggDato === dateStr ? ' aktiv' : '';
+            html += `<button class="eggpoll-dag${aktiv}" type="button" onclick="velgEggDato('${dateStr}')" aria-label="${formatEggPollDato(dateStr)}">${day}</button>`;
+        }
+
+        eggPollKalender.innerHTML = html;
+    }
+
+    function renderEggPollListe() {
+        if (!eggPollOversikt || !eggPollTotal) return;
+
+        eggPollTotal.textContent = String(eggPollEntries.length);
+
+        if (!eggPollEntries.length) {
+            eggPollOversikt.innerHTML = '<div class="eggpoll-tom">Ingen tips ennå. Bli den første som gjetter.</div>';
+            return;
+        }
+
+        const grouped = eggPollEntries.reduce((acc, entry) => {
+            if (!acc[entry.date]) acc[entry.date] = [];
+            acc[entry.date].push(entry);
+            return acc;
+        }, {});
+
+        const html = Object.keys(grouped)
+            .sort((a, b) => a.localeCompare(b))
+            .map((date) => {
+                const names = grouped[date]
+                    .sort((a, b) => a.name.localeCompare(b.name, 'nb'))
+                    .map((entry) => `<span class="eggpoll-namnepill">${entry.name}</span>`)
+                    .join('');
+
+                return `
+                    <div class="eggpoll-rad">
+                        <div class="eggpoll-datopill">${formatEggPollDato(date)}</div>
+                        <div class="eggpoll-namn">${names}</div>
+                    </div>
+                `;
+            })
+            .join('');
+
+        eggPollOversikt.innerHTML = html;
+    }
+
+    function velgEggDato(dateStr) {
+        valgtEggDato = dateStr;
+        if (eggPollStatus) eggPollStatus.textContent = '';
+        renderEggPollKalender();
+    }
+
+    async function hentEggTips() {
+        try {
+            const resp = await fetch(WORKER + '/eggpoll');
+            if (!resp.ok) throw new Error('eggpoll-get');
+            const data = await resp.json();
+            eggPollEntries = Array.isArray(data.entries) ? data.entries : [];
+            renderEggPollListe();
+        } catch (e) {
+            if (eggPollStatus) eggPollStatus.textContent = 'Kunne ikke hente tips akkurat nå.';
+        }
+    }
+
+    async function sendEggTips() {
+        const name = eggPollNamn?.value.trim() || '';
+
+        if (!valgtEggDato) {
+            eggPollStatus.textContent = 'Velg en dato i kalenderen først.';
+            return;
+        }
+
+        if (!name) {
+            eggPollStatus.textContent = 'Skriv inn navnet ditt før du bekrefter.';
+            eggPollNamn?.focus();
+            return;
+        }
+
+        eggPollBekreft.disabled = true;
+        eggPollStatus.textContent = 'Lagrer tipset ditt…';
+
+        try {
+            const resp = await fetch(WORKER + '/eggpoll', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, date: valgtEggDato }),
+            });
+
+            const data = await resp.json();
+            if (!resp.ok) {
+                throw new Error(data?.error || 'eggpoll-post');
+            }
+
+            eggPollEntries = Array.isArray(data.entries) ? data.entries : [];
+            eggPollStatus.textContent = `${name} er registrert på ${formatEggPollDato(valgtEggDato)}.`;
+            eggPollNamn.value = '';
+            renderEggPollListe();
+        } catch (e) {
+            eggPollStatus.textContent = 'Kunne ikke lagre tipset akkurat nå.';
+        } finally {
+            eggPollBekreft.disabled = false;
+        }
+    }
+
+    function oppdaterEggCountValgt() {
+        if (!eggCountValgt) return;
+        eggCountValgt.textContent = valtEggAntall > 0 ? String(valtEggAntall) : '–';
+    }
+
+    function velgEggAntall(count) {
+        valtEggAntall = count;
+        eggCountStatus.textContent = '';
+        oppdaterEggCountValgt();
+        renderEggCountGrid();
+        try {
+            localStorage.setItem('eggcount-valt', String(count));
+        } catch (e) {}
+    }
+
+    function renderEggCountGrid() {
+        if (!eggCountGrid) return;
+
+        let html = '';
+        for (let count = 1; count <= 15; count += 1) {
+            const aktiv = count <= valtEggAntall ? ' aktiv' : '';
+            html += `
+                <button class="eggantall-knapp${aktiv}" type="button" onclick="velgEggAntall(${count})" aria-label="${count} egg">
+                    <span class="eggantall-ikon" aria-hidden="true"></span>
+                    <span class="eggantall-tal">${count}</span>
+                </button>
+            `;
+        }
+        eggCountGrid.innerHTML = html;
+    }
+
+    function renderEggCountGraf() {
+        if (!eggCountGraf) return;
+
+        const maxCount = Math.max(1, ...Array.from({ length: 15 }, (_, i) => Number(eggCountStats[i + 1] || 0)));
+        const totalVotes = Array.from({ length: 15 }, (_, i) => Number(eggCountStats[i + 1] || 0)).reduce((sum, value) => sum + value, 0);
+
+        if (totalVotes === 0) {
+            eggCountGraf.innerHTML = '<div class="eggpoll-tom">Ingen antallstips ennå. Send inn ditt først.</div>';
+            return;
+        }
+
+        eggCountGraf.innerHTML = Array.from({ length: 15 }, (_, i) => {
+            const count = i + 1;
+            const votes = Number(eggCountStats[count] || 0);
+            const width = votes > 0 ? Math.max(8, (votes / maxCount) * 100) : 0;
+            return `
+                <div class="eggantall-rad">
+                    <div class="eggantall-radlabel">${count}</div>
+                    <div class="eggantall-bar">
+                        <div class="eggantall-barfill" style="width:${width}%"></div>
+                    </div>
+                    <div class="eggantall-radtal">${votes}</div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    async function hentEggCount() {
+        try {
+            const resp = await fetch(WORKER + '/eggcount');
+            if (!resp.ok) throw new Error('eggcount-get');
+            const data = await resp.json();
+            eggCountStats = data?.counts && typeof data.counts === 'object' ? data.counts : {};
+            renderEggCountGraf();
+        } catch (e) {
+            eggCountStatus.textContent = 'Kunne ikke hente egg-tips akkurat nå.';
+        }
+    }
+
+    async function sendEggCount() {
+        if (!valtEggAntall) {
+            eggCountStatus.textContent = 'Velg hvor mange egg du tror på først.';
+            return;
+        }
+
+        eggCountBekreft.disabled = true;
+        eggCountStatus.textContent = 'Lagrer tipset ditt…';
+
+        try {
+            const resp = await fetch(WORKER + '/eggcount', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ count: valtEggAntall }),
+            });
+            const data = await resp.json();
+            if (!resp.ok) {
+                throw new Error(data?.error || 'eggcount-post');
+            }
+
+            eggCountStats = data?.counts && typeof data.counts === 'object' ? data.counts : {};
+            eggCountStatus.textContent = `Tipset ditt på ${valtEggAntall} egg er registrert.`;
+            renderEggCountGraf();
+        } catch (e) {
+            eggCountStatus.textContent = 'Kunne ikke lagre egg-tippet akkurat nå.';
+        } finally {
+            eggCountBekreft.disabled = false;
+        }
     }
 
     function plasserPreview(e) {
@@ -2060,6 +2907,18 @@
     hentFavoritter();
     hentHighFives();
     hentVaer();
+    renderEggPollKalender();
+    renderEggPollListe();
+    try {
+        const lagraEggCount = parseInt(localStorage.getItem('eggcount-valt') || '0', 10);
+        if (lagraEggCount >= 1 && lagraEggCount <= 15) {
+            valtEggAntall = lagraEggCount;
+        }
+    } catch (e) {}
+    oppdaterEggCountValgt();
+    renderEggCountGrid();
+    hentEggTips();
+    hentEggCount();
     hentGalleri();
     document.addEventListener('keydown', e => {
         if (e.key === 'ArrowLeft')  forrige();
