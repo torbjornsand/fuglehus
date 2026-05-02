@@ -1,0 +1,18 @@
+[Unit]
+Description=Fuglehus camera capture API
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/fuglehus
+Environment=FUGLEHUS_REPO_DIR=/home/pi/fuglehus
+Environment=FUGLEHUS_HOST=0.0.0.0
+Environment=FUGLEHUS_PORT=8080
+ExecStart=/usr/bin/python3 /home/pi/fuglehus/pi/capture_server.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

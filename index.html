@@ -672,42 +672,92 @@
         }
 
         .videokort {
-            width: 172px;
-            min-height: 96px;
+            width: 188px;
             flex-shrink: 0;
             border: 2px solid transparent;
-            border-radius: 18px;
-            background: linear-gradient(135deg, rgba(18,54,60,0.95), rgba(11,118,109,0.84));
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            color: #ffffff;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: space-between;
-            padding: 14px;
+            border-radius: 20px;
+            background: linear-gradient(180deg, rgba(246, 255, 254, 0.98), rgba(228, 247, 244, 0.96));
+            box-shadow: 0 12px 24px rgba(10, 45, 43, 0.11);
+            color: var(--ink);
+            position: relative;
+            overflow: hidden;
             transition: transform 0.13s ease, box-shadow 0.13s ease, border-color 0.13s ease;
-            text-align: left;
         }
 
         .videokort:hover {
             transform: translateY(-3px);
-            box-shadow: 0 16px 24px rgba(0,0,0,0.14);
+            box-shadow: 0 18px 30px rgba(10, 45, 43, 0.16);
         }
 
         .videokort.aktiv {
-            border-color: var(--accent-bright);
+            border-color: var(--accent);
             transform: translateY(-3px);
         }
 
-        .videokort-ikon {
-            width: 38px;
-            height: 38px;
-            border-radius: 14px;
-            background: rgba(255,255,255,0.12);
+        .videokort-knapp {
+            width: 100%;
+            border: 0;
+            background: transparent;
+            padding: 0;
+            text-align: left;
+            color: inherit;
+            cursor: pointer;
+        }
+
+        .videokort-forhandsvisning {
+            position: relative;
+            aspect-ratio: 16 / 9;
+            background: linear-gradient(145deg, #0f3f45 0%, #137a72 100%);
+            overflow: hidden;
+        }
+
+        .videokort-thumb {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            opacity: 0;
+            transition: opacity 0.18s ease;
+        }
+
+        .videokort-thumb.synlig {
+            opacity: 1;
+        }
+
+        .videokort-thumbfallback {
+            position: absolute;
+            inset: 0;
             display: flex;
             align-items: center;
             justify-content: center;
+            background:
+                radial-gradient(circle at 28% 26%, rgba(255,255,255,0.15), transparent 32%),
+                linear-gradient(145deg, rgba(10, 40, 43, 0.88), rgba(14, 114, 105, 0.8));
+            color: rgba(255,255,255,0.95);
+            transition: opacity 0.18s ease;
+        }
+
+        .videokort-thumbfallback.skjult {
+            opacity: 0;
+        }
+
+        .videokort-play {
+            width: 42px;
+            height: 42px;
+            border-radius: 16px;
+            background: rgba(255,255,255,0.18);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 24px rgba(0,0,0,0.16);
+        }
+
+        .videokort-innhold {
+            padding: 12px 14px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
         }
 
         .videokort-tid {
@@ -716,14 +766,72 @@
             line-height: 1.35;
         }
 
-        .videokort-meta {
+        .videokort-undertittel {
             font-size: 0.74rem;
-            color: rgba(255,255,255,0.72);
+            color: rgba(18, 54, 60, 0.68);
+        }
+
+        .videokort-menyknapp {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 32px;
+            height: 32px;
+            border: 0;
+            border-radius: 999px;
+            background: rgba(9, 34, 37, 0.72);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 3;
+            box-shadow: 0 10px 22px rgba(0,0,0,0.16);
+        }
+
+        .videokort-menyknapp:hover {
+            background: rgba(9, 34, 37, 0.88);
+        }
+
+        .videokort-meny {
+            position: absolute;
+            top: 48px;
+            right: 10px;
+            min-width: 132px;
+            padding: 8px;
+            border-radius: 14px;
+            background: rgba(255,255,255,0.98);
+            border: 1px solid rgba(18, 54, 60, 0.1);
+            box-shadow: 0 16px 30px rgba(7, 31, 33, 0.16);
+            display: none;
+            z-index: 4;
+        }
+
+        .videokort-meny.vis {
+            display: block;
+        }
+
+        .videokort-menyvalg {
+            width: 100%;
+            border: 0;
+            background: transparent;
+            border-radius: 10px;
+            padding: 9px 10px;
+            text-align: left;
+            font: inherit;
+            color: #7a2020;
+            cursor: pointer;
+        }
+
+        .videokort-menyvalg:hover {
+            background: rgba(195, 51, 51, 0.08);
         }
 
         @media (max-width: 600px) {
             .thumb { width: 92px; height: 68px; }
-            .videokort { width: 138px; min-height: 88px; padding: 12px; }
+            .videokort { width: 146px; }
+            .videokort-innhold { padding: 10px 12px 12px; }
+            .videokort-menyknapp { width: 30px; height: 30px; top: 8px; right: 8px; }
         }
 
         @media (max-width: 640px) {
@@ -2134,6 +2242,9 @@
     let thumbObserver = null;
     let valgtVideo = 0;
     let aktivMediaType = 'image';
+    const videoThumbCache = new Map();
+    const videoThumbPromises = new Map();
+    let openVideoMeny = null;
 
     const preview    = document.getElementById('forhåndsvisning');
     const previewImg = document.getElementById('forhåndsvisning-img');
@@ -2241,6 +2352,137 @@
         const [, mnd, dag] = dato.split('-');
         const [time, min] = tid.split('-');
         return `${dag}.${mnd} kl. ${time}:${min}`;
+    }
+
+    function escapeHtml(tekst) {
+        return String(tekst)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    function lukkVideoMenyer() {
+        openVideoMeny = null;
+        document.querySelectorAll('.videokort-meny').forEach((meny) => meny.classList.remove('vis'));
+    }
+
+    function toggleVideoMeny(namn, knapp) {
+        const kort = knapp.closest('.videokort');
+        const meny = kort?.querySelector('.videokort-meny');
+        if (!kort || !meny) return;
+
+        const sameOpen = openVideoMeny === namn && meny.classList.contains('vis');
+        lukkVideoMenyer();
+        if (sameOpen) return;
+
+        meny.classList.add('vis');
+        openVideoMeny = namn;
+    }
+
+    function setVideoThumb(img, fallback, dataUrl) {
+        if (!dataUrl) return;
+        img.src = dataUrl;
+        img.classList.add('synlig');
+        fallback?.classList.add('skjult');
+    }
+
+    function byggVideoThumbnail(video) {
+        return new Promise((resolve) => {
+            const element = document.createElement('video');
+            let ferdig = false;
+
+            function cleanup() {
+                element.onloadeddata = null;
+                element.onseeked = null;
+                element.onerror = null;
+                element.pause();
+                element.removeAttribute('src');
+                element.load();
+            }
+
+            function fail() {
+                if (ferdig) return;
+                ferdig = true;
+                cleanup();
+                resolve('');
+            }
+
+            function draw() {
+                if (ferdig) return;
+                try {
+                    const canvas = document.createElement('canvas');
+                    const bredde = element.videoWidth || 320;
+                    const hoyde = element.videoHeight || 180;
+                    canvas.width = bredde;
+                    canvas.height = hoyde;
+                    const ctx = canvas.getContext('2d');
+                    if (!ctx) return fail();
+                    ctx.drawImage(element, 0, 0, bredde, hoyde);
+                    ferdig = true;
+                    const data = canvas.toDataURL('image/jpeg', 0.72);
+                    cleanup();
+                    resolve(data);
+                } catch {
+                    fail();
+                }
+            }
+
+            element.muted = true;
+            element.playsInline = true;
+            element.preload = 'metadata';
+            element.crossOrigin = 'anonymous';
+            element.src = video.download_url;
+            element.onerror = fail;
+            element.onloadeddata = () => {
+                const duration = Number.isFinite(element.duration) ? element.duration : 0;
+                if (duration > 0.2) {
+                    try {
+                        element.currentTime = Math.min(0.2, duration / 3);
+                    } catch {
+                        draw();
+                    }
+                } else {
+                    draw();
+                }
+            };
+            element.onseeked = draw;
+        });
+    }
+
+    function beOmVideoThumbnail(video, kort) {
+        const img = kort.querySelector('.videokort-thumb');
+        const fallback = kort.querySelector('.videokort-thumbfallback');
+        if (!img) return;
+
+        const cached = videoThumbCache.get(video.name);
+        if (cached) {
+            setVideoThumb(img, fallback, cached);
+            return;
+        }
+
+        let promise = videoThumbPromises.get(video.name);
+        if (!promise) {
+            promise = byggVideoThumbnail(video)
+                .then((data) => {
+                    if (data) videoThumbCache.set(video.name, data);
+                    return data;
+                })
+                .finally(() => {
+                    videoThumbPromises.delete(video.name);
+                });
+            videoThumbPromises.set(video.name, promise);
+        }
+
+        promise.then((data) => {
+            if (!data) return;
+            const aktuellKort = document.querySelector(`.videokort[data-namn="${CSS.escape(video.name)}"]`);
+            if (!aktuellKort) return;
+            const aktuellImg = aktuellKort.querySelector('.videokort-thumb');
+            const aktuellFallback = aktuellKort.querySelector('.videokort-thumbfallback');
+            if (aktuellImg) setVideoThumb(aktuellImg, aktuellFallback, data);
+        });
     }
 
     function formatEggPollDato(dateStr) {
@@ -2619,6 +2861,62 @@
         }
     }
 
+    async function slettVideo(namn) {
+        lukkVideoMenyer();
+
+        const video = videoer.find((item) => item.name === namn);
+        const label = video ? formatVideoTid(video.name) : namn;
+        if (!confirm(`Slette videoklippet ${label}?`)) return;
+
+        const status = document.getElementById('status');
+        status.textContent = 'Sletter videoklipp…';
+
+        try {
+            const resp = await fetch(WORKER + '/video-delete', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: namn }),
+            });
+            const data = await resp.json();
+            if (!resp.ok || !data.success) {
+                throw new Error(data.error || 'video-delete');
+            }
+
+            videoer = videoer.filter((item) => item.name !== namn);
+            videoThumbCache.delete(namn);
+            videoThumbPromises.delete(namn);
+
+            if (valgtVideo >= videoer.length) {
+                valgtVideo = Math.max(0, videoer.length - 1);
+            }
+
+            const videoTeller = document.getElementById('teller-video');
+            if (videoTeller) videoTeller.textContent = videoer.length;
+
+            if (aktivTab === 'video') {
+                visFilmstripe();
+                if (videoer.length > 0) {
+                    visVideo(valgtVideo);
+                } else {
+                    bildeWrapper.classList.remove('video-visning');
+                    hovudvideo.pause();
+                    hovudvideo.removeAttribute('src');
+                    hovudvideo.load();
+                    document.getElementById('bilde-tid').textContent = '';
+                    document.getElementById('btn-forrige').disabled = true;
+                    document.getElementById('btn-neste').disabled = true;
+                }
+            }
+
+            status.textContent = 'Videoklipp slettet.';
+            setTimeout(() => {
+                hentVideoer();
+            }, 1200);
+        } catch (e) {
+            status.textContent = 'Kunne ikke slette videoklippet akkurat nå.';
+        }
+    }
+
     function visVideo(index = 0) {
         if (!videoer.length) {
             document.getElementById('status').textContent = 'Ingen videoer ennå.';
@@ -2965,6 +3263,7 @@
     function visFilmstripe() {
         const strip = document.getElementById('filmstripe');
         strip.innerHTML = '';
+        lukkVideoMenyer();
 
         if (aktivTab === 'video') {
             if (!videoer.length) {
@@ -2973,25 +3272,55 @@
             }
 
             videoer.forEach((video) => {
-                const kort = document.createElement('button');
-                kort.type = 'button';
+                const kort = document.createElement('div');
                 kort.dataset.namn = video.name;
                 kort.className = 'videokort' + (video.name === videoer[valgtVideo]?.name ? ' aktiv' : '');
                 kort.innerHTML = `
-                    <span class="videokort-ikon" aria-hidden="true">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="23 7 16 12 23 17 23 7"></polygon>
-                            <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+                    <button type="button" class="videokort-knapp" aria-label="Vis video ${escapeHtml(formatVideoTid(video.name))}">
+                        <span class="videokort-forhandsvisning">
+                            <img class="videokort-thumb" alt="">
+                            <span class="videokort-thumbfallback">
+                                <span class="videokort-play" aria-hidden="true">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polygon points="23 7 16 12 23 17 23 7"></polygon>
+                                        <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+                                    </svg>
+                                </span>
+                            </span>
+                        </span>
+                        <span class="videokort-innhold">
+                            <span class="videokort-tid">${formatVideoTid(video.name)}</span>
+                            <span class="videokort-undertittel">Videoklipp</span>
+                        </span>
+                    </button>
+                    <button type="button" class="videokort-menyknapp" aria-label="Flere valg">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <circle cx="12" cy="5" r="1.9"></circle>
+                            <circle cx="12" cy="12" r="1.9"></circle>
+                            <circle cx="12" cy="19" r="1.9"></circle>
                         </svg>
-                    </span>
-                    <span class="videokort-tid">${formatVideoTid(video.name)}</span>
-                    <span class="videokort-meta">15 sek • 720p</span>
+                    </button>
+                    <div class="videokort-meny">
+                        <button type="button" class="videokort-menyvalg">Slett klipp</button>
+                    </div>
                 `;
-                kort.addEventListener('click', () => {
+                kort.querySelector('.videokort-knapp')?.addEventListener('click', () => {
                     const idx = videoer.findIndex((x) => x.name === video.name);
                     if (idx !== -1) visVideo(idx);
                 });
+                kort.querySelector('.videokort-menyknapp')?.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    toggleVideoMeny(video.name, event.currentTarget);
+                });
+                kort.querySelector('.videokort-meny')?.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                });
+                kort.querySelector('.videokort-menyvalg')?.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    slettVideo(video.name);
+                });
                 strip.appendChild(kort);
+                beOmVideoThumbnail(video, kort);
             });
             return;
         }
@@ -3299,6 +3628,12 @@
     setInterval(hentVideoer, 600000);
     setInterval(hentFavoritter, 30000);
     setInterval(hentVaer, 600000);
+
+    document.addEventListener('click', (event) => {
+        if (!event.target.closest('.videokort-meny') && !event.target.closest('.videokort-menyknapp')) {
+            lukkVideoMenyer();
+        }
+    });
 </script>
 </body>
 </html>

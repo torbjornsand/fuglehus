@@ -163,11 +163,33 @@ export default {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           duration: 15,
-          width: 1280,
-          height: 720,
-          bitrate: '2500k',
+          width: 1920,
+          height: 1080,
+          bitrate: '1800k',
           format: 'mp4',
         }),
+      });
+
+      const data = await response.json();
+      return new Response(JSON.stringify(data), {
+        status: response.status,
+        headers: { ...cors, 'Content-Type': 'application/json' },
+      });
+    }
+
+    if (url.pathname === '/video-delete') {
+      if (request.method !== 'POST') {
+        return new Response(JSON.stringify({ error: 'Method not allowed' }), {
+          status: 405,
+          headers: { ...cors, 'Content-Type': 'application/json' },
+        });
+      }
+
+      const body = await request.json();
+      const response = await fetch('https://cam.kvitrehus.com/api/video-delete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: body?.name || '' }),
       });
 
       const data = await response.json();
