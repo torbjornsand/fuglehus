@@ -2244,6 +2244,7 @@
     let aktivMediaType = 'image';
     const videoThumbCache = new Map();
     const videoThumbPromises = new Map();
+    const videoerSomSlettes = new Set();
     let openVideoMeny = null;
 
     const preview    = document.getElementById('forhåndsvisning');
@@ -2845,6 +2846,7 @@
                         name: fil.name,
                         download_url: fil.download_url || `video/${fil.name}`,
                     }))
+                    .filter((fil) => !videoerSomSlettes.has(fil.name))
                     .sort((a, b) => b.name.localeCompare(a.name))
                 : [];
         } catch (e) {
@@ -2869,6 +2871,35 @@
         if (!confirm(`Slette videoklippet ${label}?`)) return;
 
         const status = document.getElementById('status');
+        const forrigeVideoer = [...videoer];
+        const forrigeValgtVideo = valgtVideo;
+        videoerSomSlettes.add(namn);
+        videoer = videoer.filter((item) => item.name !== namn);
+        videoThumbCache.delete(namn);
+        videoThumbPromises.delete(namn);
+
+        if (valgtVideo >= videoer.length) {
+            valgtVideo = Math.max(0, videoer.length - 1);
+        }
+
+        const videoTeller = document.getElementById('teller-video');
+        if (videoTeller) videoTeller.textContent = videoer.length;
+
+        if (aktivTab === 'video') {
+            visFilmstripe();
+            if (videoer.length > 0) {
+                visVideo(valgtVideo);
+            } else {
+                bildeWrapper.classList.remove('video-visning');
+                hovudvideo.pause();
+                hovudvideo.removeAttribute('src');
+                hovudvideo.load();
+                document.getElementById('bilde-tid').textContent = '';
+                document.getElementById('btn-forrige').disabled = true;
+                document.getElementById('btn-neste').disabled = true;
+            }
+        }
+
         status.textContent = 'Sletter videoklipp…';
 
         try {
@@ -2882,37 +2913,22 @@
                 throw new Error(data.error || 'video-delete');
             }
 
-            videoer = videoer.filter((item) => item.name !== namn);
-            videoThumbCache.delete(namn);
-            videoThumbPromises.delete(namn);
-
-            if (valgtVideo >= videoer.length) {
-                valgtVideo = Math.max(0, videoer.length - 1);
-            }
-
-            const videoTeller = document.getElementById('teller-video');
-            if (videoTeller) videoTeller.textContent = videoer.length;
-
-            if (aktivTab === 'video') {
-                visFilmstripe();
-                if (videoer.length > 0) {
-                    visVideo(valgtVideo);
-                } else {
-                    bildeWrapper.classList.remove('video-visning');
-                    hovudvideo.pause();
-                    hovudvideo.removeAttribute('src');
-                    hovudvideo.load();
-                    document.getElementById('bilde-tid').textContent = '';
-                    document.getElementById('btn-forrige').disabled = true;
-                    document.getElementById('btn-neste').disabled = true;
-                }
-            }
-
+            videoerSomSlettes.delete(namn);
             status.textContent = 'Videoklipp slettet.';
             setTimeout(() => {
                 hentVideoer();
             }, 1200);
         } catch (e) {
+            videoerSomSlettes.delete(namn);
+            videoer = forrigeVideoer;
+            valgtVideo = Math.min(forrigeValgtVideo, Math.max(0, videoer.length - 1));
+            if (videoTeller) videoTeller.textContent = videoer.length;
+            if (aktivTab === 'video') {
+                visFilmstripe();
+                if (videoer.length > 0) {
+                    visVideo(valgtVideo);
+                }
+            }
             status.textContent = 'Kunne ikke slette videoklippet akkurat nå.';
         }
     }
