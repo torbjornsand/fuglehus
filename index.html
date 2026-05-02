@@ -374,10 +374,29 @@
         .kontroller {
             display: flex;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: space-between;
             padding: 18px 20px 12px;
             gap: 16px;
             flex-wrap: nowrap;
+        }
+
+        .kontroller-meta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-left: auto;
+            color: var(--muted);
+            font-size: 0.84rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .kontroller-meta svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            flex-shrink: 0;
         }
 
         .nav-gruppe {
@@ -615,6 +634,21 @@
         .tab.aktiv .tab-teller {
             background: rgba(255,255,255,0.14);
             color: rgba(255,255,255,0.82);
+        }
+
+        .tab-ny {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #ff8f5a 0%, #f26b3f 100%);
+            color: #fff;
+            font-size: 0.64rem;
+            font-weight: 800;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            box-shadow: 0 8px 18px rgba(242, 107, 63, 0.18);
         }
 
         .filmstripe {
@@ -869,6 +903,15 @@
             .kontroller {
                 padding: 14px 12px 14px;
                 gap: 10px;
+                align-items: flex-start;
+            }
+
+            .kontroller-meta {
+                font-size: 0.75rem;
+                gap: 8px;
+                max-width: 150px;
+                line-height: 1.25;
+                white-space: normal;
             }
 
             .nav-gruppe {
@@ -1186,7 +1229,7 @@
         .eggpoll-liste {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
 
         .eggpoll-liste-tittel {
@@ -1213,14 +1256,14 @@
         .eggpoll-oversikt {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
         }
 
         .eggpoll-rad {
             display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            padding: 12px 12px 10px;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 10px;
             border-radius: 16px;
             background: rgba(255,255,255,0.78);
             border: 1px solid rgba(11, 118, 109, 0.08);
@@ -1229,30 +1272,31 @@
         .eggpoll-datopill {
             flex-shrink: 0;
             min-width: 84px;
-            padding: 9px 12px;
+            padding: 6px 10px;
             border-radius: 14px;
             background: linear-gradient(180deg, rgba(20,184,166,0.12), rgba(20,184,166,0.06));
             color: var(--accent-strong);
             font-weight: 700;
+            font-size: 0.76rem;
             text-align: center;
         }
 
         .eggpoll-namn {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 6px;
         }
 
         .eggpoll-namnepill {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 7px 11px;
+            padding: 5px 9px;
             border-radius: 999px;
             background: #ffffff;
             border: 1px solid rgba(11, 118, 109, 0.1);
             color: var(--text);
-            font-size: 0.84rem;
+            font-size: 0.76rem;
             font-weight: 600;
         }
 
@@ -1465,37 +1509,65 @@
         }
 
         .eggantall-graf {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(126px, 1fr));
+            gap: 10px;
+        }
+
+        .eggantall-kortvisning {
+            min-height: 166px;
+            border-radius: 18px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(246,251,250,0.98));
+            border: 1px solid rgba(11, 118, 109, 0.1);
+            box-shadow: 0 12px 28px rgba(7, 31, 33, 0.08);
+            padding: 14px 12px 12px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
-        }
-
-        .eggantall-rad {
-            display: grid;
-            grid-template-columns: 36px minmax(0, 1fr) 34px;
-            gap: 10px;
             align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 10px;
         }
 
-        .eggantall-radlabel,
-        .eggantall-radtal {
-            color: var(--text);
-            font-size: 0.8rem;
+        .eggantall-korttal {
+            font-size: clamp(2.4rem, 4.4vw, 3.7rem);
+            line-height: 0.95;
+            font-weight: 400;
+            color: var(--ink);
+            letter-spacing: -0.05em;
+        }
+
+        .eggantall-korttal-enhet {
+            margin-left: 4px;
+            font-size: 0.32em;
+            letter-spacing: 0;
             font-weight: 700;
+            color: var(--muted);
         }
 
-        .eggantall-bar {
-            height: 12px;
-            border-radius: 999px;
-            background: rgba(11,118,109,0.09);
-            overflow: hidden;
+        .eggantall-kortegg {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 34px;
+            flex-wrap: wrap;
         }
 
-        .eggantall-barfill {
-            height: 100%;
-            border-radius: inherit;
-            background: linear-gradient(90deg, #ffbf69 0%, #f26b3f 100%);
-            min-width: 8px;
+        .eggantall-korteggikon {
+            width: 18px;
+            height: 24px;
+            border-radius: 50% 50% 48% 48%;
+            background: linear-gradient(180deg, #fff7e8 0%, #ffe5bf 100%);
+            border: 1px solid rgba(201, 144, 10, 0.22);
+            box-shadow: inset 0 -2px 0 rgba(255,255,255,0.58);
+            display: inline-block;
+        }
+
+        .eggantall-kortstemmer {
+            font-size: 0.82rem;
+            color: var(--text);
+            font-weight: 500;
         }
 
         @media (max-width: 760px) {
@@ -1505,6 +1577,10 @@
 
             .eggantall-innhald {
                 grid-template-columns: 1fr;
+            }
+
+            .eggantall-graf {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
             }
         }
 
@@ -1520,6 +1596,14 @@
             .eggantall-knapp {
                 min-height: 72px;
                 border-radius: 16px;
+            }
+
+            .eggantall-graf {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .eggantall-kortvisning {
+                min-height: 154px;
             }
         }
 
@@ -1994,8 +2078,14 @@
             </button>
             <span class="bilde-tid-tekst">–</span>
         </div>
+        <div class="kontroller-meta">
+            <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="9"></circle>
+                <path d="M12 7v5l3 2"></path>
+            </svg>
+            <span>Automatisk bilde hvert 10. minutt</span>
+        </div>
     </div>
-    <p class="side-undertittel">Automatisk bilde hvert 10. minutt</p>
     <p id="status"></p>
     <div class="capture-fremdrift" id="capture-fremdrift" aria-live="polite">
         <div class="capture-fremdrift-topp">
@@ -2020,6 +2110,7 @@
             <button class="tab" id="tab-video" onclick="byttTab('video')">
                 Video
                 <span class="tab-teller" id="teller-video">0</span>
+                <span class="tab-ny" id="tab-video-ny" hidden>Ny</span>
             </button>
         </div>
         <div class="filmstripe" id="filmstripe"></div>
@@ -2145,7 +2236,7 @@
                 <div class="eggpoll-status" id="eggpoll-status"></div>
                 <div class="eggpoll-liste">
                     <div class="eggpoll-liste-tittel">
-                        <span>Innkomne tips</span>
+                        <span>Tippelista</span>
                         <span class="eggpoll-total" id="eggpoll-total">0</span>
                     </div>
                     <div class="eggpoll-oversikt" id="eggpoll-oversikt"></div>
@@ -2244,7 +2335,8 @@
     let aktivMediaType = 'image';
     const videoThumbCache = new Map();
     const videoThumbPromises = new Map();
-    const videoerSomSlettes = new Set();
+    const videoerSomSlettes = new Map();
+    let harUlesteVideoer = false;
     let openVideoMeny = null;
 
     const preview    = document.getElementById('forhåndsvisning');
@@ -2278,6 +2370,7 @@
     const captureFremdriftFill = document.getElementById('capture-fremdrift-fill');
     const captureFremdriftTekst = document.getElementById('capture-fremdrift-tekst');
     const captureFremdriftTid = document.getElementById('capture-fremdrift-tid');
+    const tabVideoNy = document.getElementById('tab-video-ny');
 
     function vaerEmoji(symbol) {
         if (!symbol) return '\u26C5';
@@ -2362,6 +2455,26 @@
             .replace(/>/g, '&gt;')
             .replace(/"/g, '&quot;')
             .replace(/'/g, '&#39;');
+    }
+
+    function videoPieFarger(index) {
+        const farger = ['#0b766d', '#14b8a6', '#ffbf69', '#ff8f5a', '#84cc16', '#3b82f6', '#ec4899', '#8b5cf6'];
+        return farger[index % farger.length];
+    }
+
+    function oppdaterVideoNyBadge() {
+        if (!tabVideoNy) return;
+        tabVideoNy.hidden = !harUlesteVideoer || aktivTab === 'video';
+    }
+
+    function videoErMidlertidigSkjult(namn) {
+        const skjulTil = videoerSomSlettes.get(namn);
+        if (!skjulTil) return false;
+        if (Date.now() > skjulTil) {
+            videoerSomSlettes.delete(namn);
+            return false;
+        }
+        return true;
     }
 
     function lukkVideoMenyer() {
@@ -2646,25 +2759,34 @@
     function renderEggCountGraf() {
         if (!eggCountGraf) return;
 
-        const maxCount = Math.max(1, ...Array.from({ length: 15 }, (_, i) => Number(eggCountStats[i + 1] || 0)));
-        const totalVotes = Array.from({ length: 15 }, (_, i) => Number(eggCountStats[i + 1] || 0)).reduce((sum, value) => sum + value, 0);
+        const aktiveSvar = Array.from({ length: 15 }, (_, i) => {
+            const count = i + 1;
+            return { count, votes: Number(eggCountStats[count] || 0) };
+        }).filter((item) => item.votes > 0);
+
+        const totalVotes = aktiveSvar.reduce((sum, item) => sum + item.votes, 0);
 
         if (totalVotes === 0) {
             eggCountGraf.innerHTML = '<div class="eggpoll-tom">Ingen antallstips ennå. Send inn ditt først.</div>';
             return;
         }
 
-        eggCountGraf.innerHTML = Array.from({ length: 15 }, (_, i) => {
-            const count = i + 1;
-            const votes = Number(eggCountStats[count] || 0);
-            const width = votes > 0 ? Math.max(8, (votes / maxCount) * 100) : 0;
+        const sorterteSvar = [...aktiveSvar].sort((a, b) => {
+            if (b.votes !== a.votes) return b.votes - a.votes;
+            return a.count - b.count;
+        });
+
+        eggCountGraf.innerHTML = sorterteSvar.map((item) => {
+            const visEgg = Math.min(item.votes, 6);
+            const eggikoner = Array.from({ length: visEgg }, () => '<span class="eggantall-korteggikon" aria-hidden="true"></span>').join('');
+            const ekstraEgg = item.votes > visEgg ? `<span class="eggantall-kortstemmer">+${item.votes - visEgg}</span>` : '';
+            const stemmeTekst = item.votes === 1 ? '1 stemme' : `${item.votes} stemmer`;
+
             return `
-                <div class="eggantall-rad">
-                    <div class="eggantall-radlabel">${count}</div>
-                    <div class="eggantall-bar">
-                        <div class="eggantall-barfill" style="width:${width}%"></div>
-                    </div>
-                    <div class="eggantall-radtal">${votes}</div>
+                <div class="eggantall-kortvisning">
+                    <div class="eggantall-korttal">${item.count}<span class="eggantall-korttal-enhet">egg</span></div>
+                    <div class="eggantall-kortegg">${eggikoner}${ekstraEgg}</div>
+                    <div class="eggantall-kortstemmer">${stemmeTekst}</div>
                 </div>
             `;
         }).join('');
@@ -2826,6 +2948,7 @@
     }
 
     async function hentVideoer() {
+        const forrigeNyaste = videoer[0]?.name;
         try {
             let filer = [];
 
@@ -2846,15 +2969,20 @@
                         name: fil.name,
                         download_url: fil.download_url || `video/${fil.name}`,
                     }))
-                    .filter((fil) => !videoerSomSlettes.has(fil.name))
+                    .filter((fil) => !videoErMidlertidigSkjult(fil.name))
                     .sort((a, b) => b.name.localeCompare(a.name))
                 : [];
         } catch (e) {
             videoer = [];
         }
 
+        if (videoer.length > 0 && forrigeNyaste && videoer[0]?.name !== forrigeNyaste && aktivTab !== 'video') {
+            harUlesteVideoer = true;
+        }
+
         const videoTeller = document.getElementById('teller-video');
         if (videoTeller) videoTeller.textContent = videoer.length;
+        oppdaterVideoNyBadge();
         if (aktivTab === 'video') {
             visFilmstripe();
             if (videoer.length > 0) {
@@ -2873,7 +3001,7 @@
         const status = document.getElementById('status');
         const forrigeVideoer = [...videoer];
         const forrigeValgtVideo = valgtVideo;
-        videoerSomSlettes.add(namn);
+        videoerSomSlettes.set(namn, Date.now() + 90000);
         videoer = videoer.filter((item) => item.name !== namn);
         videoThumbCache.delete(namn);
         videoThumbPromises.delete(namn);
@@ -2913,11 +3041,10 @@
                 throw new Error(data.error || 'video-delete');
             }
 
-            videoerSomSlettes.delete(namn);
             status.textContent = 'Videoklipp slettet.';
             setTimeout(() => {
                 hentVideoer();
-            }, 1200);
+            }, 65000);
         } catch (e) {
             videoerSomSlettes.delete(namn);
             videoer = forrigeVideoer;
@@ -3390,6 +3517,10 @@
         document.getElementById('tab-tidslinje').classList.toggle('aktiv', tab === 'tidslinje');
         document.getElementById('tab-favoritter').classList.toggle('aktiv', tab === 'favoritter');
         document.getElementById('tab-video').classList.toggle('aktiv', tab === 'video');
+        if (tab === 'video') {
+            harUlesteVideoer = false;
+            oppdaterVideoNyBadge();
+        }
         visFilmstripe();
         if (tab === 'video') {
             if (videoer.length > 0) {
