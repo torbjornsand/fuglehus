@@ -102,10 +102,10 @@ def capture_and_push_video(duration: int, width: int, height: int, bitrate: str,
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--duration", type=int, default=15)
+    parser.add_argument("--duration", type=int, default=18)
     parser.add_argument("--width", type=int, default=1920)
     parser.add_argument("--height", type=int, default=1080)
-    parser.add_argument("--bitrate", default="1800k")
+    parser.add_argument("--bitrate", default="2800k")
     parser.add_argument("--framerate", type=int, default=25)
     args = parser.parse_args()
 

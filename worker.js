@@ -162,10 +162,10 @@ export default {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          duration: 15,
+          duration: 18,
           width: 1920,
           height: 1080,
-          bitrate: '1800k',
+          bitrate: '2800k',
           format: 'mp4',
         }),
       });
