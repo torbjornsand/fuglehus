@@ -3308,7 +3308,8 @@
                 }))
                 .sort((a, b) => b.name.localeCompare(a.name));
 
-            document.getElementById('teller-tidslinje').textContent = bilder.length;
+            const tellerTidslinje = document.getElementById('teller-tidslinje');
+            if (tellerTidslinje) tellerTidslinje.textContent = bilder.length;
             if (bilder.length > 0 && aktivTab !== 'video') {
                 visFilmstripe();
                 try {
@@ -3362,7 +3363,8 @@
     }
 
     function oppdaterFavorittTeller() {
-        document.getElementById('teller-favoritter').textContent = favoritter.size;
+        const tellerFavoritter = document.getElementById('teller-favoritter');
+        if (tellerFavoritter) tellerFavoritter.textContent = favoritter.size;
     }
 
     function visBilde(index, inline = 'center', behavior = 'smooth') {
