@@ -1184,6 +1184,9 @@
         .dagoppsummering-thumbtekst strong {
             color: var(--text-soft);
             font-weight: 700;
+            font-family: "Caveat", "Instrument Sans", system-ui, sans-serif;
+            font-size: 1.35rem;
+            font-weight: 700;
         }
 
         .dagoppsummering-signatur {
@@ -2342,7 +2345,7 @@
                     <img id="dagoppsummering-bilde" src="" alt="">
                 </button>
                 <div class="dagoppsummering-thumbtekst">
-                    <strong id="dagoppsummering-bildetekst">Dagens høydepunkt</strong>
+                    <strong id="dagoppsummering-bildetekst">Mitt favorittbilde</strong>
                     <span class="dagoppsummering-link">Åpne stort</span>
                 </div>
             </div>
@@ -2679,15 +2682,13 @@
 
         dagsoppsummering = data;
         dagOppsummeringKort.hidden = false;
-        dagOppsummeringDato.textContent = `Oppsummert ${formatSummaryDate(data.date)}`;
+        dagOppsummeringDato.textContent = formatSummaryDate(data.date);
         dagOppsummeringTekst.textContent = data.summary;
         dagOppsummeringBilde.src = data.hero_image_download_url;
         dagOppsummeringBilde.alt = data.hero_image_time
             ? `Dagens høydepunkt kl. ${data.hero_image_time}`
             : 'Dagens høydepunkt';
-        dagOppsummeringBildeTekst.textContent = data.hero_image_time
-            ? `Høydepunkt kl. ${data.hero_image_time}`
-            : 'Dagens høydepunkt';
+        dagOppsummeringBildeTekst.textContent = 'Mitt favorittbilde';
         dagOppsummeringSignatur.textContent = data.signature || 'Hilsen Else';
     }
 
