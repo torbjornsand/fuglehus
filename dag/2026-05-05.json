@@ -1,6 +1,6 @@
 {
   "date": "2026-05-05",
-  "generated_at": "2026-05-05T18:58:16.356Z",
+  "generated_at": "2026-05-05T20:40:06.371Z",
   "model": "gpt-4.1-mini",
   "source": "openai",
   "selected_images": [
@@ -8,35 +8,49 @@
       "name": "bilde_2026-05-05_06-00-01.jpg",
       "time": "06:00",
       "download_url": "bilde_2026-05-05_06-00-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/0436a056f4e7322a7345d9242d011d5e52f4b84e/bilde_2026-05-05_06-00-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/9f08cdb3f7cd9d5b4810927430b6b50f1cceaac4/bilde_2026-05-05_06-00-01.jpg",
       "favorite": true
     },
     {
       "name": "bilde_2026-05-05_19-30-01.jpg",
       "time": "19:30",
       "download_url": "bilde_2026-05-05_19-30-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/0436a056f4e7322a7345d9242d011d5e52f4b84e/bilde_2026-05-05_19-30-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/9f08cdb3f7cd9d5b4810927430b6b50f1cceaac4/bilde_2026-05-05_19-30-01.jpg",
       "favorite": true
     },
     {
       "name": "bilde_2026-05-05_20-00-01.jpg",
       "time": "20:00",
       "download_url": "bilde_2026-05-05_20-00-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/0436a056f4e7322a7345d9242d011d5e52f4b84e/bilde_2026-05-05_20-00-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/9f08cdb3f7cd9d5b4810927430b6b50f1cceaac4/bilde_2026-05-05_20-00-01.jpg",
       "favorite": true
     },
     {
       "name": "bilde_2026-05-05_20-10-01.jpg",
       "time": "20:10",
       "download_url": "bilde_2026-05-05_20-10-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/0436a056f4e7322a7345d9242d011d5e52f4b84e/bilde_2026-05-05_20-10-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/9f08cdb3f7cd9d5b4810927430b6b50f1cceaac4/bilde_2026-05-05_20-10-01.jpg",
+      "favorite": true
+    },
+    {
+      "name": "bilde_2026-05-05_20-20-01.jpg",
+      "time": "20:20",
+      "download_url": "bilde_2026-05-05_20-20-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/9f08cdb3f7cd9d5b4810927430b6b50f1cceaac4/bilde_2026-05-05_20-20-01.jpg",
+      "favorite": true
+    },
+    {
+      "name": "bilde_2026-05-05_20-50-01.jpg",
+      "time": "20:50",
+      "download_url": "bilde_2026-05-05_20-50-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/9f08cdb3f7cd9d5b4810927430b6b50f1cceaac4/bilde_2026-05-05_20-50-01.jpg",
       "favorite": true
     }
   ],
-  "hero_image": "bilde_2026-05-05_20-00-01.jpg",
-  "hero_image_download_url": "bilde_2026-05-05_20-00-01.jpg",
-  "hero_image_time": "20:00",
-  "summary": "I dag har jeg virkelig kost meg med redebygging – det er som å være interiørdesigner, bare med kvister og mose! Litt krøll med fjærene, men pytt, det er jo sjarmen med å være kjøttmeis. Nå er jeg klar for å legge egg og gjøre dette til et skikkelig hjemmekoselig sted.",
+  "hero_image": "bilde_2026-05-05_06-00-01.jpg",
+  "hero_image_download_url": "bilde_2026-05-05_06-00-01.jpg",
+  "hero_image_time": "06:00",
+  "summary": "I dag har jeg virkelig kost meg med å fikse rede! Det er litt som å være interiørdesigner, bare med mose og fjær. Jeg har snurpet og puffet på plass alt så det skal bli skikkelig koselig for småtassene som kommer. Nå er jeg klar for å ta kvelden med fjærene på plass og hodet fullt av planer.",
   "signature": "Hilsen Else",
-  "used_favorite_hero_image": false
+  "used_favorite_hero_image": true
 }
