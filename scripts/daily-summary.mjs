@@ -92,6 +92,15 @@ async function fetchFavorites() {
   }
 }
 
+function mergeSelectedWithFavorites(selectedImages, dayFavorites, maxImages) {
+  const merged = new Map();
+  dayFavorites.forEach((image) => merged.set(image.name, image));
+  selectedImages.forEach((image) => merged.set(image.name, image));
+  return [...merged.values()]
+    .sort((a, b) => a.name.localeCompare(b.name, 'en'))
+    .slice(0, Math.max(maxImages, dayFavorites.length));
+}
+
 function selectImages(images, maxImages) {
   if (images.length <= maxImages) return images;
 
@@ -156,6 +165,7 @@ function buildFallbackSummary(targetDate, images, selectedImages) {
     source: 'fallback',
     summary: `Kjære dagbok: Jeg hadde en travel dag i fuglehuset og stakk innom flere ganger for å holde orden på prosjektet mitt. Vertene fikk nok følge godt med, men jeg røper bare at reirarbeid fortsatt står høyt på planen.`,
     hero_image: selectedImages[Math.floor(selectedImages.length / 2)]?.name || selectedImages[0]?.name || null,
+    signature: 'Hilsen Else',
   };
 }
 
@@ -186,16 +196,19 @@ async function generateAiSummary(targetDate, images, selectedImages) {
         `Skriv i førsteperson som om Else selv oppsummerer dagen. ` +
         `Tonen kan være lett humoristisk og sjarmerende, men den må fortsatt være tydelig forankret i faktisk aktivitet i bildene. ` +
         `Ikke dikt opp ting som ikke kan støttes av bildene. ` +
-        `Svar KUN med gyldig JSON med feltene: summary, hero_image. ` +
+        `Velg et hero_image der Else faktisk er tydelig synlig dersom et slikt bilde finnes. ` +
+        `Hvis flere bilder viser Else tydelig, velg det som best føles som dagens høydepunkt. ` +
+        `Svar KUN med gyldig JSON med feltene: summary, hero_image, signature. ` +
         `summary skal være 2 til 4 korte setninger på norsk. ` +
-        `hero_image må være nøyaktig ett av filnavnene du får oppgitt.`,
+        `hero_image må være nøyaktig ett av filnavnene du får oppgitt. ` +
+        `signature skal være en kort signatur fra Else, for eksempel 'Hilsen Else'.`,
     },
   ];
 
   selectedImages.forEach((image, index) => {
     content.push({
       type: 'text',
-      text: `Bilde ${index + 1}: filename=${image.name}, tidspunkt=${image.timestamp.label}`,
+      text: `Bilde ${index + 1}: filename=${image.name}, tidspunkt=${image.timestamp.label}${image.favorite ? ', favoritt=ja' : ''}`,
     });
     content.push({
       type: 'image_url',
@@ -242,6 +255,7 @@ async function generateAiSummary(targetDate, images, selectedImages) {
     source: 'openai',
     summary: parsed.summary,
     hero_image: parsed.hero_image,
+    signature: parsed.signature || 'Hilsen Else',
   };
 }
 
@@ -260,15 +274,20 @@ async function main() {
     return;
   }
 
-  const selectedImages = selectImages(images, MAX_SELECTED_IMAGES);
   const favorites = await fetchFavorites();
-  const favoriteImagesForDay = selectedImages.filter((image) => favorites.includes(image.name));
+  const favoriteImagesForDay = images.filter((image) => favorites.includes(image.name));
+  let selectedImages = selectImages(images, MAX_SELECTED_IMAGES);
+  selectedImages = mergeSelectedWithFavorites(selectedImages, favoriteImagesForDay, MAX_SELECTED_IMAGES);
+    selectedImages = selectedImages.map((image) => ({
+      ...image,
+      favorite: favorites.includes(image.name),
+    }));
   const aiSummary = await generateAiSummary(TARGET_DATE, images, selectedImages);
-  const favoriteHeroName = favoriteImagesForDay[0]?.name || null;
   const aiHeroName = selectedImages.some((image) => image.name === aiSummary.hero_image)
     ? aiSummary.hero_image
     : null;
-  const heroImageName = favoriteHeroName || aiHeroName || selectedImages[0]?.name || null;
+  const fallbackFavoriteHero = favoriteImagesForDay[0]?.name || null;
+  const heroImageName = aiHeroName || fallbackFavoriteHero || selectedImages[0]?.name || null;
   const heroImage = selectedImages.find((image) => image.name === heroImageName) || null;
 
   const summary = {
@@ -281,12 +300,14 @@ async function main() {
       time: image.timestamp.label,
       download_url: image.download_url,
       raw_url: image.raw_url,
+      favorite: Boolean(image.favorite),
     })),
     hero_image: heroImage?.name || null,
     hero_image_download_url: heroImage?.download_url || null,
     hero_image_time: heroImage?.timestamp.label || null,
     summary: aiSummary.summary,
-    used_favorite_hero_image: Boolean(favoriteHeroName),
+    signature: aiSummary.signature || 'Hilsen Else',
+    used_favorite_hero_image: Boolean(fallbackFavoriteHero && heroImage?.name === fallbackFavoriteHero),
   };
 
   await writeSummaryFile(summary);

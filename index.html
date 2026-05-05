@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
     <title>Fuglehus – Karstenvegen 6C</title>
     <style>
         :root {
@@ -1088,11 +1089,19 @@
 
         .dagoppsummering-kort {
             margin-top: 18px;
-            background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(242,251,250,0.9));
+            background:
+                linear-gradient(180deg, rgba(255,253,248,0.98), rgba(248,252,250,0.96)),
+                repeating-linear-gradient(
+                    180deg,
+                    transparent 0,
+                    transparent 30px,
+                    rgba(15, 155, 142, 0.06) 30px,
+                    rgba(15, 155, 142, 0.06) 31px
+                );
             border: 1px solid rgba(15, 155, 142, 0.14);
-            border-radius: 24px;
-            padding: 20px;
-            box-shadow: var(--shadow-soft);
+            border-radius: 26px;
+            padding: 22px 22px 20px;
+            box-shadow: 0 18px 36px rgba(11, 71, 79, 0.1);
         }
 
         .dagoppsummering-kort[hidden] {
@@ -1108,16 +1117,20 @@
         }
 
         .dagoppsummering-tittel {
-            font-size: 1.15rem;
+            font-size: 1.55rem;
             font-weight: 700;
-            letter-spacing: -0.03em;
+            letter-spacing: -0.02em;
             color: var(--text);
             margin-bottom: 4px;
+            font-family: "Caveat", "Instrument Sans", system-ui, sans-serif;
         }
 
         .dagoppsummering-dato {
-            font-size: 0.86rem;
+            font-size: 0.8rem;
             color: var(--text-faint);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 700;
         }
 
         .dagoppsummering-innhald {
@@ -1128,9 +1141,10 @@
         }
 
         .dagoppsummering-tekst {
-            font-size: 0.98rem;
-            line-height: 1.6;
+            font-size: 1rem;
+            line-height: 1.72;
             color: var(--text-soft);
+            padding-top: 4px;
         }
 
         .dagoppsummering-media {
@@ -1172,6 +1186,14 @@
             font-weight: 700;
         }
 
+        .dagoppsummering-signatur {
+            margin-top: 16px;
+            color: var(--accent-strong);
+            font-family: "Caveat", "Instrument Sans", system-ui, sans-serif;
+            font-size: 1.55rem;
+            line-height: 1;
+        }
+
         .dagoppsummering-link {
             color: var(--accent-strong);
             font-weight: 700;
@@ -1192,6 +1214,10 @@
 
             .dagoppsummering-topp {
                 margin-bottom: 12px;
+            }
+
+            .dagoppsummering-tittel {
+                font-size: 1.45rem;
             }
 
             .dagoppsummering-innhald {
@@ -2302,13 +2328,14 @@
     <section class="dagoppsummering-kort" id="dagoppsummering-kort" hidden aria-labelledby="dagoppsummering-tittel">
         <div class="dagoppsummering-topp">
             <div>
-                <h3 class="dagoppsummering-tittel" id="dagoppsummering-tittel">Dagens aktivitet</h3>
+                <h3 class="dagoppsummering-tittel" id="dagoppsummering-tittel">Elses dagbok</h3>
                 <p class="dagoppsummering-dato" id="dagoppsummering-dato">Laster oppsummering…</p>
             </div>
         </div>
         <div class="dagoppsummering-innhald">
             <div>
                 <p class="dagoppsummering-tekst" id="dagoppsummering-tekst"></p>
+                <p class="dagoppsummering-signatur" id="dagoppsummering-signatur">Hilsen Else</p>
             </div>
             <div class="dagoppsummering-media">
                 <button class="dagoppsummering-thumb" id="dagoppsummering-thumb" type="button" aria-label="Vis dagens høydepunkt">
@@ -2576,6 +2603,7 @@
     const dagOppsummeringKort = document.getElementById('dagoppsummering-kort');
     const dagOppsummeringDato = document.getElementById('dagoppsummering-dato');
     const dagOppsummeringTekst = document.getElementById('dagoppsummering-tekst');
+    const dagOppsummeringSignatur = document.getElementById('dagoppsummering-signatur');
     const dagOppsummeringThumb = document.getElementById('dagoppsummering-thumb');
     const dagOppsummeringBilde = document.getElementById('dagoppsummering-bilde');
     const dagOppsummeringBildeTekst = document.getElementById('dagoppsummering-bildetekst');
@@ -2660,6 +2688,7 @@
         dagOppsummeringBildeTekst.textContent = data.hero_image_time
             ? `Høydepunkt kl. ${data.hero_image_time}`
             : 'Dagens høydepunkt';
+        dagOppsummeringSignatur.textContent = data.signature || 'Hilsen Else';
     }
 
     async function åpneOppsummeringsbilde() {
