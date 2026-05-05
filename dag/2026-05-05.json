@@ -1,98 +1,42 @@
 {
   "date": "2026-05-05",
-  "generated_at": "2026-05-05T18:22:33.679Z",
-  "model": null,
-  "source": "fallback",
+  "generated_at": "2026-05-05T18:58:16.356Z",
+  "model": "gpt-4.1-mini",
+  "source": "openai",
   "selected_images": [
     {
       "name": "bilde_2026-05-05_06-00-01.jpg",
       "time": "06:00",
       "download_url": "bilde_2026-05-05_06-00-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/main/bilde_2026-05-05_06-00-01.jpg",
-      "favorite": false
-    },
-    {
-      "name": "bilde_2026-05-05_07-20-01.jpg",
-      "time": "07:20",
-      "download_url": "bilde_2026-05-05_07-20-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/main/bilde_2026-05-05_07-20-01.jpg",
-      "favorite": false
-    },
-    {
-      "name": "bilde_2026-05-05_08-10-01.jpg",
-      "time": "08:10",
-      "download_url": "bilde_2026-05-05_08-10-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/main/bilde_2026-05-05_08-10-01.jpg",
-      "favorite": false
-    },
-    {
-      "name": "bilde_2026-05-05_10-30-01.jpg",
-      "time": "10:30",
-      "download_url": "bilde_2026-05-05_10-30-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/main/bilde_2026-05-05_10-30-01.jpg",
-      "favorite": false
-    },
-    {
-      "name": "bilde_2026-05-05_11-20-01.jpg",
-      "time": "11:20",
-      "download_url": "bilde_2026-05-05_11-20-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/main/bilde_2026-05-05_11-20-01.jpg",
-      "favorite": false
-    },
-    {
-      "name": "bilde_2026-05-05_13-40-02.jpg",
-      "time": "13:40",
-      "download_url": "bilde_2026-05-05_13-40-02.jpg",
-      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/main/bilde_2026-05-05_13-40-02.jpg",
-      "favorite": false
-    },
-    {
-      "name": "bilde_2026-05-05_15-20-01.jpg",
-      "time": "15:20",
-      "download_url": "bilde_2026-05-05_15-20-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/main/bilde_2026-05-05_15-20-01.jpg",
-      "favorite": false
-    },
-    {
-      "name": "bilde_2026-05-05_16-50-02.jpg",
-      "time": "16:50",
-      "download_url": "bilde_2026-05-05_16-50-02.jpg",
-      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/main/bilde_2026-05-05_16-50-02.jpg",
-      "favorite": false
-    },
-    {
-      "name": "bilde_2026-05-05_17-40-01.jpg",
-      "time": "17:40",
-      "download_url": "bilde_2026-05-05_17-40-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/main/bilde_2026-05-05_17-40-01.jpg",
-      "favorite": false
-    },
-    {
-      "name": "bilde_2026-05-05_18-10-02.jpg",
-      "time": "18:10",
-      "download_url": "bilde_2026-05-05_18-10-02.jpg",
-      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/main/bilde_2026-05-05_18-10-02.jpg",
-      "favorite": false
+      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/0436a056f4e7322a7345d9242d011d5e52f4b84e/bilde_2026-05-05_06-00-01.jpg",
+      "favorite": true
     },
     {
       "name": "bilde_2026-05-05_19-30-01.jpg",
       "time": "19:30",
       "download_url": "bilde_2026-05-05_19-30-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/main/bilde_2026-05-05_19-30-01.jpg",
-      "favorite": false
+      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/0436a056f4e7322a7345d9242d011d5e52f4b84e/bilde_2026-05-05_19-30-01.jpg",
+      "favorite": true
+    },
+    {
+      "name": "bilde_2026-05-05_20-00-01.jpg",
+      "time": "20:00",
+      "download_url": "bilde_2026-05-05_20-00-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/0436a056f4e7322a7345d9242d011d5e52f4b84e/bilde_2026-05-05_20-00-01.jpg",
+      "favorite": true
     },
     {
       "name": "bilde_2026-05-05_20-10-01.jpg",
       "time": "20:10",
       "download_url": "bilde_2026-05-05_20-10-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/main/bilde_2026-05-05_20-10-01.jpg",
-      "favorite": false
+      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/0436a056f4e7322a7345d9242d011d5e52f4b84e/bilde_2026-05-05_20-10-01.jpg",
+      "favorite": true
     }
   ],
-  "hero_image": "bilde_2026-05-05_15-20-01.jpg",
-  "hero_image_download_url": "bilde_2026-05-05_15-20-01.jpg",
-  "hero_image_time": "15:20",
-  "summary": "Kjære dagbok: Jeg hadde en travel dag i fuglehuset og stakk innom flere ganger for å holde orden på prosjektet mitt. Vertene fikk nok følge godt med, men jeg røper bare at reirarbeid fortsatt står høyt på planen.",
+  "hero_image": "bilde_2026-05-05_20-00-01.jpg",
+  "hero_image_download_url": "bilde_2026-05-05_20-00-01.jpg",
+  "hero_image_time": "20:00",
+  "summary": "I dag har jeg virkelig kost meg med redebygging – det er som å være interiørdesigner, bare med kvister og mose! Litt krøll med fjærene, men pytt, det er jo sjarmen med å være kjøttmeis. Nå er jeg klar for å legge egg og gjøre dette til et skikkelig hjemmekoselig sted.",
   "signature": "Hilsen Else",
   "used_favorite_hero_image": false
 }
