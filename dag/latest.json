@@ -1,0 +1,91 @@
+{
+  "date": "2026-05-02",
+  "generated_at": "2026-05-05T17:33:03.951Z",
+  "model": null,
+  "source": "fallback",
+  "total_images": 99,
+  "selected_images": [
+    {
+      "name": "bilde_2026-05-02_06-00-01.jpg",
+      "time": "06:00",
+      "download_url": "bilde_2026-05-02_06-00-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/main/bilde_2026-05-02_06-00-01.jpg"
+    },
+    {
+      "name": "bilde_2026-05-02_06-40-01.jpg",
+      "time": "06:40",
+      "download_url": "bilde_2026-05-02_06-40-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/main/bilde_2026-05-02_06-40-01.jpg"
+    },
+    {
+      "name": "bilde_2026-05-02_07-30-01.jpg",
+      "time": "07:30",
+      "download_url": "bilde_2026-05-02_07-30-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/main/bilde_2026-05-02_07-30-01.jpg"
+    },
+    {
+      "name": "bilde_2026-05-02_08-20-01.jpg",
+      "time": "08:20",
+      "download_url": "bilde_2026-05-02_08-20-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/main/bilde_2026-05-02_08-20-01.jpg"
+    },
+    {
+      "name": "bilde_2026-05-02_09-30-02.jpg",
+      "time": "09:30",
+      "download_url": "bilde_2026-05-02_09-30-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/main/bilde_2026-05-02_09-30-02.jpg"
+    },
+    {
+      "name": "bilde_2026-05-02_10-30-02.jpg",
+      "time": "10:30",
+      "download_url": "bilde_2026-05-02_10-30-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/main/bilde_2026-05-02_10-30-02.jpg"
+    },
+    {
+      "name": "bilde_2026-05-02_14-50-01.jpg",
+      "time": "14:50",
+      "download_url": "bilde_2026-05-02_14-50-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/main/bilde_2026-05-02_14-50-01.jpg"
+    },
+    {
+      "name": "bilde_2026-05-02_15-00-01.jpg",
+      "time": "15:00",
+      "download_url": "bilde_2026-05-02_15-00-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/main/bilde_2026-05-02_15-00-01.jpg"
+    },
+    {
+      "name": "bilde_2026-05-02_18-40-01.jpg",
+      "time": "18:40",
+      "download_url": "bilde_2026-05-02_18-40-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/main/bilde_2026-05-02_18-40-01.jpg"
+    },
+    {
+      "name": "bilde_2026-05-02_19-40-02.jpg",
+      "time": "19:40",
+      "download_url": "bilde_2026-05-02_19-40-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/main/bilde_2026-05-02_19-40-02.jpg"
+    },
+    {
+      "name": "bilde_2026-05-02_21-20-02.jpg",
+      "time": "21:20",
+      "download_url": "bilde_2026-05-02_21-20-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/main/bilde_2026-05-02_21-20-02.jpg"
+    },
+    {
+      "name": "bilde_2026-05-02_21-50-01.jpg",
+      "time": "21:50",
+      "download_url": "bilde_2026-05-02_21-50-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/main/bilde_2026-05-02_21-50-01.jpg"
+    }
+  ],
+  "hero_image": "bilde_2026-05-02_14-50-01.jpg",
+  "hero_image_download_url": "bilde_2026-05-02_14-50-01.jpg",
+  "hero_image_time": "14:50",
+  "summary": "Det ble tatt 99 bilder 2026-05-02. Aktiviteten fordelte seg over 10 tidsrom gjennom dagen, med utvalgte nøkkelbilder fra 06:00 til 21:50.",
+  "activity_level": "high",
+  "highlights": [
+    "Totalt 99 bilder fra dagen",
+    "Utvalgt 12 nøkkelbilder til oppsummeringen",
+    "Dekker tidsrommet 06:00–21:50"
+  ]
+}
