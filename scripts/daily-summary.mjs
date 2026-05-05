@@ -194,9 +194,11 @@ async function generateAiSummary(targetDate, images, selectedImages) {
         `Du lager en kort norsk dagboknotis for fuglekassekameraet. ` +
         `Bildene er fra ${targetDate} og viser aktivitet rundt kjøttmeisen Else. ` +
         `Skriv i førsteperson som om Else selv oppsummerer dagen. ` +
-        `Tonen kan være lett humoristisk og sjarmerende, men den må fortsatt være tydelig forankret i faktisk aktivitet i bildene. ` +
-        `Ikke dikt opp ting som ikke kan støttes av bildene. ` +
-        `Velg et hero_image der Else faktisk er tydelig synlig dersom et slikt bilde finnes. ` +
+        `Tonen skal gjerne være litt mer humoristisk, leken og personlig, som en liten dagboknotis med glimt i øyet. ` +
+        `Du kan bruke morsomme vendinger og små observasjoner om stemning, men den må fortsatt være tydelig forankret i faktisk aktivitet i bildene. ` +
+        `Ikke dikt opp konkrete hendelser, besøk eller værforhold som ikke kan støttes av bildene. ` +
+        `Velg et hero_image der Else faktisk er tydelig synlig, og prioriter nærvær, kropp eller hode fremfor tom kasse eller bare miljø. ` +
+        `Hvis flere bilder viser Else, velg det bildet der hun fremstår tydeligst og mest sentralt. ` +
         `Hvis flere bilder viser Else tydelig, velg det som best føles som dagens høydepunkt. ` +
         `Svar KUN med gyldig JSON med feltene: summary, hero_image, signature. ` +
         `summary skal være 2 til 4 korte setninger på norsk. ` +
@@ -276,12 +278,15 @@ async function main() {
 
   const favorites = await fetchFavorites();
   const favoriteImagesForDay = images.filter((image) => favorites.includes(image.name));
-  let selectedImages = selectImages(images, MAX_SELECTED_IMAGES);
-  selectedImages = mergeSelectedWithFavorites(selectedImages, favoriteImagesForDay, MAX_SELECTED_IMAGES);
-    selectedImages = selectedImages.map((image) => ({
-      ...image,
-      favorite: favorites.includes(image.name),
-    }));
+  const baseImages = favoriteImagesForDay.length
+    ? favoriteImagesForDay
+    : selectImages(images, MAX_SELECTED_IMAGES);
+
+  let selectedImages = baseImages.map((image) => ({
+    ...image,
+    favorite: favorites.includes(image.name),
+  }));
+
   const aiSummary = await generateAiSummary(TARGET_DATE, images, selectedImages);
   const aiHeroName = selectedImages.some((image) => image.name === aiSummary.hero_image)
     ? aiSummary.hero_image
@@ -311,7 +316,7 @@ async function main() {
   };
 
   await writeSummaryFile(summary);
-  console.log(`Oppdatert dagsoppsummering for ${TARGET_DATE} med ${selectedImages.length} utvalgte bilder.`);
+  console.log(`Oppdatert dagsoppsummering for ${TARGET_DATE} med ${selectedImages.length} bilder i AI-utvalget.`);
 }
 
 main().catch((error) => {
