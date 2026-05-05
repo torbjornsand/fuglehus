@@ -1107,24 +1107,12 @@
             margin-bottom: 14px;
         }
 
-        .dagoppsummering-etikett {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 8px;
-            color: var(--accent-strong);
-            font-size: 0.78rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-        }
-
         .dagoppsummering-tittel {
             font-size: 1.15rem;
             font-weight: 700;
             letter-spacing: -0.03em;
             color: var(--text);
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
         .dagoppsummering-dato {
@@ -1132,50 +1120,17 @@
             color: var(--text-faint);
         }
 
-        .dagoppsummering-niva {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 88px;
-            padding: 8px 12px;
-            border-radius: 999px;
-            background: rgba(15, 155, 142, 0.1);
-            color: var(--accent-strong);
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
         .dagoppsummering-innhald {
             display: grid;
-            grid-template-columns: minmax(0, 1.35fr) minmax(220px, 0.95fr);
+            grid-template-columns: minmax(0, 1.45fr) minmax(220px, 0.9fr);
             gap: 18px;
             align-items: start;
         }
 
         .dagoppsummering-tekst {
-            font-size: 0.96rem;
+            font-size: 0.98rem;
             line-height: 1.6;
             color: var(--text-soft);
-        }
-
-        .dagoppsummering-punkter {
-            margin-top: 14px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .dagoppsummering-punkt {
-            display: inline-flex;
-            align-items: center;
-            padding: 8px 12px;
-            border-radius: 999px;
-            background: rgba(15, 155, 142, 0.08);
-            color: var(--text-soft);
-            font-size: 0.8rem;
-            font-weight: 600;
         }
 
         .dagoppsummering-media {
@@ -1236,8 +1191,7 @@
             }
 
             .dagoppsummering-topp {
-                flex-direction: column;
-                gap: 10px;
+                margin-bottom: 12px;
             }
 
             .dagoppsummering-innhald {
@@ -2348,16 +2302,13 @@
     <section class="dagoppsummering-kort" id="dagoppsummering-kort" hidden aria-labelledby="dagoppsummering-tittel">
         <div class="dagoppsummering-topp">
             <div>
-                <div class="dagoppsummering-etikett">AI-oppsummering</div>
                 <h3 class="dagoppsummering-tittel" id="dagoppsummering-tittel">Dagens aktivitet</h3>
                 <p class="dagoppsummering-dato" id="dagoppsummering-dato">Laster oppsummering…</p>
             </div>
-            <div class="dagoppsummering-niva" id="dagoppsummering-niva">Middels</div>
         </div>
         <div class="dagoppsummering-innhald">
             <div>
                 <p class="dagoppsummering-tekst" id="dagoppsummering-tekst"></p>
-                <div class="dagoppsummering-punkter" id="dagoppsummering-punkter"></div>
             </div>
             <div class="dagoppsummering-media">
                 <button class="dagoppsummering-thumb" id="dagoppsummering-thumb" type="button" aria-label="Vis dagens høydepunkt">
@@ -2624,9 +2575,7 @@
     const galleriNeste = document.getElementById('galleri-neste');
     const dagOppsummeringKort = document.getElementById('dagoppsummering-kort');
     const dagOppsummeringDato = document.getElementById('dagoppsummering-dato');
-    const dagOppsummeringNiva = document.getElementById('dagoppsummering-niva');
     const dagOppsummeringTekst = document.getElementById('dagoppsummering-tekst');
-    const dagOppsummeringPunkter = document.getElementById('dagoppsummering-punkter');
     const dagOppsummeringThumb = document.getElementById('dagoppsummering-thumb');
     const dagOppsummeringBilde = document.getElementById('dagoppsummering-bilde');
     const dagOppsummeringBildeTekst = document.getElementById('dagoppsummering-bildetekst');
@@ -2663,12 +2612,6 @@
             month: 'long',
             year: 'numeric',
         }).format(date);
-    }
-
-    function summaryLevelText(level) {
-        if (level === 'high') return 'Høy aktivitet';
-        if (level === 'low') return 'Rolig dag';
-        return 'Middels aktivitet';
     }
 
     async function hentVaer() {
@@ -2709,7 +2652,6 @@
         dagsoppsummering = data;
         dagOppsummeringKort.hidden = false;
         dagOppsummeringDato.textContent = `Oppsummert ${formatSummaryDate(data.date)}`;
-        dagOppsummeringNiva.textContent = summaryLevelText(data.activity_level);
         dagOppsummeringTekst.textContent = data.summary;
         dagOppsummeringBilde.src = data.hero_image_download_url;
         dagOppsummeringBilde.alt = data.hero_image_time
@@ -2718,14 +2660,6 @@
         dagOppsummeringBildeTekst.textContent = data.hero_image_time
             ? `Høydepunkt kl. ${data.hero_image_time}`
             : 'Dagens høydepunkt';
-
-        dagOppsummeringPunkter.innerHTML = '';
-        (data.highlights || []).forEach((punkt) => {
-            const el = document.createElement('span');
-            el.className = 'dagoppsummering-punkt';
-            el.textContent = punkt;
-            dagOppsummeringPunkter.appendChild(el);
-        });
     }
 
     async function åpneOppsummeringsbilde() {

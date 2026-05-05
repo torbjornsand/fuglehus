@@ -13,6 +13,7 @@ const OPENAI_API_KEY = process.env.OPENAI_API_KEY || '';
 const REPO_SLUG = process.env.GITHUB_REPOSITORY || 'torbjornsand/fuglehus';
 const REPO_REF = process.env.GITHUB_SHA || 'main';
 const MAX_SELECTED_IMAGES = Number(process.env.DAILY_SUMMARY_MAX_IMAGES || 12);
+const FAVORITES_URL = process.env.FAVORITES_URL || 'https://fuglehus.torbjs.workers.dev/favorites';
 const TARGET_DATE = process.argv.find((arg) => arg.startsWith('--date='))?.split('=')[1] || formatOsloDate(new Date());
 
 function formatOsloDate(date) {
@@ -79,6 +80,18 @@ async function listImagesForDate(targetDate) {
   return images;
 }
 
+async function fetchFavorites() {
+  try {
+    const response = await fetch(FAVORITES_URL, { headers: { Accept: 'application/json' } });
+    if (!response.ok) throw new Error(`favorites-${response.status}`);
+    const data = await response.json();
+    if (!Array.isArray(data)) return [];
+    return data.filter((value) => typeof value === 'string');
+  } catch {
+    return [];
+  }
+}
+
 function selectImages(images, maxImages) {
   if (images.length <= maxImages) return images;
 
@@ -139,19 +152,9 @@ function selectImages(images, maxImages) {
 }
 
 function buildFallbackSummary(targetDate, images, selectedImages) {
-  const first = selectedImages[0];
-  const last = selectedImages.at(-1);
-  const hours = new Set(selectedImages.map((image) => image.timestamp.hh));
-
   return {
     source: 'fallback',
-    summary: `Det ble tatt ${images.length} bilder ${targetDate}. Aktiviteten fordelte seg over ${hours.size} tidsrom gjennom dagen, med utvalgte nøkkelbilder fra ${first?.timestamp.label || 'ukjent tidspunkt'} til ${last?.timestamp.label || 'ukjent tidspunkt'}.`,
-    activity_level: images.length >= 30 ? 'high' : images.length >= 12 ? 'medium' : 'low',
-    highlights: [
-      `Totalt ${images.length} bilder fra dagen`,
-      `Utvalgt ${selectedImages.length} nøkkelbilder til oppsummeringen`,
-      first && last ? `Dekker tidsrommet ${first.timestamp.label}–${last.timestamp.label}` : 'Dagen mangler komplette tidsdata',
-    ].filter(Boolean),
+    summary: `Kjære dagbok: Jeg hadde en travel dag i fuglehuset og stakk innom flere ganger for å holde orden på prosjektet mitt. Vertene fikk nok følge godt med, men jeg røper bare at reirarbeid fortsatt står høyt på planen.`,
     hero_image: selectedImages[Math.floor(selectedImages.length / 2)]?.name || selectedImages[0]?.name || null,
   };
 }
@@ -178,13 +181,14 @@ async function generateAiSummary(targetDate, images, selectedImages) {
     {
       type: 'text',
       text:
-        `Du lager en kort norsk dagsoppsummering for et fuglekassekamera. ` +
+        `Du lager en kort norsk dagboknotis for fuglekassekameraet. ` +
         `Bildene er fra ${targetDate} og viser aktivitet rundt kjøttmeisen Else. ` +
-        `Svar KUN med gyldig JSON med feltene: summary, activity_level, highlights, hero_image. ` +
-        `activity_level må være en av: low, medium, high. ` +
-        `highlights må være en liste med 2 til 4 korte punkter på norsk. ` +
-        `hero_image må være nøyaktig ett av filnavnene du får oppgitt. ` +
-        `Ikke dikt opp ting du ikke ser. Vær konkret, kort og nøktern.`,
+        `Skriv i førsteperson som om Else selv oppsummerer dagen. ` +
+        `Tonen kan være lett humoristisk og sjarmerende, men den må fortsatt være tydelig forankret i faktisk aktivitet i bildene. ` +
+        `Ikke dikt opp ting som ikke kan støttes av bildene. ` +
+        `Svar KUN med gyldig JSON med feltene: summary, hero_image. ` +
+        `summary skal være 2 til 4 korte setninger på norsk. ` +
+        `hero_image må være nøyaktig ett av filnavnene du får oppgitt.`,
     },
   ];
 
@@ -237,8 +241,6 @@ async function generateAiSummary(targetDate, images, selectedImages) {
   return {
     source: 'openai',
     summary: parsed.summary,
-    activity_level: ['low', 'medium', 'high'].includes(parsed.activity_level) ? parsed.activity_level : 'medium',
-    highlights: Array.isArray(parsed.highlights) ? parsed.highlights.slice(0, 4) : [],
     hero_image: parsed.hero_image,
   };
 }
@@ -259,10 +261,14 @@ async function main() {
   }
 
   const selectedImages = selectImages(images, MAX_SELECTED_IMAGES);
+  const favorites = await fetchFavorites();
+  const favoriteImagesForDay = selectedImages.filter((image) => favorites.includes(image.name));
   const aiSummary = await generateAiSummary(TARGET_DATE, images, selectedImages);
-  const heroImageName = selectedImages.some((image) => image.name === aiSummary.hero_image)
+  const favoriteHeroName = favoriteImagesForDay[0]?.name || null;
+  const aiHeroName = selectedImages.some((image) => image.name === aiSummary.hero_image)
     ? aiSummary.hero_image
-    : selectedImages[0]?.name || null;
+    : null;
+  const heroImageName = favoriteHeroName || aiHeroName || selectedImages[0]?.name || null;
   const heroImage = selectedImages.find((image) => image.name === heroImageName) || null;
 
   const summary = {
@@ -270,7 +276,6 @@ async function main() {
     generated_at: new Date().toISOString(),
     model: aiSummary.source === 'openai' ? MODEL : null,
     source: aiSummary.source,
-    total_images: images.length,
     selected_images: selectedImages.map((image) => ({
       name: image.name,
       time: image.timestamp.label,
@@ -281,8 +286,7 @@ async function main() {
     hero_image_download_url: heroImage?.download_url || null,
     hero_image_time: heroImage?.timestamp.label || null,
     summary: aiSummary.summary,
-    activity_level: aiSummary.activity_level,
-    highlights: aiSummary.highlights,
+    used_favorite_hero_image: Boolean(favoriteHeroName),
   };
 
   await writeSummaryFile(summary);

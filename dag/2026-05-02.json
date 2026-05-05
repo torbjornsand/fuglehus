@@ -1,9 +1,8 @@
 {
   "date": "2026-05-02",
-  "generated_at": "2026-05-05T17:33:03.951Z",
+  "generated_at": "2026-05-05T18:14:19.430Z",
   "model": null,
   "source": "fallback",
-  "total_images": 99,
   "selected_images": [
     {
       "name": "bilde_2026-05-02_06-00-01.jpg",
@@ -81,11 +80,6 @@
   "hero_image": "bilde_2026-05-02_14-50-01.jpg",
   "hero_image_download_url": "bilde_2026-05-02_14-50-01.jpg",
   "hero_image_time": "14:50",
-  "summary": "Det ble tatt 99 bilder 2026-05-02. Aktiviteten fordelte seg over 10 tidsrom gjennom dagen, med utvalgte nøkkelbilder fra 06:00 til 21:50.",
-  "activity_level": "high",
-  "highlights": [
-    "Totalt 99 bilder fra dagen",
-    "Utvalgt 12 nøkkelbilder til oppsummeringen",
-    "Dekker tidsrommet 06:00–21:50"
-  ]
+  "summary": "Kjære dagbok: Jeg hadde en travel dag i fuglehuset og stakk innom flere ganger for å holde orden på prosjektet mitt. Vertene fikk nok følge godt med, men jeg røper bare at reirarbeid fortsatt står høyt på planen.",
+  "used_favorite_hero_image": false
 }
