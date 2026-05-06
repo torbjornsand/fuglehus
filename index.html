@@ -1721,54 +1721,99 @@
         }
 
         .eggantall-graf {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(126px, 1fr));
+            display: flex;
+            flex-direction: column;
             gap: 10px;
         }
 
         .eggantall-kortvisning {
-            min-height: 166px;
+            position: relative;
+            min-height: 0;
             border-radius: 18px;
-            background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(246,251,250,0.98));
-            border: 1px solid rgba(11, 118, 109, 0.1);
-            box-shadow: 0 12px 28px rgba(7, 31, 33, 0.08);
-            padding: 14px 12px 12px;
+            background:
+                radial-gradient(circle at top right, rgba(255, 191, 105, 0.14), transparent 28%),
+                linear-gradient(180deg, rgba(255,255,255,0.99), rgba(246,251,250,0.98));
+            border: 1px solid rgba(11, 118, 109, 0.09);
+            box-shadow: 0 10px 22px rgba(7, 31, 33, 0.07);
+            padding: 12px 14px;
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            text-align: left;
+            gap: 12px;
+            overflow: hidden;
+        }
+
+        .eggantall-kortvisning::after {
+            content: none;
+        }
+
+        .eggantall-kortvisning.leder {
+            border-color: rgba(242, 107, 63, 0.18);
+            box-shadow: 0 14px 28px rgba(242, 107, 63, 0.12);
+        }
+
+        .eggantall-kortrang {
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            text-align: center;
-            gap: 10px;
+            min-width: 44px;
+            height: 24px;
+            padding: 0 10px;
+            border-radius: 999px;
+            background: rgba(11, 118, 109, 0.08);
+            color: var(--accent-strong);
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 0.03em;
+            flex-shrink: 0;
+        }
+
+        .eggantall-kortvisning.leder .eggantall-kortrang {
+            background: linear-gradient(180deg, rgba(255, 191, 105, 0.28), rgba(255, 143, 90, 0.18));
+            color: #9a4e10;
+        }
+
+        .eggantall-kortinfo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+            flex: 1 1 auto;
         }
 
         .eggantall-korttal {
-            font-size: clamp(2.4rem, 4.4vw, 3.7rem);
+            font-size: clamp(1.55rem, 2.6vw, 2rem);
             line-height: 0.95;
-            font-weight: 400;
-            color: var(--ink);
+            font-weight: 500;
+            color: var(--text);
             letter-spacing: -0.05em;
+            flex-shrink: 0;
         }
 
         .eggantall-korttal-enhet {
+            display: inline;
             margin-left: 4px;
-            font-size: 0.32em;
-            letter-spacing: 0;
+            margin-top: 0;
+            font-size: 0.42em;
+            letter-spacing: 0.01em;
             font-weight: 700;
-            color: var(--muted);
+            color: var(--text-faint);
         }
 
         .eggantall-kortegg {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 8px;
-            min-height: 34px;
+            justify-content: flex-start;
+            gap: 6px;
+            min-height: 22px;
             flex-wrap: wrap;
+            min-width: 0;
         }
 
         .eggantall-korteggikon {
-            width: 18px;
-            height: 24px;
+            width: 13px;
+            height: 18px;
             border-radius: 50% 50% 48% 48%;
             background: linear-gradient(180deg, #fff7e8 0%, #ffe5bf 100%);
             border: 1px solid rgba(201, 144, 10, 0.22);
@@ -1777,9 +1822,18 @@
         }
 
         .eggantall-kortstemmer {
-            font-size: 0.82rem;
-            color: var(--text);
-            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 28px;
+            padding: 7px 10px;
+            border-radius: 999px;
+            background: rgba(11, 118, 109, 0.07);
+            color: var(--text-soft);
+            font-size: 0.74rem;
+            font-weight: 700;
+            line-height: 1;
+            flex-shrink: 0;
         }
 
         @media (max-width: 760px) {
@@ -1789,10 +1843,6 @@
 
             .eggantall-innhald {
                 grid-template-columns: 1fr;
-            }
-
-            .eggantall-graf {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
             }
         }
 
@@ -1810,12 +1860,22 @@
                 border-radius: 16px;
             }
 
-            .eggantall-graf {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
+            .eggantall-kortvisning {
+                padding: 11px 12px;
+                gap: 10px;
             }
 
-            .eggantall-kortvisning {
-                min-height: 154px;
+            .eggantall-kortinfo {
+                gap: 10px;
+            }
+
+            .eggantall-korttal {
+                font-size: 1.4rem;
+            }
+
+            .eggantall-kortstemmer {
+                font-size: 0.7rem;
+                padding: 6px 9px;
             }
         }
 
@@ -3091,16 +3151,21 @@
             return a.count - b.count;
         });
 
-        eggCountGraf.innerHTML = sorterteSvar.map((item) => {
+        eggCountGraf.innerHTML = sorterteSvar.map((item, index) => {
             const visEgg = Math.min(item.votes, 6);
             const eggikoner = Array.from({ length: visEgg }, () => '<span class="eggantall-korteggikon" aria-hidden="true"></span>').join('');
             const ekstraEgg = item.votes > visEgg ? `<span class="eggantall-kortstemmer">+${item.votes - visEgg}</span>` : '';
             const stemmeTekst = item.votes === 1 ? '1 stemme' : `${item.votes} stemmer`;
+            const leiar = index === 0 ? ' leder' : '';
+            const rangTekst = index === 0 ? 'Mest' : `#${index + 1}`;
 
             return `
-                <div class="eggantall-kortvisning">
-                    <div class="eggantall-korttal">${item.count}<span class="eggantall-korttal-enhet">egg</span></div>
-                    <div class="eggantall-kortegg">${eggikoner}${ekstraEgg}</div>
+                <div class="eggantall-kortvisning${leiar}">
+                    <div class="eggantall-kortrang">${rangTekst}</div>
+                    <div class="eggantall-kortinfo">
+                        <div class="eggantall-korttal">${item.count}<span class="eggantall-korttal-enhet">egg</span></div>
+                        <div class="eggantall-kortegg">${eggikoner}${ekstraEgg}</div>
+                    </div>
                     <div class="eggantall-kortstemmer">${stemmeTekst}</div>
                 </div>
             `;
