@@ -1,122 +1,123 @@
 {
-  "date": "2026-05-04",
-  "generated_at": "2026-05-06T05:14:24.058Z",
+  "date": "2026-05-05",
+  "generated_at": "2026-05-06T06:39:59.933Z",
   "model": "gpt-4.1-mini",
   "source": "openai",
   "selected_images": [
     {
-      "name": "bilde_2026-05-04_06-00-01.jpg",
+      "name": "bilde_2026-05-05_06-00-01.jpg",
       "time": "06:00",
-      "download_url": "bilde_2026-05-04_06-00-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/0a3c84356b1f3c8422c17c0c15be4dfaa4f5c2c1/bilde_2026-05-04_06-00-01.jpg",
-      "favorite": false,
-      "else_visible": false,
-      "visibility_confidence": 0.1
-    },
-    {
-      "name": "bilde_2026-05-04_08-20-01.jpg",
-      "time": "08:20",
-      "download_url": "bilde_2026-05-04_08-20-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/0a3c84356b1f3c8422c17c0c15be4dfaa4f5c2c1/bilde_2026-05-04_08-20-01.jpg",
-      "favorite": false,
-      "else_visible": false,
-      "visibility_confidence": 0.1
-    },
-    {
-      "name": "bilde_2026-05-04_09-10-01.jpg",
-      "time": "09:10",
-      "download_url": "bilde_2026-05-04_09-10-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/0a3c84356b1f3c8422c17c0c15be4dfaa4f5c2c1/bilde_2026-05-04_09-10-01.jpg",
+      "download_url": "bilde_2026-05-05_06-00-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/21155385df9ca5346b10bc2a7f2514dd2c7343fe/bilde_2026-05-05_06-00-01.jpg",
       "favorite": true,
       "else_visible": true,
       "visibility_confidence": 0.95
     },
     {
-      "name": "bilde_2026-05-04_10-20-01.jpg",
-      "time": "10:20",
-      "download_url": "bilde_2026-05-04_10-20-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/0a3c84356b1f3c8422c17c0c15be4dfaa4f5c2c1/bilde_2026-05-04_10-20-01.jpg",
+      "name": "bilde_2026-05-05_07-20-01.jpg",
+      "time": "07:20",
+      "download_url": "bilde_2026-05-05_07-20-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/21155385df9ca5346b10bc2a7f2514dd2c7343fe/bilde_2026-05-05_07-20-01.jpg",
       "favorite": false,
       "else_visible": false,
       "visibility_confidence": 0.1
     },
     {
-      "name": "bilde_2026-05-04_14-50-01.jpg",
-      "time": "14:50",
-      "download_url": "bilde_2026-05-04_14-50-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/0a3c84356b1f3c8422c17c0c15be4dfaa4f5c2c1/bilde_2026-05-04_14-50-01.jpg",
-      "favorite": true,
-      "else_visible": true,
-      "visibility_confidence": 0.95
-    },
-    {
-      "name": "bilde_2026-05-04_15-00-01.jpg",
-      "time": "15:00",
-      "download_url": "bilde_2026-05-04_15-00-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/0a3c84356b1f3c8422c17c0c15be4dfaa4f5c2c1/bilde_2026-05-04_15-00-01.jpg",
+      "name": "bilde_2026-05-05_08-10-01.jpg",
+      "time": "08:10",
+      "download_url": "bilde_2026-05-05_08-10-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/21155385df9ca5346b10bc2a7f2514dd2c7343fe/bilde_2026-05-05_08-10-01.jpg",
       "favorite": false,
       "else_visible": false,
       "visibility_confidence": 0.1
     },
     {
-      "name": "bilde_2026-05-04_16-30-01.jpg",
-      "time": "16:30",
-      "download_url": "bilde_2026-05-04_16-30-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/0a3c84356b1f3c8422c17c0c15be4dfaa4f5c2c1/bilde_2026-05-04_16-30-01.jpg",
+      "name": "bilde_2026-05-05_11-20-01.jpg",
+      "time": "11:20",
+      "download_url": "bilde_2026-05-05_11-20-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/21155385df9ca5346b10bc2a7f2514dd2c7343fe/bilde_2026-05-05_11-20-01.jpg",
       "favorite": false,
       "else_visible": false,
       "visibility_confidence": 0.1
     },
     {
-      "name": "bilde_2026-05-04_17-40-01.jpg",
+      "name": "bilde_2026-05-05_13-40-02.jpg",
+      "time": "13:40",
+      "download_url": "bilde_2026-05-05_13-40-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/21155385df9ca5346b10bc2a7f2514dd2c7343fe/bilde_2026-05-05_13-40-02.jpg",
+      "favorite": false,
+      "else_visible": false,
+      "visibility_confidence": 0.1
+    },
+    {
+      "name": "bilde_2026-05-05_15-20-01.jpg",
+      "time": "15:20",
+      "download_url": "bilde_2026-05-05_15-20-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/21155385df9ca5346b10bc2a7f2514dd2c7343fe/bilde_2026-05-05_15-20-01.jpg",
+      "favorite": false,
+      "else_visible": false,
+      "visibility_confidence": 0.1
+    },
+    {
+      "name": "bilde_2026-05-05_16-50-02.jpg",
+      "time": "16:50",
+      "download_url": "bilde_2026-05-05_16-50-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/21155385df9ca5346b10bc2a7f2514dd2c7343fe/bilde_2026-05-05_16-50-02.jpg",
+      "favorite": false,
+      "else_visible": false,
+      "visibility_confidence": 0.1
+    },
+    {
+      "name": "bilde_2026-05-05_17-40-01.jpg",
       "time": "17:40",
-      "download_url": "bilde_2026-05-04_17-40-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/0a3c84356b1f3c8422c17c0c15be4dfaa4f5c2c1/bilde_2026-05-04_17-40-01.jpg",
+      "download_url": "bilde_2026-05-05_17-40-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/21155385df9ca5346b10bc2a7f2514dd2c7343fe/bilde_2026-05-05_17-40-01.jpg",
+      "favorite": false,
+      "else_visible": false,
+      "visibility_confidence": 0.1
+    },
+    {
+      "name": "bilde_2026-05-05_18-10-02.jpg",
+      "time": "18:10",
+      "download_url": "bilde_2026-05-05_18-10-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/21155385df9ca5346b10bc2a7f2514dd2c7343fe/bilde_2026-05-05_18-10-02.jpg",
+      "favorite": false,
+      "else_visible": false,
+      "visibility_confidence": 0.1
+    },
+    {
+      "name": "bilde_2026-05-05_19-30-01.jpg",
+      "time": "19:30",
+      "download_url": "bilde_2026-05-05_19-30-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/21155385df9ca5346b10bc2a7f2514dd2c7343fe/bilde_2026-05-05_19-30-01.jpg",
       "favorite": true,
       "else_visible": true,
       "visibility_confidence": 0.9
     },
     {
-      "name": "bilde_2026-05-04_17-53-28.jpg",
-      "time": "17:53",
-      "download_url": "bilde_2026-05-04_17-53-28.jpg",
-      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/0a3c84356b1f3c8422c17c0c15be4dfaa4f5c2c1/bilde_2026-05-04_17-53-28.jpg",
-      "favorite": false,
-      "else_visible": false,
-      "visibility_confidence": 0.1
-    },
-    {
-      "name": "bilde_2026-05-04_19-50-01.jpg",
-      "time": "19:50",
-      "download_url": "bilde_2026-05-04_19-50-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/0a3c84356b1f3c8422c17c0c15be4dfaa4f5c2c1/bilde_2026-05-04_19-50-01.jpg",
-      "favorite": false,
-      "else_visible": false,
-      "visibility_confidence": 0.1
-    },
-    {
-      "name": "bilde_2026-05-04_20-00-01.jpg",
+      "name": "bilde_2026-05-05_20-00-01.jpg",
       "time": "20:00",
-      "download_url": "bilde_2026-05-04_20-00-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/0a3c84356b1f3c8422c17c0c15be4dfaa4f5c2c1/bilde_2026-05-04_20-00-01.jpg",
+      "download_url": "bilde_2026-05-05_20-00-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/21155385df9ca5346b10bc2a7f2514dd2c7343fe/bilde_2026-05-05_20-00-01.jpg",
       "favorite": true,
       "else_visible": true,
       "visibility_confidence": 0.9
     },
     {
-      "name": "bilde_2026-05-04_21-30-01.jpg",
-      "time": "21:30",
-      "download_url": "bilde_2026-05-04_21-30-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/0a3c84356b1f3c8422c17c0c15be4dfaa4f5c2c1/bilde_2026-05-04_21-30-01.jpg",
+      "name": "bilde_2026-05-05_20-10-01.jpg",
+      "time": "20:10",
+      "download_url": "bilde_2026-05-05_20-10-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/torbjornsand/fuglehus/21155385df9ca5346b10bc2a7f2514dd2c7343fe/bilde_2026-05-05_20-10-01.jpg",
       "favorite": true,
       "else_visible": true,
       "visibility_confidence": 0.9
     }
   ],
-  "hero_image": "bilde_2026-05-04_09-10-01.jpg",
-  "hero_image_download_url": "bilde_2026-05-04_09-10-01.jpg",
-  "hero_image_time": "09:10",
-  "summary": "Else har vært innom flere ganger i løpet av dagen, med tydelig aktivitet både om formiddagen og sent på ettermiddagen. Bildene viser at det har vært godt lys i kassen, noe som tyder på klart vær. Aktiviteten virker å være jevn gjennom dagen med flere besøk.",
+  "hero_image": "bilde_2026-05-05_06-00-01.jpg",
+  "hero_image_download_url": "bilde_2026-05-05_06-00-01.jpg",
+  "hero_image_time": "06:00",
+  "summary": "Else har vært innom fuglekassen tidlig på dagen, med et tydelig besøk klokken 06:00. Det ser ut til å være roligere aktivitet utover dagen. Bildene tyder på at det var godt lys tidlig, men mørkere senere på dagen.",
   "signature": "Hilsen Else",
-  "used_favorite_hero_image": true
+  "used_favorite_hero_image": true,
+  "weather": null
 }
