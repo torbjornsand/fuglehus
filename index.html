@@ -1135,30 +1135,37 @@
 
         .dagoppsummering-innhald {
             display: grid;
-            grid-template-columns: minmax(0, 1.45fr) minmax(220px, 0.9fr);
-            gap: 18px;
-            align-items: start;
+            grid-template-columns: minmax(0, 1.3fr) minmax(260px, 1fr);
+            gap: 22px;
+            align-items: stretch;
+        }
+
+        .dagoppsummering-tekstblokk {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 100%;
         }
 
         .dagoppsummering-tekst {
             font-size: 1rem;
             line-height: 1.72;
             color: var(--text-soft);
-            padding-top: 4px;
         }
 
         .dagoppsummering-media {
             display: flex;
             flex-direction: column;
             gap: 10px;
+            align-items: center;
         }
 
         .dagoppsummering-thumb {
-            width: min(100%, 280px);
+            width: min(100%, 330px);
             aspect-ratio: auto;
             border: 0;
             border-radius: 20px;
-            padding: 12px 12px 28px;
+            padding: 14px 14px 34px;
             overflow: hidden;
             background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(250,248,242,0.96));
             box-shadow:
@@ -1226,6 +1233,10 @@
 
             .dagoppsummering-innhald {
                 grid-template-columns: 1fr;
+            }
+
+            .dagoppsummering-thumb {
+                width: min(100%, 312px);
             }
 
             .dagoppsummering-thumbtekst {
@@ -2332,12 +2343,12 @@
     <section class="dagoppsummering-kort" id="dagoppsummering-kort" hidden aria-labelledby="dagoppsummering-tittel">
         <div class="dagoppsummering-topp">
             <div>
-                <h3 class="dagoppsummering-tittel" id="dagoppsummering-tittel">Elses dagbok</h3>
+                <h3 class="dagoppsummering-tittel" id="dagoppsummering-tittel">Dagens aktivitet</h3>
                 <p class="dagoppsummering-dato" id="dagoppsummering-dato">Laster oppsummering…</p>
             </div>
         </div>
         <div class="dagoppsummering-innhald">
-            <div>
+            <div class="dagoppsummering-tekstblokk">
                 <p class="dagoppsummering-tekst" id="dagoppsummering-tekst"></p>
                 <p class="dagoppsummering-signatur" id="dagoppsummering-signatur">Hilsen Else</p>
             </div>

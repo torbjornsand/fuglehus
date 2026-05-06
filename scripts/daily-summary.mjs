@@ -10,6 +10,8 @@ const latestPath = path.join(outputDir, 'latest.json');
 
 const MODEL = process.env.OPENAI_MODEL || 'gpt-4.1-mini';
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY || '';
+const FROST_CLIENT_ID = process.env.FROST_CLIENT_ID || '';
+const FROST_SOURCE_ID = process.env.FROST_SOURCE_ID || '';
 const REPO_SLUG = process.env.GITHUB_REPOSITORY || 'torbjornsand/fuglehus';
 const REPO_REF = process.env.GITHUB_SHA || 'main';
 const MAX_SELECTED_IMAGES = Number(process.env.DAILY_SUMMARY_MAX_IMAGES || 12);
@@ -56,6 +58,13 @@ function buildRawUrl(relativePath) {
   return `https://raw.githubusercontent.com/${REPO_SLUG}/${REPO_REF}/${escapePathSegment(relativePath)}`;
 }
 
+function nextDate(dateStr) {
+  const [year, month, day] = dateStr.split('-').map(Number);
+  const date = new Date(Date.UTC(year, month - 1, day));
+  date.setUTCDate(date.getUTCDate() + 1);
+  return date.toISOString().slice(0, 10);
+}
+
 async function listImagesForDate(targetDate) {
   const entries = await fs.readdir(repoRoot, { withFileTypes: true });
   const names = entries
@@ -90,6 +99,66 @@ async function fetchFavorites() {
   } catch {
     return [];
   }
+}
+
+function buildWeatherNote(weather) {
+  if (!weather) return null;
+
+  const parts = [];
+  if (typeof weather.temperature === 'number') {
+    parts.push(`snittemperatur rundt ${Math.round(weather.temperature)} °C`);
+  }
+  if (typeof weather.wind === 'number') {
+    parts.push(`vind omkring ${Math.round(weather.wind)} m/s`);
+  }
+  if (typeof weather.precipitation === 'number') {
+    if (weather.precipitation > 0.2) {
+      parts.push(`omtrent ${weather.precipitation.toFixed(1)} mm nedbør`);
+    } else {
+      parts.push('lite eller ingen nedbør');
+    }
+  }
+
+  return parts.length ? parts.join(', ') : null;
+}
+
+async function fetchHistoricalWeather(targetDate) {
+  if (!FROST_CLIENT_ID || !FROST_SOURCE_ID) return null;
+
+  const params = new URLSearchParams({
+    sources: FROST_SOURCE_ID,
+    referencetime: `${targetDate}/${nextDate(targetDate)}`,
+    elements: 'mean(air_temperature%20P1D),sum(precipitation_amount%20P1D),mean(wind_speed%20P1D)',
+    levels: 'default',
+    timeoffsets: 'default',
+  });
+
+  const auth = Buffer.from(`${FROST_CLIENT_ID}:`).toString('base64');
+  const response = await fetch(`https://frost.met.no/observations/v0.jsonld?${params.toString()}`, {
+    headers: {
+      Authorization: `Basic ${auth}`,
+      Accept: 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Frost-feil ${response.status}`);
+  }
+
+  const payload = await response.json();
+  const rows = Array.isArray(payload?.data) ? payload.data : [];
+  const weather = {};
+
+  for (const row of rows) {
+    for (const observation of row.observations || []) {
+      const element = String(observation.elementId || '');
+      if (element.startsWith('mean(air_temperature')) weather.temperature = Number(observation.value);
+      if (element.startsWith('sum(precipitation_amount')) weather.precipitation = Number(observation.value);
+      if (element.startsWith('mean(wind_speed')) weather.wind = Number(observation.value);
+    }
+  }
+
+  return Object.keys(weather).length ? weather : null;
 }
 
 function mergeSelectedWithFavorites(selectedImages, dayFavorites, maxImages) {
@@ -281,7 +350,7 @@ async function classifyElseVisibility(targetDate, selectedImages) {
   });
 }
 
-async function generateAiSummary(targetDate, images, selectedImages) {
+async function generateAiSummary(targetDate, images, selectedImages, weatherNote) {
   if (!OPENAI_API_KEY) {
     return buildFallbackSummary(targetDate, images, selectedImages);
   }
@@ -295,6 +364,7 @@ async function generateAiSummary(targetDate, images, selectedImages) {
         `Oppsummer kort hvor mye hun ser ut til å ha vært innom, om aktiviteten virker tidlig på dagen, midt på dagen eller sent, og gjerne en kort observasjon om lys eller vær dersom det faktisk kan støttes av bildene. ` +
         `Tonen kan være varm og lett tilgjengelig, men ikke dagbokaktig og ikke i førsteperson. ` +
         `Ikke dikt opp konkrete hendelser, værforhold eller besøk som ikke kan støttes av bildene. ` +
+        `${weatherNote ? `Bruk denne historiske værobservasjonen som støtte når den passer med bildene: ${weatherNote}. ` : ''}` +
         `Velg et hero_image der Else faktisk er tydelig synlig, og prioriter nærvær, kropp eller hode fremfor tom kasse eller bare miljø. ` +
         `Hvis flere bilder viser Else, velg det bildet der hun fremstår tydeligst og mest sentralt. ` +
         `Hvis flere bilder viser Else tydelig, velg det som best føles som dagens høydepunkt. ` +
@@ -348,6 +418,8 @@ async function main() {
   }
 
   const favorites = await fetchFavorites();
+  const weather = await fetchHistoricalWeather(TARGET_DATE).catch(() => null);
+  const weatherNote = buildWeatherNote(weather);
   const favoriteImagesForDay = images.filter((image) => favorites.includes(image.name));
   const baseImages = mergeSelectedWithFavorites(
     selectImages(images, MAX_SELECTED_IMAGES),
@@ -367,7 +439,7 @@ async function main() {
   const summaryImages = selectedImages;
   const heroCandidates = confirmedElseImages.length ? confirmedElseImages : selectedImages;
 
-  const aiSummary = await generateAiSummary(TARGET_DATE, images, summaryImages);
+  const aiSummary = await generateAiSummary(TARGET_DATE, images, summaryImages, weatherNote);
   const aiHeroName = heroCandidates.some((image) => image.name === aiSummary.hero_image)
     ? aiSummary.hero_image
     : null;
@@ -395,6 +467,12 @@ async function main() {
     summary: aiSummary.summary,
     signature: aiSummary.signature || 'Hilsen Else',
     used_favorite_hero_image: Boolean(fallbackFavoriteHero && heroImage?.name === fallbackFavoriteHero),
+    weather: weather ? {
+      temperature: weather.temperature ?? null,
+      precipitation: weather.precipitation ?? null,
+      wind: weather.wind ?? null,
+      note: weatherNote,
+    } : null,
   };
 
   await writeSummaryFile(summary);

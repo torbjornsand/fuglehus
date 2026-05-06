@@ -31,6 +31,8 @@ jobs:
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENAI_MODEL: gpt-4.1-mini
+          FROST_CLIENT_ID: ${{ secrets.FROST_CLIENT_ID }}
+          FROST_SOURCE_ID: ${{ vars.FROST_SOURCE_ID }}
         run: |
           if [ -n "${{ github.event.inputs.date }}" ]; then
             node scripts/daily-summary.mjs --date=${{ github.event.inputs.date }}
