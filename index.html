@@ -7,7 +7,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
     <title>Fuglehus – Karstenvegen 6C</title>
     <style>
         :root {
@@ -1122,7 +1121,6 @@
             letter-spacing: -0.02em;
             color: var(--text);
             margin-bottom: 4px;
-            font-family: "Caveat", "Instrument Sans", system-ui, sans-serif;
         }
 
         .dagoppsummering-dato {
@@ -1198,17 +1196,8 @@
         .dagoppsummering-thumbtekst strong {
             color: var(--text-soft);
             font-weight: 700;
-            font-family: "Caveat", "Instrument Sans", system-ui, sans-serif;
-            font-size: 1.35rem;
-            font-weight: 700;
-        }
-
-        .dagoppsummering-signatur {
-            margin-top: 16px;
-            color: var(--accent-strong);
-            font-family: "Caveat", "Instrument Sans", system-ui, sans-serif;
-            font-size: 1.55rem;
-            line-height: 1;
+            font-size: 0.95rem;
+            letter-spacing: 0.01em;
         }
 
         .dagoppsummering-tom {
@@ -2350,7 +2339,6 @@
         <div class="dagoppsummering-innhald">
             <div class="dagoppsummering-tekstblokk">
                 <p class="dagoppsummering-tekst" id="dagoppsummering-tekst"></p>
-                <p class="dagoppsummering-signatur" id="dagoppsummering-signatur">Hilsen Else</p>
             </div>
             <div class="dagoppsummering-media">
                 <button class="dagoppsummering-thumb" id="dagoppsummering-thumb" type="button" aria-label="Vis dagens høydepunkt">
@@ -2617,7 +2605,6 @@
     const dagOppsummeringKort = document.getElementById('dagoppsummering-kort');
     const dagOppsummeringDato = document.getElementById('dagoppsummering-dato');
     const dagOppsummeringTekst = document.getElementById('dagoppsummering-tekst');
-    const dagOppsummeringSignatur = document.getElementById('dagoppsummering-signatur');
     const dagOppsummeringThumb = document.getElementById('dagoppsummering-thumb');
     const dagOppsummeringBilde = document.getElementById('dagoppsummering-bilde');
     const dagOppsummeringBildeTekst = document.getElementById('dagoppsummering-bildetekst');
@@ -2700,7 +2687,6 @@
             ? `Dagens høydepunkt kl. ${data.hero_image_time}`
             : 'Dagens høydepunkt';
         dagOppsummeringBildeTekst.textContent = 'Mitt favorittbilde';
-        dagOppsummeringSignatur.textContent = data.signature || 'Hilsen Else';
     }
 
     async function åpneOppsummeringsbilde() {

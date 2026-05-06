@@ -234,9 +234,8 @@ function buildFallbackSummary(targetDate, images, selectedImages) {
   const last = selectedImages.at(-1)?.time || selectedImages.at(-1)?.timestamp?.label || 'senere på dagen';
   return {
     source: 'fallback',
-    summary: `Else var innom flere ganger i løpet av dagen, fra omtrent ${first} til ${last}. Bildene tyder på jevn aktivitet rundt fuglehuset, med mest liv i perioder på dagtid. Vær og lys kan vurderes nærmere når AI-kjøringen er på plass.`,
+    summary: `Else var innom flere ganger i løpet av dagen, fra omtrent ${first} til ${last}. Aktiviteten virker jevnt fordelt gjennom dagen, med mest liv i de lyseste timene.`,
     hero_image: selectedImages[Math.floor(selectedImages.length / 2)]?.name || selectedImages[0]?.name || null,
-    signature: 'Hilsen Else',
   };
 }
 
@@ -361,17 +360,17 @@ async function generateAiSummary(targetDate, images, selectedImages, weatherNote
       text:
         `Du lager en kort norsk oppsummering av dagens aktivitet i en fuglekasse. ` +
         `Bildene er fra ${targetDate} og viser aktivitet rundt kjøttmeisen Else. ` +
-        `Oppsummer kort hvor mye hun ser ut til å ha vært innom, om aktiviteten virker tidlig på dagen, midt på dagen eller sent, og gjerne en kort observasjon om lys eller vær dersom det faktisk kan støttes av bildene. ` +
-        `Tonen kan være varm og lett tilgjengelig, men ikke dagbokaktig og ikke i førsteperson. ` +
+        `Oppsummer kort hvor mye hun ser ut til å ha vært innom, og om aktiviteten virker størst tidlig på dagen, midt på dagen eller sent. ` +
+        `Hvis historiske værdata finnes, ta med én kort og faktuell observasjon om værforholdene den dagen. ` +
+        `Tonen skal være nøktern, kort og lett tilgjengelig. ` +
         `Ikke dikt opp konkrete hendelser, værforhold eller besøk som ikke kan støttes av bildene. ` +
-        `${weatherNote ? `Bruk denne historiske værobservasjonen som støtte når den passer med bildene: ${weatherNote}. ` : ''}` +
+        `${weatherNote ? `Bruk denne historiske værobservasjonen som faktagrunnlag når den passer med bildene: ${weatherNote}. ` : ''}` +
         `Velg et hero_image der Else faktisk er tydelig synlig, og prioriter nærvær, kropp eller hode fremfor tom kasse eller bare miljø. ` +
         `Hvis flere bilder viser Else, velg det bildet der hun fremstår tydeligst og mest sentralt. ` +
         `Hvis flere bilder viser Else tydelig, velg det som best føles som dagens høydepunkt. ` +
-        `Svar KUN med gyldig JSON med feltene: summary, hero_image, signature. ` +
-        `summary skal være 2 til 4 korte setninger på norsk. ` +
-        `hero_image må være nøyaktig ett av filnavnene du får oppgitt. ` +
-        `signature skal være en kort signatur fra Else, for eksempel 'Hilsen Else'.`,
+        `Svar KUN med gyldig JSON med feltene: summary, hero_image. ` +
+        `summary skal være 2 til 3 korte setninger på norsk. ` +
+        `hero_image må være nøyaktig ett av filnavnene du får oppgitt.`,
     },
   ];
 
@@ -398,7 +397,6 @@ async function generateAiSummary(targetDate, images, selectedImages, weatherNote
     source: 'openai',
     summary: parsed.summary,
     hero_image: parsed.hero_image,
-    signature: parsed.signature || 'Hilsen Else',
   };
 }
 
@@ -465,7 +463,6 @@ async function main() {
     hero_image_download_url: heroImage?.download_url || null,
     hero_image_time: heroImage?.timestamp.label || null,
     summary: aiSummary.summary,
-    signature: aiSummary.signature || 'Hilsen Else',
     used_favorite_hero_image: Boolean(fallbackFavoriteHero && heroImage?.name === fallbackFavoriteHero),
     weather: weather ? {
       temperature: weather.temperature ?? null,
