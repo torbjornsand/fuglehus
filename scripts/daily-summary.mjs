@@ -161,9 +161,11 @@ function selectImages(images, maxImages) {
 }
 
 function buildFallbackSummary(targetDate, images, selectedImages) {
+  const first = selectedImages[0]?.time || selectedImages[0]?.timestamp?.label || 'tidlig på dagen';
+  const last = selectedImages.at(-1)?.time || selectedImages.at(-1)?.timestamp?.label || 'senere på dagen';
   return {
     source: 'fallback',
-    summary: `Kjære dagbok: Jeg hadde en travel dag i fuglehuset og stakk innom flere ganger for å holde orden på prosjektet mitt. Vertene fikk nok følge godt med, men jeg røper bare at reirarbeid fortsatt står høyt på planen.`,
+    summary: `Else var innom flere ganger i løpet av dagen, fra omtrent ${first} til ${last}. Bildene tyder på jevn aktivitet rundt fuglehuset, med mest liv i perioder på dagtid. Vær og lys kan vurderes nærmere når AI-kjøringen er på plass.`,
     hero_image: selectedImages[Math.floor(selectedImages.length / 2)]?.name || selectedImages[0]?.name || null,
     signature: 'Hilsen Else',
   };
@@ -182,42 +184,7 @@ function tryParseJson(text) {
   return JSON.parse(match[0]);
 }
 
-async function generateAiSummary(targetDate, images, selectedImages) {
-  if (!OPENAI_API_KEY) {
-    return buildFallbackSummary(targetDate, images, selectedImages);
-  }
-
-  const content = [
-    {
-      type: 'text',
-      text:
-        `Du lager en kort norsk dagboknotis for fuglekassekameraet. ` +
-        `Bildene er fra ${targetDate} og viser aktivitet rundt kjøttmeisen Else. ` +
-        `Skriv i førsteperson som om Else selv oppsummerer dagen. ` +
-        `Tonen skal gjerne være litt mer humoristisk, leken og personlig, som en liten dagboknotis med glimt i øyet. ` +
-        `Du kan bruke morsomme vendinger og små observasjoner om stemning, men den må fortsatt være tydelig forankret i faktisk aktivitet i bildene. ` +
-        `Ikke dikt opp konkrete hendelser, besøk eller værforhold som ikke kan støttes av bildene. ` +
-        `Velg et hero_image der Else faktisk er tydelig synlig, og prioriter nærvær, kropp eller hode fremfor tom kasse eller bare miljø. ` +
-        `Hvis flere bilder viser Else, velg det bildet der hun fremstår tydeligst og mest sentralt. ` +
-        `Hvis flere bilder viser Else tydelig, velg det som best føles som dagens høydepunkt. ` +
-        `Svar KUN med gyldig JSON med feltene: summary, hero_image, signature. ` +
-        `summary skal være 2 til 4 korte setninger på norsk. ` +
-        `hero_image må være nøyaktig ett av filnavnene du får oppgitt. ` +
-        `signature skal være en kort signatur fra Else, for eksempel 'Hilsen Else'.`,
-    },
-  ];
-
-  selectedImages.forEach((image, index) => {
-    content.push({
-      type: 'text',
-      text: `Bilde ${index + 1}: filename=${image.name}, tidspunkt=${image.timestamp.label}${image.favorite ? ', favoritt=ja' : ''}`,
-    });
-    content.push({
-      type: 'image_url',
-      image_url: { url: image.raw_url },
-    });
-  });
-
+async function callOpenAiJson(content, systemPrompt, max_tokens = 600) {
   const response = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
     headers: {
@@ -227,11 +194,11 @@ async function generateAiSummary(targetDate, images, selectedImages) {
     body: JSON.stringify({
       model: MODEL,
       temperature: 0.3,
-      max_tokens: 600,
+      max_tokens,
       messages: [
         {
           role: 'system',
-          content: 'Du er en naturjournalist som skriver korte, presise oppsummeringer av aktivitet i en fuglekasse.',
+          content: systemPrompt,
         },
         {
           role: 'user',
@@ -252,7 +219,111 @@ async function generateAiSummary(targetDate, images, selectedImages) {
     throw new Error('Modellen returnerte ikke tekst');
   }
 
-  const parsed = tryParseJson(text);
+  return tryParseJson(text);
+}
+
+async function classifyElseVisibility(targetDate, selectedImages) {
+  if (!OPENAI_API_KEY) {
+    return selectedImages.map((image) => ({
+      ...image,
+      else_visible: image.favorite,
+      visibility_confidence: image.favorite ? 0.9 : 0.2,
+    }));
+  }
+
+  const content = [
+    {
+      type: 'text',
+      text:
+        `Du skal klassifisere om kjøttmeisen Else faktisk er synlig i hvert bilde fra ${targetDate}. ` +
+        `Svar KUN med gyldig JSON på formen {"images":[{"name":"...","else_visible":true,"visibility_confidence":0.0}]}. ` +
+        `else_visible skal bare være true når fuglen faktisk er synlig i eller ved fuglehuset. ` +
+        `Bruk false for tom kasse, bare miljø eller når du er usikker. ` +
+        `visibility_confidence skal være et tall mellom 0 og 1.`,
+    },
+  ];
+
+  selectedImages.forEach((image, index) => {
+    content.push({
+      type: 'text',
+      text: `Bilde ${index + 1}: filename=${image.name}, tidspunkt=${image.timestamp.label}${image.favorite ? ', favoritt=ja' : ''}`,
+    });
+    content.push({
+      type: 'image_url',
+      image_url: { url: image.raw_url },
+    });
+  });
+
+  const parsed = await callOpenAiJson(
+    content,
+    'Du er svært nøyaktig på visuell klassifisering av om en fugl faktisk er synlig i et bilde.'
+  );
+
+  const visibilityMap = new Map(
+    (parsed.images || [])
+      .filter((entry) => entry && typeof entry.name === 'string')
+      .map((entry) => [
+        entry.name,
+        {
+          else_visible: Boolean(entry.else_visible),
+          visibility_confidence: Math.max(0, Math.min(1, Number(entry.visibility_confidence) || 0)),
+        },
+      ])
+  );
+
+  return selectedImages.map((image) => {
+    const match = visibilityMap.get(image.name);
+    return {
+      ...image,
+      else_visible: match?.else_visible ?? false,
+      visibility_confidence: match?.visibility_confidence ?? 0,
+    };
+  });
+}
+
+async function generateAiSummary(targetDate, images, selectedImages) {
+  if (!OPENAI_API_KEY) {
+    return buildFallbackSummary(targetDate, images, selectedImages);
+  }
+
+  const content = [
+    {
+      type: 'text',
+      text:
+        `Du lager en kort norsk oppsummering av dagens aktivitet i en fuglekasse. ` +
+        `Bildene er fra ${targetDate} og viser aktivitet rundt kjøttmeisen Else. ` +
+        `Oppsummer kort hvor mye hun ser ut til å ha vært innom, om aktiviteten virker tidlig på dagen, midt på dagen eller sent, og gjerne en kort observasjon om lys eller vær dersom det faktisk kan støttes av bildene. ` +
+        `Tonen kan være varm og lett tilgjengelig, men ikke dagbokaktig og ikke i førsteperson. ` +
+        `Ikke dikt opp konkrete hendelser, værforhold eller besøk som ikke kan støttes av bildene. ` +
+        `Velg et hero_image der Else faktisk er tydelig synlig, og prioriter nærvær, kropp eller hode fremfor tom kasse eller bare miljø. ` +
+        `Hvis flere bilder viser Else, velg det bildet der hun fremstår tydeligst og mest sentralt. ` +
+        `Hvis flere bilder viser Else tydelig, velg det som best føles som dagens høydepunkt. ` +
+        `Svar KUN med gyldig JSON med feltene: summary, hero_image, signature. ` +
+        `summary skal være 2 til 4 korte setninger på norsk. ` +
+        `hero_image må være nøyaktig ett av filnavnene du får oppgitt. ` +
+        `signature skal være en kort signatur fra Else, for eksempel 'Hilsen Else'.`,
+    },
+  ];
+
+  selectedImages.forEach((image, index) => {
+    content.push({
+      type: 'text',
+      text:
+        `Bilde ${index + 1}: filename=${image.name}, tidspunkt=${image.timestamp.label}` +
+        `${image.favorite ? ', favoritt=ja' : ''}` +
+        `${image.else_visible ? `, else_visible=ja, confidence=${image.visibility_confidence}` : ', else_visible=nei'}`,
+    });
+    content.push({
+      type: 'image_url',
+      image_url: { url: image.raw_url },
+    });
+  });
+
+  const parsed = await callOpenAiJson(
+    content,
+    'Du er en naturjournalist som skriver korte, presise oppsummeringer av aktivitet i en fuglekasse.'
+  );
+
   return {
     source: 'openai',
     summary: parsed.summary,
@@ -278,21 +349,30 @@ async function main() {
 
   const favorites = await fetchFavorites();
   const favoriteImagesForDay = images.filter((image) => favorites.includes(image.name));
-  const baseImages = favoriteImagesForDay.length
-    ? favoriteImagesForDay
-    : selectImages(images, MAX_SELECTED_IMAGES);
+  const baseImages = mergeSelectedWithFavorites(
+    selectImages(images, MAX_SELECTED_IMAGES),
+    favoriteImagesForDay,
+    MAX_SELECTED_IMAGES
+  );
 
   let selectedImages = baseImages.map((image) => ({
     ...image,
     favorite: favorites.includes(image.name),
   }));
 
-  const aiSummary = await generateAiSummary(TARGET_DATE, images, selectedImages);
-  const aiHeroName = selectedImages.some((image) => image.name === aiSummary.hero_image)
+  selectedImages = await classifyElseVisibility(TARGET_DATE, selectedImages);
+  const confirmedElseImages = selectedImages
+    .filter((image) => image.else_visible)
+    .sort((a, b) => (b.visibility_confidence || 0) - (a.visibility_confidence || 0) || a.name.localeCompare(b.name, 'en'));
+  const summaryImages = selectedImages;
+  const heroCandidates = confirmedElseImages.length ? confirmedElseImages : selectedImages;
+
+  const aiSummary = await generateAiSummary(TARGET_DATE, images, summaryImages);
+  const aiHeroName = heroCandidates.some((image) => image.name === aiSummary.hero_image)
     ? aiSummary.hero_image
     : null;
-  const fallbackFavoriteHero = favoriteImagesForDay[0]?.name || null;
-  const heroImageName = aiHeroName || fallbackFavoriteHero || selectedImages[0]?.name || null;
+  const fallbackFavoriteHero = confirmedElseImages.find((image) => image.favorite)?.name || favoriteImagesForDay[0]?.name || null;
+  const heroImageName = aiHeroName || fallbackFavoriteHero || heroCandidates[0]?.name || null;
   const heroImage = selectedImages.find((image) => image.name === heroImageName) || null;
 
   const summary = {
@@ -306,6 +386,8 @@ async function main() {
       download_url: image.download_url,
       raw_url: image.raw_url,
       favorite: Boolean(image.favorite),
+      else_visible: Boolean(image.else_visible),
+      visibility_confidence: image.visibility_confidence ?? 0,
     })),
     hero_image: heroImage?.name || null,
     hero_image_download_url: heroImage?.download_url || null,
@@ -316,7 +398,7 @@ async function main() {
   };
 
   await writeSummaryFile(summary);
-  console.log(`Oppdatert dagsoppsummering for ${TARGET_DATE} med ${selectedImages.length} bilder i AI-utvalget.`);
+  console.log(`Oppdatert dagsoppsummering for ${TARGET_DATE} med ${summaryImages.length} bilder i AI-utvalget.`);
 }
 
 main().catch((error) => {

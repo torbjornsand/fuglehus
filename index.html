@@ -1154,31 +1154,38 @@
         }
 
         .dagoppsummering-thumb {
-            width: 100%;
-            aspect-ratio: 16 / 9;
+            width: min(100%, 280px);
+            aspect-ratio: auto;
             border: 0;
-            border-radius: 18px;
-            padding: 0;
+            border-radius: 20px;
+            padding: 12px 12px 28px;
             overflow: hidden;
-            background: linear-gradient(145deg, rgba(18,54,60,0.94), rgba(15,155,142,0.76));
-            box-shadow: 0 14px 30px rgba(11, 71, 79, 0.18);
+            background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(250,248,242,0.96));
+            box-shadow:
+                0 18px 30px rgba(11, 71, 79, 0.14),
+                0 3px 0 rgba(255,255,255,0.85) inset;
             cursor: pointer;
+            transform: rotate(1.4deg);
         }
 
         .dagoppsummering-thumb img {
             width: 100%;
-            height: 100%;
+            aspect-ratio: 16 / 9;
+            height: auto;
             object-fit: cover;
             display: block;
+            border-radius: 10px;
+            box-shadow: 0 10px 18px rgba(12, 37, 41, 0.14);
         }
 
         .dagoppsummering-thumbtekst {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             gap: 12px;
             align-items: center;
             font-size: 0.8rem;
             color: var(--text-faint);
+            margin-top: 10px;
         }
 
         .dagoppsummering-thumbtekst strong {
@@ -1195,12 +1202,6 @@
             font-family: "Caveat", "Instrument Sans", system-ui, sans-serif;
             font-size: 1.55rem;
             line-height: 1;
-        }
-
-        .dagoppsummering-link {
-            color: var(--accent-strong);
-            font-weight: 700;
-            white-space: nowrap;
         }
 
         .dagoppsummering-tom {
@@ -2346,7 +2347,6 @@
                 </button>
                 <div class="dagoppsummering-thumbtekst">
                     <strong id="dagoppsummering-bildetekst">Mitt favorittbilde</strong>
-                    <span class="dagoppsummering-link">Åpne stort</span>
                 </div>
             </div>
         </div>
