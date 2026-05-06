@@ -1,8 +1,6 @@
 name: Daily AI Summary
 
 on:
-  schedule:
-    - cron: '30 19 * * *'
   workflow_dispatch:
     inputs:
       date:
