@@ -2375,7 +2375,7 @@
             <div>
                 <div class="eggantall-etikett">🐣 Antall egg</div>
                 <h3 class="eggantall-tittel" id="eggantall-tittel">Hvor mange egg tror du Else legger?</h3>
-                <p class="eggantall-beskrivelse">Marker hvor mange egg du tror det blir. Når du sender inn, får du se hva andre tror.</p>
+                <p class="eggantall-beskrivelse">Marker hvor mange egg du tror det blir.</p>
             </div>
             <div class="eggantall-valgt" id="eggantall-valgt">–</div>
         </div>
@@ -2909,9 +2909,7 @@
         });
 
         eggCountGraf.innerHTML = sorterteSvar.map((item, index) => {
-            const visEgg = Math.min(item.votes, 6);
-            const eggikoner = Array.from({ length: visEgg }, () => '<span class="eggantall-korteggikon" aria-hidden="true"></span>').join('');
-            const ekstraEgg = item.votes > visEgg ? `<span class="eggantall-kortstemmer">+${item.votes - visEgg}</span>` : '';
+            const eggikoner = Array.from({ length: item.votes }, () => '<span class="eggantall-korteggikon" aria-hidden="true"></span>').join('');
             const stemmeTekst = item.votes === 1 ? '1 stemme' : `${item.votes} stemmer`;
             const leiar = index === 0 ? ' leder' : '';
             const rangTekst = index === 0 ? 'Mest' : `#${index + 1}`;
@@ -2921,7 +2919,7 @@
                     <div class="eggantall-kortrang">${rangTekst}</div>
                     <div class="eggantall-kortinfo">
                         <div class="eggantall-korttal">${item.count}<span class="eggantall-korttal-enhet">egg</span></div>
-                        <div class="eggantall-kortegg">${eggikoner}${ekstraEgg}</div>
+                        <div class="eggantall-kortegg">${eggikoner}</div>
                     </div>
                     <div class="eggantall-kortstemmer">${stemmeTekst}</div>
                 </div>
