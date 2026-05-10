@@ -620,6 +620,12 @@
             padding: 0 20px;
         }
 
+        .btn-capture-tekst,
+        .bilde-auto-meta,
+        .kontroller-meta {
+            display: none !important;
+        }
+
         /* ── Tabs + filmstripe ── */
 
         .tidslinje {
@@ -2413,14 +2419,14 @@
     </div>
 
     <div class="footer-handlinger">
-        <button class="btn-capture" id="btn-ta" onclick="taBilde()">
+        <button class="btn-capture" id="btn-ta" onclick="taBilde()" aria-label="Ta bilde nå" title="Ta bilde nå">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
                 <circle cx="12" cy="13" r="4"/>
             </svg>
             <span class="btn-capture-tekst">Ta bilde nå</span>
         </button>
-        <button class="btn-capture btn-video" id="btn-video" onclick="taVideo()">
+        <button class="btn-capture btn-video" id="btn-video" onclick="taVideo()" aria-label="Ta 18 sek video nå" title="Ta 18 sek video nå">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <polygon points="23 7 16 12 23 17 23 7"></polygon>
                 <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
@@ -3704,7 +3710,7 @@
         const status = document.getElementById('status');
         const forigeNyaste = bilder[0]?.name;
         btn.disabled  = true;
-        btn.innerHTML = '<span class="spinner"></span><span class="btn-capture-tekst">Tar bilde…</span>';
+        btn.innerHTML = '<span class="spinner" aria-hidden="true"></span>';
         status.textContent = '';
         try {
             const resp = await fetch(WORKER, { method: 'POST' });
@@ -3720,7 +3726,7 @@
             stoppCaptureFremdrift();
         }
         btn.disabled  = false;
-        btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span class="btn-capture-tekst">Ta bilde nå</span>`;
+        btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>`;
     }
 
     async function taVideo() {
@@ -3728,7 +3734,7 @@
         const status = document.getElementById('status');
         const forigeNyaste = videoer[0]?.name;
         btn.disabled = true;
-        btn.innerHTML = '<span class="spinner"></span><span class="btn-capture-tekst">Tar opp video…</span>';
+        btn.innerHTML = '<span class="spinner" aria-hidden="true"></span>';
         status.textContent = '';
 
         try {
@@ -3797,7 +3803,7 @@
         }
 
         btn.disabled = false;
-        btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg><span class="btn-capture-tekst">Ta 18 sek video nå</span>`;
+        btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>`;
     }
 
     hovudbilde.addEventListener('load', skjulBildeLaster);
