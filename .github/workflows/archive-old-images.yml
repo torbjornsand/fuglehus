@@ -1,0 +1,39 @@
+name: Archive old non-favorites
+
+on:
+  schedule:
+    - cron: '30 1 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  archive-old-images:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+
+      - name: Archive old non-favorites
+        env:
+          FAVORITES_URL: https://fuglehus.torbjs.workers.dev/favorites
+          ARCHIVE_AFTER_DAYS: '4'
+        run: node scripts/archive-old-images.mjs
+
+      - name: Regenerate manifests
+        run: node scripts/update-bilder-json.mjs
+
+      - name: Commit archive updates
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'Archive old non-favorite images'
+          file_pattern: arkiv/** bilde_*.jpg bilder.json bilder-filtrert.json
