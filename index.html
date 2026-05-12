@@ -1311,6 +1311,40 @@
             font-weight: 700;
         }
 
+        .eggpoll-toggle {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 0;
+            border: none;
+            background: transparent;
+            color: inherit;
+            font: inherit;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .eggpoll-toggle-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .eggpoll-toggle-ikon {
+            width: 18px;
+            height: 18px;
+            color: var(--text-faint);
+            transition: transform 0.16s ease, color 0.16s ease;
+            flex-shrink: 0;
+        }
+
+        .eggpoll-liste.utvida .eggpoll-toggle-ikon {
+            transform: rotate(180deg);
+            color: var(--accent-strong);
+        }
+
         .eggpoll-total {
             display: inline-flex;
             align-items: center;
@@ -1329,6 +1363,10 @@
             gap: 8px;
         }
 
+        .eggpoll-liste[data-open="false"] .eggpoll-oversikt {
+            display: none;
+        }
+
         .eggpoll-rad {
             display: flex;
             align-items: center;
@@ -1337,6 +1375,12 @@
             border-radius: 16px;
             background: rgba(255,255,255,0.78);
             border: 1px solid rgba(11, 118, 109, 0.08);
+        }
+
+        .eggpoll-rad.vinnar {
+            background: linear-gradient(135deg, rgba(255, 245, 226, 0.98), rgba(255,255,255,0.92));
+            border-color: rgba(201, 144, 10, 0.22);
+            box-shadow: 0 10px 20px rgba(201, 144, 10, 0.08);
         }
 
         .eggpoll-datopill {
@@ -1429,6 +1473,25 @@
             font-size: clamp(1.1rem, 2vw, 1.4rem);
             line-height: 1.05;
             color: var(--text);
+        }
+
+        .eggpoll-vinnarar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 6px;
+        }
+
+        .eggpoll-vinnar-pill {
+            display: inline-flex;
+            align-items: center;
+            min-height: 32px;
+            padding: 0 11px;
+            border-radius: 999px;
+            background: rgba(11, 118, 109, 0.08);
+            color: var(--text-soft);
+            font-size: 0.82rem;
+            font-weight: 700;
         }
 
         .egg-popup[hidden] {
@@ -2527,14 +2590,22 @@
                 <span class="eggpoll-vinnar-label">Første egg</span>
                 <strong>12. mai 2026</strong>
                 <span>Gratulerer til alle som traff dagens dato.</span>
+                <div class="eggpoll-vinnarar" id="eggpoll-vinnarar"></div>
             </div>
         </div>
 
         <div class="eggpoll-status" id="eggpoll-status"></div>
-        <div class="eggpoll-liste">
+        <div class="eggpoll-liste" id="eggpoll-liste" data-open="false">
             <div class="eggpoll-liste-tittel">
-                <span>Tippelista</span>
-                <span class="eggpoll-total" id="eggpoll-total">0</span>
+                <button class="eggpoll-toggle" id="eggpoll-toggle" type="button" aria-expanded="false" aria-controls="eggpoll-oversikt" onclick="toggleEggPollListe()">
+                    <span class="eggpoll-toggle-label">
+                        <span>Tippelista</span>
+                        <span class="eggpoll-total" id="eggpoll-total">0</span>
+                    </span>
+                    <svg class="eggpoll-toggle-ikon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </button>
             </div>
             <div class="eggpoll-oversikt" id="eggpoll-oversikt"></div>
         </div>
@@ -2665,9 +2736,12 @@
     const eggPollKalender = document.getElementById('eggpoll-kalender');
     const eggPollNamn = document.getElementById('eggpoll-namn');
     const eggPollStatus = document.getElementById('eggpoll-status');
+    const eggPollListe = document.getElementById('eggpoll-liste');
+    const eggPollToggle = document.getElementById('eggpoll-toggle');
     const eggPollOversikt = document.getElementById('eggpoll-oversikt');
     const eggPollTotal = document.getElementById('eggpoll-total');
     const eggPollBekreft = document.getElementById('eggpoll-bekreft');
+    const eggPollVinnarar = document.getElementById('eggpoll-vinnarar');
     const eggPopup = document.getElementById('egg-popup');
     const eggPopupLukk = document.getElementById('egg-popup-lukk');
     const eggPopupBackdrop = document.getElementById('egg-popup-backdrop');
@@ -2959,6 +3033,13 @@
         if (!eggPollOversikt || !eggPollTotal) return;
 
         eggPollTotal.textContent = String(eggPollEntries.length);
+        const vinnarar = hentEggVinnarar();
+
+        if (eggPollVinnarar) {
+            eggPollVinnarar.innerHTML = vinnarar.length
+                ? vinnarar.map((name) => `<span class="eggpoll-vinnar-pill">${escapeHtml(name)}</span>`).join('')
+                : '<span class="eggpoll-tom">Ingen vinnere registrert ennå.</span>';
+        }
 
         if (!eggPollEntries.length) {
             eggPollOversikt.innerHTML = '<div class="eggpoll-tom">Ingen tips ennå. Bli den første som gjetter.</div>';
@@ -2978,9 +3059,10 @@
                     .sort((a, b) => a.name.localeCompare(b.name, 'nb'))
                     .map((entry) => `<span class="eggpoll-namnepill">${entry.name}</span>`)
                     .join('');
+                const vinnarClass = date === FIRST_EGG_DATE ? ' vinnar' : '';
 
                 return `
-                    <div class="eggpoll-rad">
+                    <div class="eggpoll-rad${vinnarClass}">
                         <div class="eggpoll-datopill">${formatEggPollDato(date)}</div>
                         <div class="eggpoll-namn">${names}</div>
                     </div>
@@ -3021,6 +3103,15 @@
             .join('');
 
         eggPopup.hidden = false;
+    }
+
+    function toggleEggPollListe(forceOpen = null) {
+        if (!eggPollListe || !eggPollToggle) return;
+        const erOpen = eggPollListe.dataset.open === 'true';
+        const nextOpen = typeof forceOpen === 'boolean' ? forceOpen : !erOpen;
+        eggPollListe.dataset.open = nextOpen ? 'true' : 'false';
+        eggPollListe.classList.toggle('utvida', nextOpen);
+        eggPollToggle.setAttribute('aria-expanded', nextOpen ? 'true' : 'false');
     }
 
     function velgEggDato(dateStr) {
