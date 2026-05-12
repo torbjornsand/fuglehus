@@ -1379,6 +1379,167 @@
             font-size: 0.88rem;
         }
 
+        .eggpoll-kort-ferdig .eggpoll-beskrivelse {
+            max-width: 58ch;
+        }
+
+        .eggpoll-vinnar-kort {
+            display: grid;
+            grid-template-columns: minmax(0, 190px) minmax(0, 1fr);
+            gap: 16px;
+            align-items: center;
+            margin-bottom: 16px;
+            padding: 16px;
+            border-radius: 22px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.98), rgba(255,247,232,0.92));
+            border: 1px solid rgba(201, 144, 10, 0.16);
+            box-shadow: 0 10px 28px rgba(28, 35, 24, 0.08);
+        }
+
+        .eggpoll-vinnar-bilde {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 18px;
+            display: block;
+            box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+        }
+
+        .eggpoll-vinnar-tekst {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            color: var(--text-soft);
+        }
+
+        .eggpoll-vinnar-label {
+            display: inline-flex;
+            align-items: center;
+            width: fit-content;
+            min-height: 28px;
+            padding: 0 10px;
+            border-radius: 999px;
+            background: rgba(255, 191, 105, 0.18);
+            color: #9a4e10;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .eggpoll-vinnar-tekst strong {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            line-height: 1.05;
+            color: var(--text);
+        }
+
+        .egg-popup[hidden] {
+            display: none;
+        }
+
+        .egg-popup {
+            position: fixed;
+            inset: 0;
+            z-index: 80;
+        }
+
+        .egg-popup-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(7, 19, 18, 0.56);
+            backdrop-filter: blur(6px);
+        }
+
+        .egg-popup-kort {
+            position: relative;
+            z-index: 1;
+            width: min(92vw, 760px);
+            margin: min(8vh, 56px) auto 24px;
+            padding: 20px;
+            border-radius: 28px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.99), rgba(248,252,251,0.98));
+            box-shadow: 0 30px 80px rgba(0,0,0,0.22);
+        }
+
+        .egg-popup-lukk {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            min-height: 42px;
+            padding: 0 14px;
+            border: none;
+            border-radius: 999px;
+            background: rgba(15, 155, 142, 0.1);
+            color: var(--accent-strong);
+            font: inherit;
+            font-size: 0.88rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .egg-popup-innhald {
+            display: grid;
+            grid-template-columns: minmax(0, 260px) minmax(0, 1fr);
+            gap: 20px;
+            align-items: center;
+        }
+
+        .egg-popup-bilde {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border-radius: 22px;
+            object-fit: cover;
+            display: block;
+            box-shadow: 0 18px 34px rgba(0,0,0,0.14);
+        }
+
+        .egg-popup-tekst {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .egg-popup-etikett {
+            display: inline-flex;
+            align-items: center;
+            width: fit-content;
+            min-height: 30px;
+            padding: 0 12px;
+            border-radius: 999px;
+            background: rgba(255, 191, 105, 0.22);
+            color: #9a4e10;
+            font-size: 0.78rem;
+            font-weight: 800;
+        }
+
+        .egg-popup-tekst h3 {
+            font-size: clamp(1.4rem, 3vw, 2rem);
+            line-height: 1;
+            color: var(--text);
+            letter-spacing: -0.03em;
+        }
+
+        .egg-popup-ingress {
+            color: var(--text-soft);
+            line-height: 1.55;
+        }
+
+        .egg-popup-vinnarar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .egg-popup-vinnar-pill {
+            display: inline-flex;
+            align-items: center;
+            min-height: 34px;
+            padding: 0 12px;
+            border-radius: 999px;
+            background: rgba(11, 118, 109, 0.08);
+            color: var(--text-soft);
+            font-size: 0.84rem;
+            font-weight: 700;
+        }
+
         @media (max-width: 760px) {
             .eggpoll-topp {
                 flex-direction: column;
@@ -1386,6 +1547,11 @@
             }
 
             .eggpoll-innhald {
+                grid-template-columns: 1fr;
+            }
+
+            .eggpoll-vinnar-kort,
+            .egg-popup-innhald {
                 grid-template-columns: 1fr;
             }
         }
@@ -1408,6 +1574,12 @@
             .eggpoll-rute {
                 min-height: 46px;
                 border-radius: 14px;
+            }
+
+            .egg-popup-kort {
+                width: min(94vw, 760px);
+                padding: 18px;
+                margin-top: 24px;
             }
         }
 
@@ -2340,39 +2512,31 @@
 
     </div>
 
-    <section class="eggpoll-kort" aria-labelledby="eggpoll-tittel">
+    <section class="eggpoll-kort eggpoll-kort-ferdig" aria-labelledby="eggpoll-tittel">
         <div class="eggpoll-topp">
             <div>
-                <div class="eggpoll-etikett">🥚 Egg-poll</div>
-                <h3 class="eggpoll-tittel" id="eggpoll-tittel">Når tipper du at første egget blir lagt?</h3>
-                <p class="eggpoll-beskrivelse">Velg en dato i mai, skriv inn navnet ditt og legg inn tipset ditt. Lista under oppdateres fortløpende.</p>
+                <div class="eggpoll-etikett">🥚 Første egg</div>
+                <h3 class="eggpoll-tittel" id="eggpoll-tittel">De første eggene er lagt</h3>
+                <p class="eggpoll-beskrivelse">Else la de første eggene 12. mai 2026. Her er tippelista med alle som gjettet på dato i mai.</p>
             </div>
         </div>
 
-        <div class="eggpoll-innhald">
-            <div class="eggpoll-kalender">
-                <div class="eggpoll-maanad">
-                    <span>Mai 2026</span>
-                    <span>Trykk på datoen du tror på</span>
-                </div>
-                <div class="eggpoll-veker" id="eggpoll-kalender"></div>
+        <div class="eggpoll-vinnar-kort">
+            <img class="eggpoll-vinnar-bilde" src="galleri/forste-egg-12-05-26.jpg" alt="De første eggene i reiret" loading="lazy" decoding="async">
+            <div class="eggpoll-vinnar-tekst">
+                <span class="eggpoll-vinnar-label">Første egg</span>
+                <strong>12. mai 2026</strong>
+                <span>Gratulerer til alle som traff dagens dato.</span>
             </div>
+        </div>
 
-            <div class="eggpoll-sidepanel">
-                <div class="eggpoll-felt">
-                    <label for="eggpoll-namn">Navn</label>
-                    <input class="eggpoll-input" id="eggpoll-namn" type="text" maxlength="40">
-                </div>
-                <button class="eggpoll-knapp" id="eggpoll-bekreft" type="button" onclick="sendEggTips()">Bekreft svar</button>
-                <div class="eggpoll-status" id="eggpoll-status"></div>
-                <div class="eggpoll-liste">
-                    <div class="eggpoll-liste-tittel">
-                        <span>Tippelista</span>
-                        <span class="eggpoll-total" id="eggpoll-total">0</span>
-                    </div>
-                    <div class="eggpoll-oversikt" id="eggpoll-oversikt"></div>
-                </div>
+        <div class="eggpoll-status" id="eggpoll-status"></div>
+        <div class="eggpoll-liste">
+            <div class="eggpoll-liste-tittel">
+                <span>Tippelista</span>
+                <span class="eggpoll-total" id="eggpoll-total">0</span>
             </div>
+            <div class="eggpoll-oversikt" id="eggpoll-oversikt"></div>
         </div>
     </section>
 
@@ -2441,6 +2605,22 @@
     <div id="forhåndsvisning-tid"></div>
 </div>
 
+<div class="egg-popup" id="egg-popup" hidden>
+    <div class="egg-popup-backdrop" id="egg-popup-backdrop"></div>
+    <div class="egg-popup-kort" role="dialog" aria-modal="true" aria-labelledby="egg-popup-tittel">
+        <button class="egg-popup-lukk" id="egg-popup-lukk" type="button" aria-label="Lukk gratulasjon">Lukk ✕</button>
+        <div class="egg-popup-innhald">
+            <img class="egg-popup-bilde" src="galleri/forste-egg-12-05-26.jpg" alt="De første eggene i reiret" loading="lazy" decoding="async">
+            <div class="egg-popup-tekst">
+                <div class="egg-popup-etikett">🎉 Gratulerer!</div>
+                <h3 id="egg-popup-tittel">Første egg er lagt</h3>
+                <p class="egg-popup-ingress">Else la de første eggene 12. mai 2026. Disse traff helt riktig på datoen:</p>
+                <div class="egg-popup-vinnarar" id="egg-popup-vinnarar"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     const WORKER = 'https://fuglehus.torbjs.workers.dev';
     const WEATHER_URL = 'https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=62.4722&lon=6.1549';
@@ -2469,6 +2649,8 @@
     const videoerSomSlettes = new Map();
     let harUlesteVideoer = false;
     let openVideoMeny = null;
+    const FIRST_EGG_DATE = '2026-05-12';
+    const FIRST_EGG_POPUP_KEY = `first-egg-popup-seen-${FIRST_EGG_DATE}`;
 
     const preview    = document.getElementById('forhåndsvisning');
     const previewImg = document.getElementById('forhåndsvisning-img');
@@ -2486,6 +2668,10 @@
     const eggPollOversikt = document.getElementById('eggpoll-oversikt');
     const eggPollTotal = document.getElementById('eggpoll-total');
     const eggPollBekreft = document.getElementById('eggpoll-bekreft');
+    const eggPopup = document.getElementById('egg-popup');
+    const eggPopupLukk = document.getElementById('egg-popup-lukk');
+    const eggPopupBackdrop = document.getElementById('egg-popup-backdrop');
+    const eggPopupVinnarar = document.getElementById('egg-popup-vinnarar');
     const eggCountGrid = document.getElementById('eggantall-grid');
     const eggCountValgt = document.getElementById('eggantall-valgt');
     const eggCountStatus = document.getElementById('eggantall-status');
@@ -2805,6 +2991,38 @@
         eggPollOversikt.innerHTML = html;
     }
 
+    function hentEggVinnarar() {
+        return eggPollEntries
+            .filter((entry) => entry.date === FIRST_EGG_DATE)
+            .sort((a, b) => a.name.localeCompare(b.name, 'nb'))
+            .map((entry) => entry.name);
+    }
+
+    function lukkEggPopup() {
+        if (!eggPopup) return;
+        eggPopup.hidden = true;
+        try {
+            localStorage.setItem(FIRST_EGG_POPUP_KEY, '1');
+        } catch (e) {}
+    }
+
+    function maybeVisEggPopup() {
+        if (!eggPopup || !eggPopupVinnarar) return;
+
+        const vinnarar = hentEggVinnarar();
+        if (!vinnarar.length) return;
+
+        try {
+            if (localStorage.getItem(FIRST_EGG_POPUP_KEY) === '1') return;
+        } catch (e) {}
+
+        eggPopupVinnarar.innerHTML = vinnarar
+            .map((name) => `<span class="egg-popup-vinnar-pill">${escapeHtml(name)}</span>`)
+            .join('');
+
+        eggPopup.hidden = false;
+    }
+
     function velgEggDato(dateStr) {
         valgtEggDato = dateStr;
         if (eggPollStatus) eggPollStatus.textContent = '';
@@ -2818,6 +3036,7 @@
             const data = await resp.json();
             eggPollEntries = Array.isArray(data.entries) ? data.entries : [];
             renderEggPollListe();
+            maybeVisEggPopup();
         } catch (e) {
             if (eggPollStatus) eggPollStatus.textContent = 'Kunne ikke hente tips akkurat nå.';
         }
@@ -3909,7 +4128,10 @@
     hentEggCount();
     hentGalleri();
     hentVideoer();
+    eggPopupLukk?.addEventListener('click', lukkEggPopup);
+    eggPopupBackdrop?.addEventListener('click', lukkEggPopup);
     document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && eggPopup && !eggPopup.hidden) lukkEggPopup();
         if (e.key === 'ArrowLeft')  forrige();
         if (e.key === 'ArrowRight') neste();
     });
