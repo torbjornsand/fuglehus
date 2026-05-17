@@ -638,6 +638,56 @@
             backdrop-filter: blur(10px);
         }
 
+        .tidslinje[data-open="false"] .tab-bar,
+        .tidslinje[data-open="false"] .filmstripe {
+            display: none;
+        }
+
+        .tidslinje-toggle {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 0;
+            border: none;
+            background: transparent;
+            color: inherit;
+            font: inherit;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .tidslinje-toggle-label {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .tidslinje-toggle-title {
+            font-size: 0.96rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .tidslinje-toggle-meta {
+            font-size: 0.82rem;
+            color: var(--text-faint);
+        }
+
+        .tidslinje-toggle-ikon {
+            width: 18px;
+            height: 18px;
+            color: var(--text-faint);
+            transition: transform 0.16s ease, color 0.16s ease;
+            flex-shrink: 0;
+        }
+
+        .tidslinje.utvida .tidslinje-toggle-ikon {
+            transform: rotate(180deg);
+            color: var(--accent-strong);
+        }
+
         .tab-bar {
             display: flex;
             gap: 8px;
@@ -1351,6 +1401,12 @@
             display: none;
         }
 
+        .eggpoll-kort[data-open="false"] .eggpoll-vinnar-kort,
+        .eggpoll-kort[data-open="false"] .eggpoll-status,
+        .eggpoll-kort[data-open="false"] .eggpoll-liste {
+            display: none;
+        }
+
         .eggpoll-total {
             display: inline-flex;
             align-items: center;
@@ -1509,14 +1565,6 @@
             border: 1px solid rgba(59, 130, 246, 0.14);
         }
 
-        .klekkingpoll-hero {
-            display: grid;
-            grid-template-columns: minmax(0, 200px) minmax(0, 1fr);
-            gap: 16px;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-
         .klekkingpoll-info {
             display: grid;
             grid-template-columns: minmax(0, 180px) minmax(0, 1fr);
@@ -1565,19 +1613,11 @@
             color: var(--text);
         }
 
-        .klekkingpoll-bilde {
-            width: 100%;
-            aspect-ratio: 1 / 1;
-            object-fit: cover;
-            border-radius: 18px;
-            display: block;
-            box-shadow: 0 14px 32px rgba(0,0,0,0.12);
-        }
-
         .klekkingpoll-valg {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 10px;
+            margin-bottom: 16px;
         }
 
         .klekkingpoll-dag {
@@ -1713,115 +1753,6 @@
             color: var(--accent-strong);
         }
 
-        .egg-popup[hidden] {
-            display: none;
-        }
-
-        .egg-popup {
-            position: fixed;
-            inset: 0;
-            z-index: 80;
-        }
-
-        .egg-popup-backdrop {
-            position: absolute;
-            inset: 0;
-            background: rgba(7, 19, 18, 0.56);
-            backdrop-filter: blur(6px);
-        }
-
-        .egg-popup-kort {
-            position: relative;
-            z-index: 1;
-            width: min(92vw, 760px);
-            margin: min(8vh, 56px) auto 24px;
-            padding: 20px;
-            border-radius: 28px;
-            background: linear-gradient(180deg, rgba(255,255,255,0.99), rgba(248,252,251,0.98));
-            box-shadow: 0 30px 80px rgba(0,0,0,0.22);
-        }
-
-        .egg-popup-lukk {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            min-height: 42px;
-            padding: 0 14px;
-            border: none;
-            border-radius: 999px;
-            background: rgba(15, 155, 142, 0.1);
-            color: var(--accent-strong);
-            font: inherit;
-            font-size: 0.88rem;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
-        .egg-popup-innhald {
-            display: grid;
-            grid-template-columns: minmax(0, 260px) minmax(0, 1fr);
-            gap: 20px;
-            align-items: center;
-        }
-
-        .egg-popup-bilde {
-            width: 100%;
-            aspect-ratio: 1 / 1;
-            border-radius: 22px;
-            object-fit: cover;
-            display: block;
-            box-shadow: 0 18px 34px rgba(0,0,0,0.14);
-        }
-
-        .egg-popup-tekst {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .egg-popup-etikett {
-            display: inline-flex;
-            align-items: center;
-            width: fit-content;
-            min-height: 30px;
-            padding: 0 12px;
-            border-radius: 999px;
-            background: rgba(255, 191, 105, 0.22);
-            color: #9a4e10;
-            font-size: 0.78rem;
-            font-weight: 800;
-        }
-
-        .egg-popup-tekst h3 {
-            font-size: clamp(1.4rem, 3vw, 2rem);
-            line-height: 1;
-            color: var(--text);
-            letter-spacing: -0.03em;
-        }
-
-        .egg-popup-ingress {
-            color: var(--text-soft);
-            line-height: 1.55;
-        }
-
-        .egg-popup-vinnarar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .egg-popup-vinnar-pill {
-            display: inline-flex;
-            align-items: center;
-            min-height: 34px;
-            padding: 0 12px;
-            border-radius: 999px;
-            background: rgba(11, 118, 109, 0.08);
-            color: var(--text-soft);
-            font-size: 0.84rem;
-            font-weight: 700;
-        }
-
         @media (max-width: 760px) {
             .eggpoll-topp {
                 flex-direction: column;
@@ -1833,8 +1764,6 @@
             }
 
             .eggpoll-vinnar-kort,
-            .egg-popup-innhald,
-            .klekkingpoll-hero,
             .klekkingpoll-sidepanel,
             .klekkingpoll-info {
                 grid-template-columns: 1fr;
@@ -1859,12 +1788,6 @@
             .eggpoll-rute {
                 min-height: 46px;
                 border-radius: 14px;
-            }
-
-            .egg-popup-kort {
-                width: min(94vw, 760px);
-                padding: 18px;
-                margin-top: 24px;
             }
 
             .klekkingpoll-valg {
@@ -2693,7 +2616,16 @@
         </div>
     </div>
 
-    <div class="tidslinje">
+    <div class="tidslinje" id="media-seksjon" data-open="false">
+        <button class="tidslinje-toggle" id="media-seksjon-toggle" type="button" aria-expanded="false" aria-controls="filmstripe" onclick="toggleMediaSection()">
+            <span class="tidslinje-toggle-label">
+                <span class="tidslinje-toggle-title">Tidslinje, favoritter og video</span>
+                <span class="tidslinje-toggle-meta">Åpne for å bla i bilder og klipp</span>
+            </span>
+            <svg class="tidslinje-toggle-ikon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+        </button>
         <div class="tab-bar">
             <button class="tab aktiv" id="tab-tidslinje" onclick="byttTab('tidslinje')">
                 Tidslinje
@@ -2819,10 +2751,7 @@
             </div>
         </div>
 
-        <div class="klekkingpoll-hero">
-            <img class="klekkingpoll-bilde" src="galleri/forste-egg-12-05-26.jpg" alt="Egg i reiret" loading="lazy" decoding="async">
-            <div class="klekkingpoll-valg" id="klekkingpoll-valg"></div>
-        </div>
+        <div class="klekkingpoll-valg" id="klekkingpoll-valg"></div>
 
         <div class="klekkingpoll-sidepanel">
             <div class="klekkingpoll-innsending">
@@ -2958,22 +2887,6 @@
     <div id="forhåndsvisning-tid"></div>
 </div>
 
-<div class="egg-popup" id="egg-popup" hidden>
-    <div class="egg-popup-backdrop" id="egg-popup-backdrop"></div>
-    <div class="egg-popup-kort" role="dialog" aria-modal="true" aria-labelledby="egg-popup-tittel">
-        <button class="egg-popup-lukk" id="egg-popup-lukk" type="button" aria-label="Lukk gratulasjon">Lukk ✕</button>
-        <div class="egg-popup-innhald">
-            <img class="egg-popup-bilde" src="galleri/forste-egg-12-05-26.jpg" alt="De første eggene i reiret" loading="lazy" decoding="async">
-            <div class="egg-popup-tekst">
-                <div class="egg-popup-etikett">🎉 Gratulerer!</div>
-                <h3 id="egg-popup-tittel">Første egg er lagt</h3>
-                <p class="egg-popup-ingress">Else la de første eggene 12. mai 2026. Disse traff helt riktig på datoen:</p>
-                <div class="egg-popup-vinnarar" id="egg-popup-vinnarar"></div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script>
     const WORKER = 'https://fuglehus.torbjs.workers.dev';
     const WEATHER_URL = 'https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=62.4722&lon=6.1549';
@@ -3005,7 +2918,6 @@
     let harUlesteVideoer = false;
     let openVideoMeny = null;
     const FIRST_EGG_DATE = '2026-05-12';
-    const FIRST_EGG_POPUP_KEY = `first-egg-popup-seen-${FIRST_EGG_DATE}`;
 
     const preview    = document.getElementById('forhåndsvisning');
     const previewImg = document.getElementById('forhåndsvisning-img');
@@ -3028,10 +2940,6 @@
     const eggPollTotal = document.getElementById('eggpoll-total');
     const eggPollBekreft = document.getElementById('eggpoll-bekreft');
     const eggPollVinnarar = document.getElementById('eggpoll-vinnarar');
-    const eggPopup = document.getElementById('egg-popup');
-    const eggPopupLukk = document.getElementById('egg-popup-lukk');
-    const eggPopupBackdrop = document.getElementById('egg-popup-backdrop');
-    const eggPopupVinnarar = document.getElementById('egg-popup-vinnarar');
     const eggCountGrid = document.getElementById('eggantall-grid');
     const eggCountValgt = document.getElementById('eggantall-valgt');
     const eggCountStatus = document.getElementById('eggantall-status');
@@ -3045,6 +2953,8 @@
     const hatchPollBekreft = document.getElementById('klekkingpoll-bekreft');
     const eggCountKort = document.querySelector('.eggantall-kort');
     const eggCountToggle = document.getElementById('eggantall-toggle');
+    const mediaSeksjon = document.getElementById('media-seksjon');
+    const mediaSeksjonToggle = document.getElementById('media-seksjon-toggle');
     const galleriRamme = document.querySelector('.galleri-ramme');
     const galleriBilde = document.getElementById('galleri-bilde');
     const galleriTekst = document.getElementById('galleri-tekst');
@@ -3377,31 +3287,6 @@
             .map((entry) => entry.name);
     }
 
-    function lukkEggPopup() {
-        if (!eggPopup) return;
-        eggPopup.hidden = true;
-        try {
-            localStorage.setItem(FIRST_EGG_POPUP_KEY, '1');
-        } catch (e) {}
-    }
-
-    function maybeVisEggPopup() {
-        if (!eggPopup || !eggPopupVinnarar) return;
-
-        const vinnarar = hentEggVinnarar();
-        if (!vinnarar.length) return;
-
-        try {
-            if (localStorage.getItem(FIRST_EGG_POPUP_KEY) === '1') return;
-        } catch (e) {}
-
-        eggPopupVinnarar.innerHTML = vinnarar
-            .map((name) => `<span class="egg-popup-vinnar-pill">${escapeHtml(name)}</span>`)
-            .join('');
-
-        eggPopup.hidden = false;
-    }
-
     function toggleEggPollListe(forceOpen = null) {
         if (!eggPollListe || !eggPollToggle) return;
         const erOpen = eggPollListe.dataset.open === 'true';
@@ -3427,6 +3312,15 @@
         eggCountKort.dataset.open = nextOpen ? 'true' : 'false';
         eggCountKort.classList.toggle('utvida', nextOpen);
         eggCountToggle.setAttribute('aria-expanded', nextOpen ? 'true' : 'false');
+    }
+
+    function toggleMediaSection(forceOpen = null) {
+        if (!mediaSeksjon || !mediaSeksjonToggle) return;
+        const erOpen = mediaSeksjon.dataset.open === 'true';
+        const nextOpen = typeof forceOpen === 'boolean' ? forceOpen : !erOpen;
+        mediaSeksjon.dataset.open = nextOpen ? 'true' : 'false';
+        mediaSeksjon.classList.toggle('utvida', nextOpen);
+        mediaSeksjonToggle.setAttribute('aria-expanded', nextOpen ? 'true' : 'false');
     }
 
     function hentKlekkingDatoar() {
@@ -3560,7 +3454,6 @@
             const data = await resp.json();
             eggPollEntries = Array.isArray(data.entries) ? data.entries : [];
             renderEggPollListe();
-            maybeVisEggPopup();
         } catch (e) {
             if (eggPollStatus) eggPollStatus.textContent = 'Kunne ikke hente tips akkurat nå.';
         }
@@ -3818,6 +3711,7 @@
             galleriBilder = Array.isArray(filer)
                 ? filer
                     .filter((fil) => fil.name && /\.(jpg|jpeg|png|webp)$/i.test(fil.name))
+                    .filter((fil) => !['forste-egg-12-05-26.jpg', '7egg-else.png'].includes(fil.name))
                     .map((fil) => ({
                         name: fil.name,
                         download_url: fil.download_url || `galleri/${fil.name}`,
@@ -4653,12 +4547,10 @@
     hentHatchTips();
     hentEggCount();
     toggleEggCount(false);
+    toggleMediaSection(false);
     hentGalleri();
     hentVideoer();
-    eggPopupLukk?.addEventListener('click', lukkEggPopup);
-    eggPopupBackdrop?.addEventListener('click', lukkEggPopup);
     document.addEventListener('keydown', e => {
-        if (e.key === 'Escape' && eggPopup && !eggPopup.hidden) lukkEggPopup();
         if (e.key === 'ArrowLeft')  forrige();
         if (e.key === 'ArrowRight') neste();
     });
