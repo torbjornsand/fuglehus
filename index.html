@@ -1345,6 +1345,12 @@
             color: var(--accent-strong);
         }
 
+        .eggpoll-kort[data-open="false"] .eggpoll-vinnar-kort,
+        .eggpoll-kort[data-open="false"] .eggpoll-status,
+        .eggpoll-kort[data-open="false"] .eggpoll-liste {
+            display: none;
+        }
+
         .eggpoll-total {
             display: inline-flex;
             align-items: center;
@@ -1509,6 +1515,54 @@
             gap: 16px;
             align-items: center;
             margin-bottom: 16px;
+        }
+
+        .klekkingpoll-info {
+            display: grid;
+            grid-template-columns: minmax(0, 180px) minmax(0, 1fr);
+            gap: 14px;
+            align-items: center;
+            margin-bottom: 16px;
+            padding: 16px;
+            border-radius: 22px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.96), rgba(242,248,255,0.96));
+            border: 1px solid rgba(59, 130, 246, 0.14);
+            box-shadow: 0 10px 28px rgba(28, 35, 24, 0.06);
+        }
+
+        .klekkingpoll-info-bilde {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 18px;
+            display: block;
+            box-shadow: 0 12px 26px rgba(0,0,0,0.12);
+        }
+
+        .klekkingpoll-info-tekst {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            color: var(--text-soft);
+        }
+
+        .klekkingpoll-info-label {
+            display: inline-flex;
+            align-items: center;
+            width: fit-content;
+            min-height: 28px;
+            padding: 0 10px;
+            border-radius: 999px;
+            background: rgba(59, 130, 246, 0.12);
+            color: #2457a6;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .klekkingpoll-info-tekst strong {
+            font-size: clamp(1.05rem, 2vw, 1.3rem);
+            line-height: 1.1;
+            color: var(--text);
         }
 
         .klekkingpoll-bilde {
@@ -1781,7 +1835,8 @@
             .eggpoll-vinnar-kort,
             .egg-popup-innhald,
             .klekkingpoll-hero,
-            .klekkingpoll-sidepanel {
+            .klekkingpoll-sidepanel,
+            .klekkingpoll-info {
                 grid-template-columns: 1fr;
             }
         }
@@ -2746,48 +2801,21 @@
 
     </div>
 
-    <section class="eggpoll-kort eggpoll-kort-ferdig" aria-labelledby="eggpoll-tittel">
-        <div class="eggpoll-topp">
-            <div>
-                <div class="eggpoll-etikett">🥚 Første egg</div>
-                <h3 class="eggpoll-tittel" id="eggpoll-tittel">De første eggene er lagt</h3>
-                <p class="eggpoll-beskrivelse">Else la de første eggene 12. mai 2026. Her er tippelista med alle som gjettet på dato i mai.</p>
-            </div>
-        </div>
-
-        <div class="eggpoll-vinnar-kort">
-            <img class="eggpoll-vinnar-bilde" src="galleri/forste-egg-12-05-26.jpg" alt="De første eggene i reiret" loading="lazy" decoding="async">
-            <div class="eggpoll-vinnar-tekst">
-                <span class="eggpoll-vinnar-label">Første egg</span>
-                <strong>12. mai 2026</strong>
-                <span>Gratulerer til alle som traff dagens dato.</span>
-                <div class="eggpoll-vinnarar" id="eggpoll-vinnarar"></div>
-            </div>
-        </div>
-
-        <div class="eggpoll-status" id="eggpoll-status"></div>
-        <div class="eggpoll-liste" id="eggpoll-liste" data-open="false">
-            <div class="eggpoll-liste-tittel">
-                <button class="eggpoll-toggle" id="eggpoll-toggle" type="button" aria-expanded="false" aria-controls="eggpoll-oversikt" onclick="toggleEggPollListe()">
-                    <span class="eggpoll-toggle-label">
-                        <span>Tippelista</span>
-                        <span class="eggpoll-total" id="eggpoll-total">0</span>
-                    </span>
-                    <svg class="eggpoll-toggle-ikon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                </button>
-            </div>
-            <div class="eggpoll-oversikt" id="eggpoll-oversikt"></div>
-        </div>
-    </section>
-
     <section class="klekkingpoll-kort" aria-labelledby="klekkingpoll-tittel">
         <div class="eggpoll-topp">
             <div>
                 <div class="eggpoll-etikett">🐥 Klekking</div>
                 <h3 class="eggpoll-tittel" id="klekkingpoll-tittel">Når klekkes første egget?</h3>
                 <p class="eggpoll-beskrivelse">Velg datoen du tror på i løpet av de neste 14 dagene, skriv inn navnet ditt og legg inn tipset ditt.</p>
+            </div>
+        </div>
+
+        <div class="klekkingpoll-info">
+            <img class="klekkingpoll-info-bilde" src="galleri/7egg-else.png" alt="Illustrasjon av syv egg i reiret" loading="lazy" decoding="async">
+            <div class="klekkingpoll-info-tekst">
+                <span class="klekkingpoll-info-label">Status nå</span>
+                <strong>7 egg er lagt i reiret</strong>
+                <span>Else har fylt opp reiret med syv egg, og nå venter vi spent på når den første lille kjøttmeisen klekker.</span>
             </div>
         </div>
 
@@ -2811,6 +2839,51 @@
                     <span class="eggpoll-total" id="klekkingpoll-total">0</span>
                 </div>
                 <div class="eggpoll-oversikt" id="klekkingpoll-oversikt"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="eggpoll-kort eggpoll-kort-ferdig" aria-labelledby="eggpoll-tittel" data-open="false">
+        <div class="eggpoll-topp">
+            <button class="eggpoll-toggle" id="eggpoll-ferdig-toggle" type="button" aria-expanded="false" aria-controls="eggpoll-ferdig-innhald" onclick="toggleEggPollComplete()">
+                <span class="eggpoll-toggle-label">
+                    <span>
+                        <div class="eggpoll-etikett">🥚 Første egg</div>
+                        <h3 class="eggpoll-tittel" id="eggpoll-tittel">De første eggene er lagt</h3>
+                        <p class="eggpoll-beskrivelse">Else la de første eggene 12. mai 2026. Her er tippelista med alle som gjettet på dato i mai.</p>
+                    </span>
+                </span>
+                <svg class="eggpoll-toggle-ikon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+            </button>
+        </div>
+
+        <div id="eggpoll-ferdig-innhald">
+            <div class="eggpoll-vinnar-kort">
+                <img class="eggpoll-vinnar-bilde" src="galleri/forste-egg-12-05-26.jpg" alt="De første eggene i reiret" loading="lazy" decoding="async">
+                <div class="eggpoll-vinnar-tekst">
+                    <span class="eggpoll-vinnar-label">Første egg</span>
+                    <strong>12. mai 2026</strong>
+                    <span>Gratulerer til alle som traff dagens dato.</span>
+                    <div class="eggpoll-vinnarar" id="eggpoll-vinnarar"></div>
+                </div>
+            </div>
+
+            <div class="eggpoll-status" id="eggpoll-status"></div>
+            <div class="eggpoll-liste" id="eggpoll-liste" data-open="false">
+                <div class="eggpoll-liste-tittel">
+                    <button class="eggpoll-toggle" id="eggpoll-toggle" type="button" aria-expanded="false" aria-controls="eggpoll-oversikt" onclick="toggleEggPollListe()">
+                        <span class="eggpoll-toggle-label">
+                            <span>Tippelista</span>
+                            <span class="eggpoll-total" id="eggpoll-total">0</span>
+                        </span>
+                        <svg class="eggpoll-toggle-ikon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                </div>
+                <div class="eggpoll-oversikt" id="eggpoll-oversikt"></div>
             </div>
         </div>
     </section>
@@ -2947,6 +3020,8 @@
     const eggPollKalender = document.getElementById('eggpoll-kalender');
     const eggPollNamn = document.getElementById('eggpoll-namn');
     const eggPollStatus = document.getElementById('eggpoll-status');
+    const eggPollCompleteKort = document.querySelector('.eggpoll-kort-ferdig');
+    const eggPollCompleteToggle = document.getElementById('eggpoll-ferdig-toggle');
     const eggPollListe = document.getElementById('eggpoll-liste');
     const eggPollToggle = document.getElementById('eggpoll-toggle');
     const eggPollOversikt = document.getElementById('eggpoll-oversikt');
@@ -3334,6 +3409,15 @@
         eggPollListe.dataset.open = nextOpen ? 'true' : 'false';
         eggPollListe.classList.toggle('utvida', nextOpen);
         eggPollToggle.setAttribute('aria-expanded', nextOpen ? 'true' : 'false');
+    }
+
+    function toggleEggPollComplete(forceOpen = null) {
+        if (!eggPollCompleteKort || !eggPollCompleteToggle) return;
+        const erOpen = eggPollCompleteKort.dataset.open === 'true';
+        const nextOpen = typeof forceOpen === 'boolean' ? forceOpen : !erOpen;
+        eggPollCompleteKort.dataset.open = nextOpen ? 'true' : 'false';
+        eggPollCompleteKort.classList.toggle('utvida', nextOpen);
+        eggPollCompleteToggle.setAttribute('aria-expanded', nextOpen ? 'true' : 'false');
     }
 
     function toggleEggCount(forceOpen = null) {
