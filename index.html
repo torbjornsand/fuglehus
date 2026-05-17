@@ -1494,6 +1494,171 @@
             font-weight: 700;
         }
 
+        .klekkingpoll-kort {
+            margin-top: 16px;
+            background: linear-gradient(180deg, #f7fcff 0%, #ffffff 100%);
+            border-radius: 22px;
+            padding: 22px 20px 20px;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.07), 0 8px 40px rgba(0,0,0,0.05);
+            border: 1px solid rgba(59, 130, 246, 0.14);
+        }
+
+        .klekkingpoll-hero {
+            display: grid;
+            grid-template-columns: minmax(0, 200px) minmax(0, 1fr);
+            gap: 16px;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .klekkingpoll-bilde {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 18px;
+            display: block;
+            box-shadow: 0 14px 32px rgba(0,0,0,0.12);
+        }
+
+        .klekkingpoll-valg {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .klekkingpoll-dag {
+            min-height: 54px;
+            border: 1px solid rgba(59, 130, 246, 0.14);
+            border-radius: 16px;
+            background: #ffffff;
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 2px;
+            padding: 10px 12px;
+            text-align: left;
+            font: inherit;
+            cursor: pointer;
+            transition: transform 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+        }
+
+        .klekkingpoll-dag:hover {
+            transform: translateY(-1px);
+            border-color: rgba(59, 130, 246, 0.36);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.08);
+        }
+
+        .klekkingpoll-dag.aktiv {
+            background: linear-gradient(135deg, #3b82f6 0%, #0f766e 100%);
+            border-color: transparent;
+            color: #ffffff;
+            box-shadow: 0 16px 28px rgba(59, 130, 246, 0.2);
+        }
+
+        .klekkingpoll-dato {
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        .klekkingpoll-undertittel {
+            font-size: 0.74rem;
+            color: var(--text-faint);
+        }
+
+        .klekkingpoll-dag.aktiv .klekkingpoll-undertittel {
+            color: rgba(255,255,255,0.82);
+        }
+
+        .klekkingpoll-sidepanel {
+            margin-top: 14px;
+            display: grid;
+            grid-template-columns: minmax(240px, 0.8fr) minmax(0, 1.2fr);
+            gap: 16px;
+            align-items: start;
+        }
+
+        .klekkingpoll-innsending {
+            background: linear-gradient(180deg, rgba(59,130,246,0.08), rgba(255,255,255,0.92));
+            border-radius: 20px;
+            padding: 16px;
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .klekkingpoll-liste {
+            background: rgba(255,255,255,0.72);
+            border: 1px solid rgba(59, 130, 246, 0.08);
+            border-radius: 20px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .klekkingpoll-rad {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 10px;
+            border-radius: 16px;
+            background: rgba(255,255,255,0.78);
+            border: 1px solid rgba(59, 130, 246, 0.08);
+        }
+
+        .klekkingpoll-namn {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .klekkingpoll-namnepill {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 9px;
+            border-radius: 999px;
+            background: #ffffff;
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            color: var(--text);
+            font-size: 0.76rem;
+            font-weight: 600;
+        }
+
+        .eggantall-kort[data-open="false"] .eggantall-innhald {
+            display: none;
+        }
+
+        .eggantall-toggle {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 0;
+            border: none;
+            background: transparent;
+            color: inherit;
+            font: inherit;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .eggantall-toggle-ikon {
+            width: 18px;
+            height: 18px;
+            color: var(--text-faint);
+            transition: transform 0.16s ease, color 0.16s ease;
+            flex-shrink: 0;
+        }
+
+        .eggantall-kort.utvida .eggantall-toggle-ikon {
+            transform: rotate(180deg);
+            color: var(--accent-strong);
+        }
+
         .egg-popup[hidden] {
             display: none;
         }
@@ -1614,7 +1779,9 @@
             }
 
             .eggpoll-vinnar-kort,
-            .egg-popup-innhald {
+            .egg-popup-innhald,
+            .klekkingpoll-hero,
+            .klekkingpoll-sidepanel {
                 grid-template-columns: 1fr;
             }
         }
@@ -1643,6 +1810,10 @@
                 width: min(94vw, 760px);
                 padding: 18px;
                 margin-top: 24px;
+            }
+
+            .klekkingpoll-valg {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -2611,17 +2782,55 @@
         </div>
     </section>
 
-    <section class="eggantall-kort" aria-labelledby="eggantall-tittel">
-        <div class="eggantall-topp">
+    <section class="klekkingpoll-kort" aria-labelledby="klekkingpoll-tittel">
+        <div class="eggpoll-topp">
             <div>
-                <div class="eggantall-etikett">🐣 Antall egg</div>
-                <h3 class="eggantall-tittel" id="eggantall-tittel">Hvor mange egg tror du Else legger?</h3>
-                <p class="eggantall-beskrivelse">Marker hvor mange egg du tror det blir.</p>
+                <div class="eggpoll-etikett">🐥 Klekking</div>
+                <h3 class="eggpoll-tittel" id="klekkingpoll-tittel">Når klekkes første egget?</h3>
+                <p class="eggpoll-beskrivelse">Velg datoen du tror på i løpet av de neste 14 dagene, skriv inn navnet ditt og legg inn tipset ditt.</p>
             </div>
+        </div>
+
+        <div class="klekkingpoll-hero">
+            <img class="klekkingpoll-bilde" src="galleri/forste-egg-12-05-26.jpg" alt="Egg i reiret" loading="lazy" decoding="async">
+            <div class="klekkingpoll-valg" id="klekkingpoll-valg"></div>
+        </div>
+
+        <div class="klekkingpoll-sidepanel">
+            <div class="klekkingpoll-innsending">
+                <div class="eggpoll-felt">
+                    <label for="klekkingpoll-namn">Navn</label>
+                    <input class="eggpoll-input" id="klekkingpoll-namn" type="text" maxlength="40">
+                </div>
+                <button class="eggpoll-knapp" id="klekkingpoll-bekreft" type="button" onclick="sendHatchTips()">Bekreft svar</button>
+                <div class="eggpoll-status" id="klekkingpoll-status"></div>
+            </div>
+            <div class="klekkingpoll-liste">
+                <div class="eggpoll-liste-tittel">
+                    <span>Klekke-tips</span>
+                    <span class="eggpoll-total" id="klekkingpoll-total">0</span>
+                </div>
+                <div class="eggpoll-oversikt" id="klekkingpoll-oversikt"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="eggantall-kort" aria-labelledby="eggantall-tittel" data-open="false">
+        <div class="eggantall-topp">
+            <button class="eggantall-toggle" id="eggantall-toggle" type="button" aria-expanded="false" aria-controls="eggantall-innhald" onclick="toggleEggCount()">
+                <div>
+                    <div class="eggantall-etikett">🐣 Antall egg</div>
+                    <h3 class="eggantall-tittel" id="eggantall-tittel">Hvor mange egg tror du Else legger?</h3>
+                    <p class="eggantall-beskrivelse">Marker hvor mange egg du tror det blir.</p>
+                </div>
+                <svg class="eggantall-toggle-ikon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+            </button>
             <div class="eggantall-valgt" id="eggantall-valgt">–</div>
         </div>
 
-        <div class="eggantall-innhald">
+        <div class="eggantall-innhald" id="eggantall-innhald">
             <div class="eggantall-velger">
                 <div class="eggantall-grid" id="eggantall-grid"></div>
             </div>
@@ -2703,7 +2912,9 @@
     let galleriTouchStartX = null;
     let galleriTouchStartY = null;
     let eggPollEntries = [];
+    let hatchPollEntries = [];
     let valgtEggDato = '';
+    let valtHatchDato = '';
     let eggCountStats = {};
     let valtEggAntall = 0;
     let gjeldende  = 0;
@@ -2751,6 +2962,14 @@
     const eggCountStatus = document.getElementById('eggantall-status');
     const eggCountGraf = document.getElementById('eggantall-graf');
     const eggCountBekreft = document.getElementById('eggantall-bekreft');
+    const hatchPollValg = document.getElementById('klekkingpoll-valg');
+    const hatchPollNamn = document.getElementById('klekkingpoll-namn');
+    const hatchPollStatus = document.getElementById('klekkingpoll-status');
+    const hatchPollOversikt = document.getElementById('klekkingpoll-oversikt');
+    const hatchPollTotal = document.getElementById('klekkingpoll-total');
+    const hatchPollBekreft = document.getElementById('klekkingpoll-bekreft');
+    const eggCountKort = document.querySelector('.eggantall-kort');
+    const eggCountToggle = document.getElementById('eggantall-toggle');
     const galleriRamme = document.querySelector('.galleri-ramme');
     const galleriBilde = document.getElementById('galleri-bilde');
     const galleriTekst = document.getElementById('galleri-tekst');
@@ -2999,8 +3218,11 @@
 
     function formatEggPollDato(dateStr) {
         if (!dateStr) return 'Velg en dato';
-        const [, , dag] = dateStr.split('-');
-        return `${parseInt(dag, 10)}. mai`;
+        const date = new Date(`${dateStr}T12:00:00`);
+        return new Intl.DateTimeFormat('nb-NO', {
+            day: 'numeric',
+            month: 'long',
+        }).format(date);
     }
 
     function renderEggPollKalender() {
@@ -3112,6 +3334,133 @@
         eggPollListe.dataset.open = nextOpen ? 'true' : 'false';
         eggPollListe.classList.toggle('utvida', nextOpen);
         eggPollToggle.setAttribute('aria-expanded', nextOpen ? 'true' : 'false');
+    }
+
+    function toggleEggCount(forceOpen = null) {
+        if (!eggCountKort || !eggCountToggle) return;
+        const erOpen = eggCountKort.dataset.open === 'true';
+        const nextOpen = typeof forceOpen === 'boolean' ? forceOpen : !erOpen;
+        eggCountKort.dataset.open = nextOpen ? 'true' : 'false';
+        eggCountKort.classList.toggle('utvida', nextOpen);
+        eggCountToggle.setAttribute('aria-expanded', nextOpen ? 'true' : 'false');
+    }
+
+    function hentKlekkingDatoar() {
+        const start = new Date();
+        start.setHours(12, 0, 0, 0);
+        return Array.from({ length: 14 }, (_, index) => {
+            const date = new Date(start);
+            date.setDate(start.getDate() + index);
+            return date.toISOString().slice(0, 10);
+        });
+    }
+
+    function renderHatchPollValg() {
+        if (!hatchPollValg) return;
+
+        const html = hentKlekkingDatoar().map((dateStr) => {
+            const aktiv = valtHatchDato === dateStr ? ' aktiv' : '';
+            const date = new Date(`${dateStr}T12:00:00`);
+            const weekDay = new Intl.DateTimeFormat('nb-NO', { weekday: 'short' }).format(date);
+            return `
+                <button class="klekkingpoll-dag${aktiv}" type="button" onclick="velgHatchDato('${dateStr}')">
+                    <span class="klekkingpoll-dato">${formatEggPollDato(dateStr)}</span>
+                    <span class="klekkingpoll-undertittel">${weekDay}</span>
+                </button>
+            `;
+        }).join('');
+
+        hatchPollValg.innerHTML = html;
+    }
+
+    function renderHatchPollListe() {
+        if (!hatchPollOversikt || !hatchPollTotal) return;
+        hatchPollTotal.textContent = String(hatchPollEntries.length);
+
+        if (!hatchPollEntries.length) {
+            hatchPollOversikt.innerHTML = '<div class="eggpoll-tom">Ingen klekke-tips ennå.</div>';
+            return;
+        }
+
+        const grouped = hatchPollEntries.reduce((acc, entry) => {
+            if (!acc[entry.date]) acc[entry.date] = [];
+            acc[entry.date].push(entry);
+            return acc;
+        }, {});
+
+        hatchPollOversikt.innerHTML = Object.keys(grouped)
+            .sort((a, b) => a.localeCompare(b))
+            .map((date) => {
+                const names = grouped[date]
+                    .sort((a, b) => a.name.localeCompare(b.name, 'nb'))
+                    .map((entry) => `<span class="klekkingpoll-namnepill">${escapeHtml(entry.name)}</span>`)
+                    .join('');
+
+                return `
+                    <div class="klekkingpoll-rad">
+                        <div class="eggpoll-datopill">${formatEggPollDato(date)}</div>
+                        <div class="klekkingpoll-namn">${names}</div>
+                    </div>
+                `;
+            })
+            .join('');
+    }
+
+    function velgHatchDato(dateStr) {
+        valtHatchDato = dateStr;
+        if (hatchPollStatus) hatchPollStatus.textContent = '';
+        renderHatchPollValg();
+    }
+
+    async function hentHatchTips() {
+        try {
+            const resp = await fetch(WORKER + '/hatchpoll');
+            if (!resp.ok) throw new Error('hatchpoll-get');
+            const data = await resp.json();
+            hatchPollEntries = Array.isArray(data.entries) ? data.entries : [];
+            renderHatchPollListe();
+        } catch (e) {
+            if (hatchPollStatus) hatchPollStatus.textContent = 'Kunne ikke hente klekke-tips akkurat nå.';
+        }
+    }
+
+    async function sendHatchTips() {
+        const name = hatchPollNamn?.value.trim() || '';
+
+        if (!valtHatchDato) {
+            hatchPollStatus.textContent = 'Velg en dato først.';
+            return;
+        }
+
+        if (!name) {
+            hatchPollStatus.textContent = 'Skriv inn navnet ditt før du bekrefter.';
+            hatchPollNamn?.focus();
+            return;
+        }
+
+        hatchPollBekreft.disabled = true;
+        hatchPollStatus.textContent = 'Lagrer tipset ditt…';
+
+        try {
+            const resp = await fetch(WORKER + '/hatchpoll', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, date: valtHatchDato }),
+            });
+            const data = await resp.json();
+            if (!resp.ok) {
+                throw new Error(data?.error || 'hatchpoll-post');
+            }
+
+            hatchPollEntries = Array.isArray(data.entries) ? data.entries : [];
+            hatchPollStatus.textContent = `${name} er registrert på ${formatEggPollDato(valtHatchDato)}.`;
+            hatchPollNamn.value = '';
+            renderHatchPollListe();
+        } catch (e) {
+            hatchPollStatus.textContent = 'Kunne ikke lagre klekke-tipset akkurat nå.';
+        } finally {
+            hatchPollBekreft.disabled = false;
+        }
     }
 
     function velgEggDato(dateStr) {
@@ -4215,8 +4564,11 @@
     } catch (e) {}
     oppdaterEggCountValgt();
     renderEggCountGrid();
+    renderHatchPollValg();
     hentEggTips();
+    hentHatchTips();
     hentEggCount();
+    toggleEggCount(false);
     hentGalleri();
     hentVideoer();
     eggPopupLukk?.addEventListener('click', lukkEggPopup);

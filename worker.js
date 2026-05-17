@@ -150,6 +150,70 @@ export default {
       }
     }
 
+    if (url.pathname === '/hatchpoll') {
+      const val = await env.FAVORITES.get('hatchpoll');
+      let entries = val ? JSON.parse(val) : [];
+
+      if (request.method === 'GET') {
+        entries = Array.isArray(entries) ? entries : [];
+        entries.sort((a, b) => {
+          const dateCompare = String(a.date || '').localeCompare(String(b.date || ''));
+          if (dateCompare !== 0) return dateCompare;
+          return String(a.name || '').localeCompare(String(b.name || ''), 'nb');
+        });
+
+        return new Response(JSON.stringify({ entries }), {
+          headers: { ...cors, 'Content-Type': 'application/json' },
+        });
+      }
+
+      if (request.method === 'POST') {
+        const body = await request.json();
+        const name = String(body?.name || '').trim().slice(0, 40);
+        const date = String(body?.date || '').trim();
+
+        if (!name || !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+          return new Response(JSON.stringify({ error: 'Invalid hatch poll input' }), {
+            status: 400,
+            headers: { ...cors, 'Content-Type': 'application/json' },
+          });
+        }
+
+        entries = Array.isArray(entries) ? entries : [];
+        const normalizedName = name.toLocaleLowerCase('nb-NO');
+        const nextEntry = {
+          name,
+          date,
+          createdAt: new Date().toISOString(),
+        };
+
+        const existingIndex = entries.findIndex(
+          (entry) => String(entry?.name || '').trim().toLocaleLowerCase('nb-NO') === normalizedName
+        );
+
+        if (existingIndex >= 0) {
+          entries[existingIndex] = {
+            ...entries[existingIndex],
+            ...nextEntry,
+          };
+        } else {
+          entries.push(nextEntry);
+        }
+
+        entries.sort((a, b) => {
+          const dateCompare = String(a.date || '').localeCompare(String(b.date || ''));
+          if (dateCompare !== 0) return dateCompare;
+          return String(a.name || '').localeCompare(String(b.name || ''), 'nb');
+        });
+
+        await env.FAVORITES.put('hatchpoll', JSON.stringify(entries));
+
+        return new Response(JSON.stringify({ entries }), {
+          headers: { ...cors, 'Content-Type': 'application/json' },
+        });
+      }
+    }
+
     if (url.pathname === '/video') {
       if (request.method !== 'POST') {
         return new Response(JSON.stringify({ error: 'Method not allowed' }), {
