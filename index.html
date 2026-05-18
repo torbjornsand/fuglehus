@@ -683,6 +683,10 @@
             flex-shrink: 0;
         }
 
+        .tidslinje.utvida .tidslinje-toggle {
+            margin-bottom: 18px;
+        }
+
         .tidslinje.utvida .tidslinje-toggle-ikon {
             transform: rotate(180deg);
             color: var(--accent-strong);
@@ -2640,6 +2644,90 @@
         <div class="filmstripe" id="filmstripe"></div>
     </div>
 
+    <section class="klekkingpoll-kort" aria-labelledby="klekkingpoll-tittel">
+        <div class="eggpoll-topp">
+            <div>
+                <div class="eggpoll-etikett">🐥 Klekking</div>
+                <h3 class="eggpoll-tittel" id="klekkingpoll-tittel">Når klekkes første egget?</h3>
+                <p class="eggpoll-beskrivelse">Velg datoen du tror på i løpet av de neste 14 dagene, skriv inn navnet ditt og legg inn tipset ditt.</p>
+            </div>
+        </div>
+
+        <div class="klekkingpoll-info">
+            <img class="klekkingpoll-info-bilde" src="galleri/7egg-else.png" alt="Illustrasjon av syv egg i reiret" loading="lazy" decoding="async">
+            <div class="klekkingpoll-info-tekst">
+                <span class="klekkingpoll-info-label">Status nå</span>
+                <strong>7 egg er lagt i reiret</strong>
+                <span>Else har fylt opp reiret med syv egg, og nå venter vi spent på når den første lille kjøttmeisen klekker.</span>
+            </div>
+        </div>
+
+        <div class="klekkingpoll-valg" id="klekkingpoll-valg"></div>
+
+        <div class="klekkingpoll-sidepanel">
+            <div class="klekkingpoll-innsending">
+                <div class="eggpoll-felt">
+                    <label for="klekkingpoll-namn">Navn</label>
+                    <input class="eggpoll-input" id="klekkingpoll-namn" type="text" maxlength="40">
+                </div>
+                <button class="eggpoll-knapp" id="klekkingpoll-bekreft" type="button" onclick="sendHatchTips()">Bekreft svar</button>
+                <div class="eggpoll-status" id="klekkingpoll-status"></div>
+            </div>
+            <div class="klekkingpoll-liste">
+                <div class="eggpoll-liste-tittel">
+                    <span>Klekke-tips</span>
+                    <span class="eggpoll-total" id="klekkingpoll-total">0</span>
+                </div>
+                <div class="eggpoll-oversikt" id="klekkingpoll-oversikt"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="eggpoll-kort eggpoll-kort-ferdig" aria-labelledby="eggpoll-tittel" data-open="false">
+        <div class="eggpoll-topp">
+            <button class="eggpoll-toggle" id="eggpoll-ferdig-toggle" type="button" aria-expanded="false" aria-controls="eggpoll-ferdig-innhald" onclick="toggleEggPollComplete()">
+                <span class="eggpoll-toggle-label">
+                    <span>
+                        <div class="eggpoll-etikett">🥚 Første egg</div>
+                        <h3 class="eggpoll-tittel" id="eggpoll-tittel">De første eggene er lagt</h3>
+                        <p class="eggpoll-beskrivelse">Else la de første eggene 12. mai 2026. Her er tippelista med alle som gjettet på dato i mai.</p>
+                    </span>
+                </span>
+                <svg class="eggpoll-toggle-ikon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+            </button>
+        </div>
+
+        <div id="eggpoll-ferdig-innhald">
+            <div class="eggpoll-vinnar-kort">
+                <img class="eggpoll-vinnar-bilde" src="galleri/forste-egg-12-05-26.jpg" alt="De første eggene i reiret" loading="lazy" decoding="async">
+                <div class="eggpoll-vinnar-tekst">
+                    <span class="eggpoll-vinnar-label">Første egg</span>
+                    <strong>12. mai 2026</strong>
+                    <span>Gratulerer til alle som traff dagens dato.</span>
+                    <div class="eggpoll-vinnarar" id="eggpoll-vinnarar"></div>
+                </div>
+            </div>
+
+            <div class="eggpoll-status" id="eggpoll-status"></div>
+            <div class="eggpoll-liste" id="eggpoll-liste" data-open="false">
+                <div class="eggpoll-liste-tittel">
+                    <button class="eggpoll-toggle" id="eggpoll-toggle" type="button" aria-expanded="false" aria-controls="eggpoll-oversikt" onclick="toggleEggPollListe()">
+                        <span class="eggpoll-toggle-label">
+                            <span>Tippelista</span>
+                            <span class="eggpoll-total" id="eggpoll-total">0</span>
+                        </span>
+                        <svg class="eggpoll-toggle-ikon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                </div>
+                <div class="eggpoll-oversikt" id="eggpoll-oversikt"></div>
+            </div>
+        </div>
+    </section>
+
     <div class="kort-rad">
     <div class="beboer-kort">
         <svg class="beboer-illustrasjon" width="100" height="100" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2732,90 +2820,6 @@
     </div>
 
     </div>
-
-    <section class="klekkingpoll-kort" aria-labelledby="klekkingpoll-tittel">
-        <div class="eggpoll-topp">
-            <div>
-                <div class="eggpoll-etikett">🐥 Klekking</div>
-                <h3 class="eggpoll-tittel" id="klekkingpoll-tittel">Når klekkes første egget?</h3>
-                <p class="eggpoll-beskrivelse">Velg datoen du tror på i løpet av de neste 14 dagene, skriv inn navnet ditt og legg inn tipset ditt.</p>
-            </div>
-        </div>
-
-        <div class="klekkingpoll-info">
-            <img class="klekkingpoll-info-bilde" src="galleri/7egg-else.png" alt="Illustrasjon av syv egg i reiret" loading="lazy" decoding="async">
-            <div class="klekkingpoll-info-tekst">
-                <span class="klekkingpoll-info-label">Status nå</span>
-                <strong>7 egg er lagt i reiret</strong>
-                <span>Else har fylt opp reiret med syv egg, og nå venter vi spent på når den første lille kjøttmeisen klekker.</span>
-            </div>
-        </div>
-
-        <div class="klekkingpoll-valg" id="klekkingpoll-valg"></div>
-
-        <div class="klekkingpoll-sidepanel">
-            <div class="klekkingpoll-innsending">
-                <div class="eggpoll-felt">
-                    <label for="klekkingpoll-namn">Navn</label>
-                    <input class="eggpoll-input" id="klekkingpoll-namn" type="text" maxlength="40">
-                </div>
-                <button class="eggpoll-knapp" id="klekkingpoll-bekreft" type="button" onclick="sendHatchTips()">Bekreft svar</button>
-                <div class="eggpoll-status" id="klekkingpoll-status"></div>
-            </div>
-            <div class="klekkingpoll-liste">
-                <div class="eggpoll-liste-tittel">
-                    <span>Klekke-tips</span>
-                    <span class="eggpoll-total" id="klekkingpoll-total">0</span>
-                </div>
-                <div class="eggpoll-oversikt" id="klekkingpoll-oversikt"></div>
-            </div>
-        </div>
-    </section>
-
-    <section class="eggpoll-kort eggpoll-kort-ferdig" aria-labelledby="eggpoll-tittel" data-open="false">
-        <div class="eggpoll-topp">
-            <button class="eggpoll-toggle" id="eggpoll-ferdig-toggle" type="button" aria-expanded="false" aria-controls="eggpoll-ferdig-innhald" onclick="toggleEggPollComplete()">
-                <span class="eggpoll-toggle-label">
-                    <span>
-                        <div class="eggpoll-etikett">🥚 Første egg</div>
-                        <h3 class="eggpoll-tittel" id="eggpoll-tittel">De første eggene er lagt</h3>
-                        <p class="eggpoll-beskrivelse">Else la de første eggene 12. mai 2026. Her er tippelista med alle som gjettet på dato i mai.</p>
-                    </span>
-                </span>
-                <svg class="eggpoll-toggle-ikon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
-            </button>
-        </div>
-
-        <div id="eggpoll-ferdig-innhald">
-            <div class="eggpoll-vinnar-kort">
-                <img class="eggpoll-vinnar-bilde" src="galleri/forste-egg-12-05-26.jpg" alt="De første eggene i reiret" loading="lazy" decoding="async">
-                <div class="eggpoll-vinnar-tekst">
-                    <span class="eggpoll-vinnar-label">Første egg</span>
-                    <strong>12. mai 2026</strong>
-                    <span>Gratulerer til alle som traff dagens dato.</span>
-                    <div class="eggpoll-vinnarar" id="eggpoll-vinnarar"></div>
-                </div>
-            </div>
-
-            <div class="eggpoll-status" id="eggpoll-status"></div>
-            <div class="eggpoll-liste" id="eggpoll-liste" data-open="false">
-                <div class="eggpoll-liste-tittel">
-                    <button class="eggpoll-toggle" id="eggpoll-toggle" type="button" aria-expanded="false" aria-controls="eggpoll-oversikt" onclick="toggleEggPollListe()">
-                        <span class="eggpoll-toggle-label">
-                            <span>Tippelista</span>
-                            <span class="eggpoll-total" id="eggpoll-total">0</span>
-                        </span>
-                        <svg class="eggpoll-toggle-ikon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </button>
-                </div>
-                <div class="eggpoll-oversikt" id="eggpoll-oversikt"></div>
-            </div>
-        </div>
-    </section>
 
     <section class="eggantall-kort" aria-labelledby="eggantall-tittel" data-open="false">
         <div class="eggantall-topp">
@@ -3321,6 +3325,21 @@
         mediaSeksjon.dataset.open = nextOpen ? 'true' : 'false';
         mediaSeksjon.classList.toggle('utvida', nextOpen);
         mediaSeksjonToggle.setAttribute('aria-expanded', nextOpen ? 'true' : 'false');
+        if (!nextOpen) return;
+
+        visFilmstripe();
+
+        if (aktivTab === 'video') {
+            if (videoer.length > 0) {
+                visVideo(Math.min(valgtVideo, videoer.length - 1));
+            }
+            return;
+        }
+
+        if (bilder.length > 0) {
+            const inline = aktivTab === 'tidslinje' && gjeldende === 0 ? 'end' : 'center';
+            visBilde(gjeldende, inline, 'auto');
+        }
     }
 
     function hentKlekkingDatoar() {
