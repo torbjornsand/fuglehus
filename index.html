@@ -568,13 +568,14 @@
         #status {
             font-size: 0.8rem;
             color: var(--text-faint);
-            padding: 0 20px 4px;
+            padding: 0;
             min-height: 22px;
             font-family: "Instrument Sans", system-ui, sans-serif;
+            text-align: center;
         }
 
         .capture-fremdrift {
-            padding: 0 20px 12px;
+            padding: 0;
             display: none;
         }
 
@@ -613,6 +614,14 @@
             gap: 12px;
             justify-content: center;
             flex-wrap: wrap;
+        }
+
+        .footer-status {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 12px;
+            padding: 0 12px 4px;
         }
 
         .footer-handlinger .btn-capture {
@@ -2609,17 +2618,6 @@
             <span>Automatisk bilde hvert 10. minutt</span>
         </div>
     </div>
-    <p id="status"></p>
-    <div class="capture-fremdrift" id="capture-fremdrift" aria-live="polite">
-        <div class="capture-fremdrift-topp">
-            <span id="capture-fremdrift-tekst">Forbereder nytt bilde…</span>
-            <span id="capture-fremdrift-tid">35s</span>
-        </div>
-        <div class="capture-fremdrift-bar">
-            <div class="capture-fremdrift-fill" id="capture-fremdrift-fill"></div>
-        </div>
-    </div>
-
     <div class="tidslinje" id="media-seksjon" data-open="false">
         <button class="tidslinje-toggle" id="media-seksjon-toggle" type="button" aria-expanded="false" aria-controls="filmstripe" onclick="toggleMediaSection()">
             <span class="tidslinje-toggle-label">
@@ -2883,6 +2881,18 @@
             </svg>
             <span class="btn-capture-tekst">Ta 18 sek video nå</span>
         </button>
+    </div>
+    <div class="footer-status">
+        <p id="status"></p>
+        <div class="capture-fremdrift" id="capture-fremdrift" aria-live="polite">
+            <div class="capture-fremdrift-topp">
+                <span id="capture-fremdrift-tekst">Forbereder nytt bilde…</span>
+                <span id="capture-fremdrift-tid">35s</span>
+            </div>
+            <div class="capture-fremdrift-bar">
+                <div class="capture-fremdrift-fill" id="capture-fremdrift-fill"></div>
+            </div>
+        </div>
     </div>
 </div>
 

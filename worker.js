@@ -229,7 +229,7 @@ export default {
           duration: 18,
           width: 1920,
           height: 1080,
-          bitrate: '2800k',
+          bitrate: '3500k',
           format: 'mp4',
         }),
       });
