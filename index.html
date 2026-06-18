@@ -2522,9 +2522,127 @@
         }
 
         .filmstripe { cursor: grab; }
+
+        /* ── Avslutnings-modal ── */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(20, 18, 14, 0.82);
+            backdrop-filter: blur(6px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-kort {
+            background: #fff;
+            border-radius: 26px;
+            max-width: 560px;
+            width: 100%;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+            animation: modal-inn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes modal-inn {
+            from { transform: scale(0.88) translateY(20px); opacity: 0; }
+            to   { transform: scale(1)    translateY(0);    opacity: 1; }
+        }
+
+        .modal-video {
+            width: 100%;
+            display: block;
+            max-height: 340px;
+            object-fit: cover;
+            background: #111;
+        }
+
+        .modal-innhold {
+            padding: 28px 32px 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .modal-tag {
+            font-size: 0.72rem;
+            color: #4caf50;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+        }
+
+        .modal-tittel {
+            font-size: 1.55rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            letter-spacing: -0.3px;
+            line-height: 1.2;
+        }
+
+        .modal-tekst {
+            font-size: 0.92rem;
+            color: #555;
+            line-height: 1.7;
+        }
+
+        .modal-fugler {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f5f3ef;
+            border-radius: 14px;
+            padding: 14px 18px;
+        }
+
+        .modal-fugler-tall {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #1a1a1a;
+            line-height: 1;
+        }
+
+        .modal-fugler-tekst {
+            font-size: 0.85rem;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .modal-takk {
+            font-size: 0.82rem;
+            color: #aaa;
+            text-align: center;
+            padding-top: 4px;
+        }
+
+        @media (max-width: 500px) {
+            .modal-innhold { padding: 22px 20px 24px; }
+            .modal-tittel  { font-size: 1.25rem; }
+        }
     </style>
 </head>
 <body>
+
+<div class="modal-overlay">
+    <div class="modal-kort">
+        <video class="modal-video" autoplay muted loop playsinline
+            src="https://raw.githubusercontent.com/torbjornsand/fuglehus/main/video/klipp_2026-06-13_12-03-20.mp4">
+        </video>
+        <div class="modal-innhold">
+            <p class="modal-tag">Karstenvegen 6C · Sesong 2026</p>
+            <h2 class="modal-tittel">Redet er tomt – og det er akkurat slik det skal være</h2>
+            <p class="modal-tekst">
+                16. juni 2026 forlot familien redet, og 6 nye kjøttmeiser fikk prøve vingene for første gang. Vi ønsker de lykke til i livet :)
+            </p>
+            <p class="modal-tekst">
+                Takk til alle som har fulgt med, gitt Else high fives og heiet på familien. Vi sees kanskje igjen neste vår!
+            </p>
+            <p class="modal-takk">🐦 Fuglehus-kameraet er nå avsluttet for sesongen</p>
+        </div>
+    </div>
+</div>
 
 <div class="main">
     <div class="side-tittel-wrapper">
